@@ -496,43 +496,20 @@ function SpecSection() {
           <p className="text-lg text-white/50">極致工藝打造，每一個細節都為實戰而生</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* 左側：3D X-RAY 預留區 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {/* 左側：3D X-RAY 實圖 */}
           <div 
             className={`relative transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
-            <div 
-              className="h-full min-h-[400px] rounded-2xl flex flex-col items-center justify-center relative overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(30,30,30,0.6) 100%)',
-                border: '2px dashed rgba(100,100,100,0.3)',
-                backdropFilter: 'blur(10px)',
-              }}
-            >
-              {/* 科技感裝飾線 */}
-              <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-[#39FF14]/30" />
-              <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-[#39FF14]/30" />
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-[#39FF14]/30" />
-              <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-[#39FF14]/30" />
-              
-              {/* 尺寸標註線視覺 */}
-              <div className="absolute left-2 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-              <div className="absolute right-2 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-              <div className="absolute top-2 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <div className="absolute bottom-2 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              
-              {/* 中央內容 */}
-              <div className="text-center z-10">
-                <div className="w-20 h-20 rounded-xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">📐</span>
-                </div>
-                <p className="text-[#39FF14] font-mono text-sm tracking-wider mb-2">[ 3D X-RAY VIEW ]</p>
-                <p className="text-white/40 text-xs">機身透視尺寸圖</p>
-                <p className="text-white/30 text-xs mt-1">PENDING</p>
-              </div>
-              
-              {/* 掃描線效果 */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#39FF14]/5 to-transparent animate-pulse" />
+            <div className="h-full flex items-center">
+              <img 
+                src="/src/assets/spec-xray.png" 
+                alt="RE:BOX 機身 3D 分解透視圖" 
+                className="w-full h-auto rounded-xl"
+                style={{
+                  boxShadow: '0 0 50px rgba(57, 255, 20, 0.15), 0 0 100px rgba(57, 255, 20, 0.05)',
+                }}
+              />
             </div>
           </div>
 

@@ -496,29 +496,27 @@ function SpecSection() {
           <p className="text-lg text-white/50">極致工藝打造，每一個細節都為實戰而生</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {/* 左側：3D X-RAY 實圖 */}
+        <div className="flex flex-col items-center gap-8">
+          {/* 上方：3D X-RAY 實圖放大展示 */}
           <div 
-            className={`relative transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`w-full max-w-4xl transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
-            <div className="h-full flex items-center">
-              <img 
-                src="/spec-xray.png" 
-                alt="RE:BOX 機身 3D 分解透視圖" 
-                className="w-full h-auto rounded-xl"
-                style={{
-                  boxShadow: '0 0 50px rgba(57, 255, 20, 0.15), 0 0 100px rgba(57, 255, 20, 0.05)',
-                }}
-              />
-            </div>
+            <img 
+              src="/spec-xray.png" 
+              alt="RE:BOX 機身 3D 分解透視圖" 
+              className="w-full h-auto rounded-xl"
+              style={{
+                boxShadow: '0 0 50px rgba(57, 255, 20, 0.15), 0 0 100px rgba(57, 255, 20, 0.05)',
+              }}
+            />
           </div>
 
-          {/* 右側：硬體規格表 */}
+          {/* 下方：硬體規格表 - 四欄佈局 */}
           <div 
-            className={`transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`w-full max-w-4xl transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
             <div 
-              className="h-full rounded-2xl p-6 md:p-8"
+              className="rounded-2xl p-6 md:p-8"
               style={{
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -530,17 +528,19 @@ function SpecSection() {
                 硬體規格
               </h3>
               
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {specs.map((spec) => (
                   <div 
                     key={spec.label}
-                    className="flex items-start justify-between py-3 border-b border-white/5 last:border-0"
+                    className="rounded-xl p-4"
+                    style={{
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}
                   >
-                    <div>
-                      <p className="text-white/60 text-sm">{spec.label}</p>
-                      <p className="text-white/40 text-xs mt-0.5">{spec.desc}</p>
-                    </div>
-                    <p className="text-white font-bold text-base text-right">{spec.value}</p>
+                    <p className="text-white/50 text-xs mb-1">{spec.label}</p>
+                    <p className="text-white font-bold text-base mb-1">{spec.value}</p>
+                    <p className="text-white/30 text-xs">{spec.desc}</p>
                   </div>
                 ))}
               </div>

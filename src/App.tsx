@@ -503,7 +503,7 @@ function SpecSection() {
           >
             <div className="h-full flex items-center">
               <img 
-                src="/src/assets/spec-xray.png" 
+                src="/spec-xray.png" 
                 alt="RE:BOX 機身 3D 分解透視圖" 
                 className="w-full h-auto rounded-xl"
                 style={{

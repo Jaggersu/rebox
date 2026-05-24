@@ -834,49 +834,98 @@ function ContactSection() {
           <p className="text-lg text-white/50">有任何問題或合作意向，歡迎與我們聯繫</p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {/* 左側：聯繫資訊 (2欄) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          {/* 左側：科技感聯絡渠道 */}
           <div 
-            className={`lg:col-span-2 space-y-4 transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`space-y-4 transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
-            <GlassCard>
-              <div className="p-5 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center shrink-0">
-                  <span className="text-2xl">📧</span>
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white mb-1">電子郵件</h3>
-                  <p className="text-white/50 text-sm">hello@rebox.tw</p>
+            {/* Email 卡片 - 可點擊 */}
+            <a 
+              href="mailto:hello@rebox.tw"
+              className="block group"
+            >
+              <div 
+                className="rounded-2xl p-5 transition-all duration-300 group-hover:border-[#39FF14]/50"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(10px)',
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(57,255,20,0.3)]"
+                    style={{ background: 'rgba(57,255,20,0.15)' }}
+                  >
+                    <svg className="w-7 h-7 text-[#39FF14]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-bold text-white">商務電子郵件</h3>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-[#39FF14]/20 text-[#39FF14]">推薦</span>
+                    </div>
+                    <p className="text-[#39FF14] text-sm font-mono mt-1">hello@rebox.tw</p>
+                    <p className="text-white/40 text-xs mt-1">點擊直接發送郵件 →</p>
+                  </div>
                 </div>
               </div>
-            </GlassCard>
-            <GlassCard>
-              <div className="p-5 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center shrink-0">
-                  <span className="text-2xl">📱</span>
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white mb-1">電話</h3>
-                  <p className="text-white/50 text-sm">+886 2-1234-5678</p>
+            </a>
+
+            {/* Telegram 卡片 - 可點擊 */}
+            <a 
+              href="https://t.me/rebox_official"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block group"
+            >
+              <div 
+                className="rounded-2xl p-5 transition-all duration-300 group-hover:border-[#39FF14]/50"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(10px)',
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(57,255,20,0.3)]"
+                    style={{ background: 'rgba(57,255,20,0.15)' }}
+                  >
+                    <svg className="w-7 h-7 text-[#39FF14]" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-bold text-white">Telegram 官方頻道</h3>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-[#39FF14]/20 text-[#39FF14]">即時</span>
+                    </div>
+                    <p className="text-[#39FF14] text-sm font-mono mt-1">@rebox_official</p>
+                    <p className="text-white/40 text-xs mt-1">點擊開啟 Telegram →</p>
+                  </div>
                 </div>
               </div>
-            </GlassCard>
-            <GlassCard>
-              <div className="p-5 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center shrink-0">
-                  <span className="text-2xl">📍</span>
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white mb-1">地址</h3>
-                  <p className="text-white/50 text-sm">台北市信義區松高路1號</p>
-                </div>
-              </div>
-            </GlassCard>
+            </a>
+
+            {/* 快速響應承諾 */}
+            <div 
+              className="rounded-2xl p-4 text-center"
+              style={{
+                background: 'linear-gradient(135deg, rgba(57,255,20,0.05) 0%, rgba(20,20,20,0.3) 100%)',
+                border: '1px solid rgba(57,255,20,0.15)',
+              }}
+            >
+              <p className="text-white/60 text-sm">
+                <span className="text-[#39FF14]">⚡</span> 工作日 24 小時內響應
+              </p>
+            </div>
           </div>
 
-          {/* 右側：B2B 商務諮詢表單 (3欄) */}
+          {/* 右側：B2B 商務諮詢表單 */}
           <div 
-            className={`lg:col-span-3 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
             <div 
               className="rounded-2xl p-6 md:p-8 h-full"

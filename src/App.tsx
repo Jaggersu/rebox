@@ -22,7 +22,7 @@ function Navbar({ active, setActive }: { active: string, setActive: (tab: string
       <div className="flex gap-1 bg-gray-800 rounded-lg p-1">
         {NAV_TABS.map(t => (
           <button key={t} onClick={() => setActive(t)}
-            className={`px-4 py-2 rounded-md text-sm transition-all ${
+            className={`px-4 py-2 rounded-md text-base transition-all ${
               active === t 
                 ? "font-bold text-gray-900" 
                 : "font-medium text-gray-400"
@@ -54,10 +54,10 @@ function CardHead({ icon, title, sub, accent = C.cyberGreen, badge }: { icon: st
       <span className="text-lg leading-none mt-0.5">{icon}</span>
       <div className="flex-1">
         <div className="flex items-center gap-2">
-          <span className="text-white font-bold text-sm">{title}</span>
-          {badge && <span className="text-xs px-2 py-0.5 rounded-full font-semibold" style={{ background: `${accent}22`, color: accent }}>{badge}</span>}
+          <span className="text-white font-bold text-base">{title}</span>
+          {badge && <span className="text-tag-sm px-2 py-0.5 rounded-full font-semibold" style={{ background: `${accent}22`, color: accent }}>{badge}</span>}
         </div>
-        {sub && <div className="text-gray-500 text-xs mt-0.5">{sub}</div>}
+        {sub && <div className="text-gray-500 text-tag-sm mt-0.5">{sub}</div>}
       </div>
       <span className="w-2 h-2 rounded-full mt-1 flex-shrink-0 animate-pulse" style={{ background: accent }} />
     </div>
@@ -67,9 +67,9 @@ function CardHead({ icon, title, sub, accent = C.cyberGreen, badge }: { icon: st
 function Kpi({ label, val, sub, col }: { label: string, val: string, sub?: string, col?: string }) {
   return (
     <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
-      <div className="text-gray-500 text-xs mb-1">{label}</div>
-      <div className="font-black text-lg leading-tight" style={{ color: col || C.cyberGreen }}>{val}</div>
-      {sub && <div className="text-gray-600 text-xs mt-1">{sub}</div>}
+      <div className="text-gray-500 text-tag-sm mb-1">{label}</div>
+      <div className="font-black text-xl leading-tight" style={{ color: col || C.cyberGreen }}>{val}</div>
+      {sub && <div className="text-gray-600 text-tag-sm mt-1">{sub}</div>}
     </div>
   );
 }
@@ -77,10 +77,10 @@ function Kpi({ label, val, sub, col }: { label: string, val: string, sub?: strin
 function Row({ label, val, note, highlight }: { label: string, val: string, note?: string, highlight?: boolean }) {
   return (
     <div className="flex justify-between items-center py-2.5 border-b border-gray-800/50">
-      <span className={`text-sm ${highlight ? `font-bold text-[${C.cyberGreen}]` : 'text-gray-400'}`}>{label}</span>
+      <span className={`text-base ${highlight ? `font-bold text-[${C.cyberGreen}]` : 'text-gray-400'}`}>{label}</span>
       <div className="text-right">
-        <span className={`text-sm ${highlight ? `font-bold text-[${C.cyberGreen}]` : 'text-gray-200 font-medium'}`}>{val}</span>
-        {note && <div className="text-gray-600 text-xs">{note}</div>}
+        <span className={`text-base ${highlight ? `font-bold text-[${C.cyberGreen}]` : 'text-gray-200 font-medium'}`}>{val}</span>
+        {note && <div className="text-gray-600 text-tag-sm">{note}</div>}
       </div>
     </div>
   );
@@ -102,14 +102,14 @@ function MiniBar({ pct, warn, inv }: { pct: number, warn?: boolean, inv?: boolea
       <div className="w-14 h-1.5 bg-gray-700 rounded-full overflow-hidden">
         <div className="h-full rounded-full" style={{ width: `${effective}%`, background: col }} />
       </div>
-      <span className="text-xs font-mono font-bold" style={{ color: col }}>{pct}%</span>
+      <span className="text-tag-sm font-mono font-bold" style={{ color: col }}>{pct}%</span>
     </div>
   );
 }
 
 function WarnTag({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 text-xs font-bold">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 text-tag-sm font-bold">
       ⚠ {label}
     </span>
   );
@@ -117,7 +117,7 @@ function WarnTag({ label }: { label: string }) {
 
 function GreenTag({ label }: { label: string }) {
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold`} style={{ background: `${C.cyberGreen}22`, color: C.cyberGreen }}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-tag-sm font-bold`} style={{ background: `${C.cyberGreen}22`, color: C.cyberGreen }}>
       ✓ {label}
     </span>
   );
@@ -146,18 +146,18 @@ function Block1_ROI() {
 
         <div className="mb-3">
           <div className="flex justify-between mb-1.5">
-            <span className="text-gray-400 text-xs font-semibold">回本進度目標 (目前第 {currentMonth} 個月)</span>
-            <span className="text-xs font-bold" style={{ color:C.shopeeOrange }}>進度 {pct}%</span>
+            <span className="text-gray-400 text-tag-sm font-semibold">回本進度目標 (目前第 {currentMonth} 個月)</span>
+            <span className="text-tag-sm font-bold" style={{ color:C.shopeeOrange }}>進度 {pct}%</span>
           </div>
           <ProgressBar pct={pct} />
           <div className="flex justify-between mt-1.5">
-            <span className="text-gray-600 text-xs">▲ 啟動</span>
-            <span className="text-gray-600 text-xs">目標：第 {targetLow}–{targetHigh} 個月回本</span>
+            <span className="text-gray-600 text-tag-sm">▲ 啟動</span>
+            <span className="text-gray-600 text-tag-sm">目標：第 {targetLow}–{targetHigh} 個月回本</span>
           </div>
         </div>
 
         <div className="bg-slate-900 rounded-lg p-3 mb-2">
-          <div className="text-gray-500 text-xs font-bold mb-2 tracking-widest">▸ CAPEX 細項拆解（估算）</div>
+          <div className="text-gray-500 text-tag-sm font-bold mb-2 tracking-widest">▸ CAPEX 細項拆解（估算）</div>
           {[
             ["機台硬體・改裝工程 (×10)", "NT$ 40–60 萬"],
             ["金流模組・IoT 網卡・SIM", "NT$  8–12 萬"],
@@ -167,7 +167,7 @@ function Block1_ROI() {
           ].map(([l, v]) => <Row key={l} label={l} val={v} />)}
         </div>
 
-        <div className="rounded-lg p-3 text-xs leading-relaxed" style={{ background:`${C.cyberGreen}0d`, color: C.cyberGreen }}>
+        <div className="rounded-lg p-3 text-tag-sm leading-relaxed" style={{ background:`${C.cyberGreen}0d`, color: C.cyberGreen }}>
           ✦ 核心談判策略：以「免費紙箱清運服務」換取門市場地零租金，將 OpEx 最大固定成本歸零，讓淨利率結構性提升。
         </div>
       </div>
@@ -181,14 +181,14 @@ function Block2_PnL() {
       <CardHead icon="💰" title="單機單月損益模型 (P&L)" sub="以單台機器・桃園區均值計算" accent={C.shopeeOrange} />
       <div className="p-4">
         <div className="bg-slate-900 rounded-lg p-3 mb-3">
-          <div className="text-xs font-bold mb-2 tracking-widest" style={{ color:C.cyberGreen }}>▸ 營收來源</div>
+          <div className="text-tag-sm font-bold mb-2 tracking-widest" style={{ color:C.cyberGreen }}>▸ 營收來源</div>
           <Row label="① 包材零售（破壞袋、膠帶）" val="≈ NT$ 8,000" note="毛利率 60%・高頻剛需" />
           <Row label="② 廢紙秤重・回收場變現"     val="≈ NT$ 2,500" note="純利 100%・無成本收入" />
           <Row label="③ 合計月營收估算"           val="≈ NT$ 10,500" highlight />
         </div>
 
         <div className="bg-slate-900 rounded-lg p-3 mb-3">
-          <div className="text-xs font-bold mb-2 tracking-widest" style={{ color:C.shopeeOrange }}>▸ 營運成本 (OpEx)</div>
+          <div className="text-tag-sm font-bold mb-2 tracking-widest" style={{ color:C.shopeeOrange }}>▸ 營運成本 (OpEx)</div>
           <Row label="🚐 動態物流 (iRent Town Ace 短租)" val="≈ NT$ 400–600" note="按需派車・拒絕長租買車" />
           <Row label="💳 金流手續費 (2–3%)"             val="≈ NT$ 210–315" note="視交易量浮動" />
           <Row label="📡 IoT 網卡 SIM 費"               val="≈ NT$ 150"     note="固定月費・遠端監控" />
@@ -199,19 +199,19 @@ function Block2_PnL() {
         </div>
 
         <div className="rounded-lg p-3" style={{ background:`${C.cyberGreen}12`, border:`1px solid ${C.cyberGreen}33` }}>
-          <div className="text-xs font-bold mb-2 tracking-widest" style={{ color:C.cyberGreen }}>▸ 單機淨利</div>
+          <div className="text-tag-sm font-bold mb-2 tracking-widest" style={{ color:C.cyberGreen }}>▸ 單機淨利</div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">單台月淨利預估</span>
+            <span className="text-gray-400 text-base">單台月淨利預估</span>
             <span className="text-xl font-black" style={{ color:C.cyberGreen }}>NT$ 9,500 – 10,000</span>
           </div>
           <div className="flex justify-between items-center mt-1.5">
-            <span className="text-gray-500 text-xs">10 台合計月淨利</span>
+            <span className="text-gray-500 text-tag-sm">10 台合計月淨利</span>
             <span className="text-base font-bold" style={{ color:C.warmWhite }}>≈ NT$ 100,000 / 月</span>
           </div>
           <div className="mt-2.5">
             <div className="flex justify-between mb-1">
-              <span className="text-gray-500 text-xs">淨利率估算</span>
-              <span className="text-xs font-bold" style={{ color:C.cyberGreen }}>~90%</span>
+              <span className="text-gray-500 text-tag-sm">淨利率估算</span>
+              <span className="text-tag-sm font-bold" style={{ color:C.cyberGreen }}>~90%</span>
             </div>
             <ProgressBar pct={90} from={C.cyberGreen} to={C.cyberGreen} />
           </div>
@@ -267,15 +267,15 @@ function Block3_SOP() {
             <div className="p-3 flex items-center gap-2.5 border-b border-gray-800" style={{ background:`${r.color}18`}}>
               <span className="text-base">{r.icon}</span>
               <div>
-                <span className="font-bold text-sm" style={{ color:r.color }}>{r.role}</span>
-                <span className="text-gray-500 text-xs ml-2">{r.duty}</span>
+                <span className="font-bold text-base" style={{ color:r.color }}>{r.role}</span>
+                <span className="text-gray-500 text-tag-sm ml-2">{r.duty}</span>
               </div>
             </div>
             <div className="p-3 flex flex-col gap-2">
               {r.sops.map(s => (
                 <div key={s.tag} className="flex gap-2 items-start">
-                  <span className="text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap mt-px flex-shrink-0" style={{ background:`${r.color}22`, color:r.color }}>{s.tag}</span>
-                  <span className="text-gray-400 text-xs leading-relaxed">{s.text}</span>
+                  <span className="text-tag-sm px-2 py-0.5 rounded-full font-bold whitespace-nowrap mt-px flex-shrink-0" style={{ background:`${r.color}22`, color:r.color }}>{s.tag}</span>
+                  <span className="text-gray-400 text-tag-sm leading-relaxed">{s.text}</span>
                 </div>
               ))}
             </div>
@@ -283,16 +283,16 @@ function Block3_SOP() {
         ))}
 
         <div className="bg-slate-900 rounded-xl p-3">
-          <div className="text-gray-500 text-xs font-bold mb-2 tracking-widest">▸ 方案架構對比</div>
+          <div className="text-gray-500 text-tag-sm font-bold mb-2 tracking-widest">▸ 方案架構對比</div>
           <div className="grid grid-cols-2 gap-2">
             {[
               { label:"方案 A 一條龍標配", items:["設備・補貨・清運全包", "換取：零場地租金", "適合快速展點"], col:C.cyberGreen },
               { label:"方案 B ESG 逆物流", items:["蝦皮車順載廢紙板", "換取：ESG 數據報告", "適合總部 CSR 需求"], col:C.shopeeOrange },
             ].map(p => (
               <div key={p.label} className="bg-gray-800 rounded-lg p-3 border" style={{ borderColor: `${p.col}33` }}>
-                <div className="text-xs font-bold mb-1.5" style={{ color:p.col }}>{p.label}</div>
+                <div className="text-tag-sm font-bold mb-1.5" style={{ color:p.col }}>{p.label}</div>
                 {p.items.map(it => (
-                  <div key={it} className="text-gray-400 text-xs leading-loose">· {it}</div>
+                  <div key={it} className="text-gray-400 text-tag-sm leading-loose">· {it}</div>
                 ))}
               </div>
             ))}
@@ -324,18 +324,18 @@ function Block4_Monitor() {
             { label:"設備離線", count:1, col:"#6b7280" },
             { label:"正常運行", count:2, col:C.cyberGreen },
           ].map(a => (
-            <span key={a.label} className="text-xs px-2.5 py-1 rounded-full font-bold" style={{ background:a.col+"22", color:a.col }}>
+            <span key={a.label} className="text-tag-sm px-2.5 py-1 rounded-full font-bold" style={{ background:a.col+"22", color:a.col }}>
               {a.label} ×{a.count}
             </span>
           ))}
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-xs">
+          <table className="w-full border-collapse text-tag-sm">
             <thead>
               <tr>
                 {["站點", "狀態", "破壞袋庫存", "膠帶庫存", "昨日營收", "回收槽滿載"].map(h => (
-                  <th key={h} className={`text-gray-500 font-semibold text-xs p-2 border-b border-gray-700 whitespace-nowrap ${h==="昨日營收" ? "text-right" : "text-left"}`}>{h}</th>
+                  <th key={h} className={`text-gray-500 font-semibold text-tag-sm p-2 border-b border-gray-700 whitespace-nowrap ${h==="昨日營收" ? "text-right" : "text-left"}`}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -347,15 +347,15 @@ function Block4_Monitor() {
                 return (
                   <tr key={s.id} className={`border-b border-gray-800/60 ${i%2===0 ? "" : "bg-slate-900/50"}`}>
                     <td className="p-2 whitespace-nowrap">
-                      <div className="text-white font-semibold text-xs">{s.id}</div>
-                      <div className="text-gray-500 text-xs">{s.name}</div>
+                      <div className="text-white font-semibold text-tag-sm">{s.id}</div>
+                      <div className="text-gray-500 text-tag-sm">{s.name}</div>
                     </td>
                     <td className="p-2">
                       {s.online
-                        ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold" style={{ background:`${C.cyberGreen}22`, color:C.cyberGreen }}>
+                        ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-tag-sm font-bold" style={{ background:`${C.cyberGreen}22`, color:C.cyberGreen }}>
                             <span className="w-1.5 h-1.5 rounded-full" style={{ background:C.cyberGreen }} />連線
                           </span>
-                        : <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400 text-xs font-bold">
+                        : <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400 text-tag-sm font-bold">
                             <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />離線
                           </span>
                       }
@@ -366,7 +366,7 @@ function Block4_Monitor() {
                             <MiniBar pct={s.bag} warn={bagWarn} />
                             {bagWarn && <WarnTag label="低庫存" />}
                           </div>
-                        : <span className="text-gray-700 text-xs">—</span>
+                        : <span className="text-gray-700 text-tag-sm">—</span>
                       }
                     </td>
                     <td className="p-2">
@@ -375,7 +375,7 @@ function Block4_Monitor() {
                             <MiniBar pct={s.tape} warn={tapeWarn} />
                             {tapeWarn && <WarnTag label="低庫存" />}
                           </div>
-                        : <span className="text-gray-700 text-xs">—</span>
+                        : <span className="text-gray-700 text-tag-sm">—</span>
                       }
                     </td>
                     <td className="p-2 text-right">
@@ -390,7 +390,7 @@ function Block4_Monitor() {
                             {fullWarn && <WarnTag label="即將滿載" />}
                             {!fullWarn && s.full < 80 && <GreenTag label="正常" />}
                           </div>
-                        : <span className="text-gray-700 text-xs">—</span>
+                        : <span className="text-gray-700 text-tag-sm">—</span>
                       }
                     </td>
                   </tr>
@@ -401,9 +401,9 @@ function Block4_Monitor() {
         </div>
 
         <div className="mt-3 p-3 bg-slate-900 rounded-lg flex flex-wrap gap-x-4 gap-y-2">
-          <span className="text-gray-500 text-xs font-bold">視覺防呆規則：</span>
-          <span className="text-red-400 text-xs">⚠ 庫存 &lt;20% → 紅色警示・派車補貨</span>
-          <span className="text-red-400 text-xs">⚠ 滿載 &gt;80% → 紅色警示・派車清運</span>
+          <span className="text-gray-500 text-tag-sm font-bold">視覺防呆規則：</span>
+          <span className="text-red-400 text-tag-sm">⚠ 庫存 &lt;20% → 紅色警示・派車補貨</span>
+          <span className="text-red-400 text-tag-sm">⚠ 滿載 &gt;80% → 紅色警示・派車清運</span>
         </div>
       </div>
     </Card>
@@ -422,15 +422,15 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
       <div className="bg-gray-950 border-b border-gray-800 h-[88px] px-6 flex items-center justify-between flex-wrap gap-y-2">
         <div className="flex items-center gap-3">
-          <span className="text-gray-700 text-sm">/ 內部管理系統</span>
-          <span className="text-xs px-2 py-0.5 rounded-full font-bold border" style={{ background:`${C.cyberGreen}18`, color:C.cyberGreen, borderColor:`${C.cyberGreen}33` }}>
+          <span className="text-gray-700 text-base">/ 內部管理系統</span>
+          <span className="text-tag-sm px-2 py-0.5 rounded-full font-bold border" style={{ background:`${C.cyberGreen}18`, color:C.cyberGreen, borderColor:`${C.cyberGreen}33` }}>
             MVP 第 1 個月
           </span>
         </div>
         <div className="flex items-center gap-2.5">
-          <span className="text-gray-600 text-xs">模擬數據 · {ts}</span>
+          <span className="text-gray-600 text-tag-sm">模擬數據 · {ts}</span>
           <button onClick={onLogout}
-            className="text-xs text-gray-500 border border-gray-700 bg-transparent rounded-lg px-3 py-1.5 hover:border-gray-500 transition">
+            className="text-tag-sm text-gray-500 border border-gray-700 bg-transparent rounded-lg px-3 py-1.5 hover:border-gray-500 transition">
             登出
           </button>
         </div>
@@ -445,9 +445,9 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
             { label:"預估月回本",    val:"7–9 個月",     sub:"目標 8–10 個月",     col:C.shopeeOrange},
           ].map(k => (
             <div key={k.label} className="bg-gray-900 rounded-xl p-4 border border-gray-800">
-              <div className="text-gray-500 text-xs mb-1">{k.label}</div>
-              <div className="font-black text-lg leading-tight" style={{ color:k.col }}>{k.val}</div>
-              <div className="text-gray-600 text-xs mt-1">{k.sub}</div>
+              <div className="text-gray-500 text-tag-sm mb-1">{k.label}</div>
+              <div className="font-black text-xl leading-tight" style={{ color:k.col }}>{k.val}</div>
+              <div className="text-gray-600 text-tag-sm mt-1">{k.sub}</div>
             </div>
           ))}
         </div>
@@ -463,7 +463,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
         <div className="mt-4 rounded-xl p-4 flex gap-2 items-start" style={{ border:"1px solid #92400e44", background:"#78350f0d" }}>
           <span className="text-amber-400 text-base flex-shrink-0">⚠️</span>
-          <p className="text-gray-500 text-xs leading-relaxed m-0">
+          <p className="text-gray-500 text-tag-sm leading-relaxed m-0">
             本儀表板目前為<span className="font-bold text-amber-300">靜態 UI 原型展示</span>，所有數據均為模擬值。後續將移轉至 Windsurf 串接 Supabase Auth，實現正式 Google 身分驗證、IoT 即時數據串流，與 10 台 MVP 測試機之真實營運儀表板。
           </p>
         </div>
@@ -497,29 +497,29 @@ function AdminPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-7">
           <img src="/logo.png" alt="RE:BOX Logo" className="h-12 mx-auto" />
-          <p className="text-gray-500 text-sm mt-2">內部管理系統</p>
+          <p className="text-gray-500 text-base mt-2">內部管理系統</p>
         </div>
 
         <div className="bg-gray-900 rounded-2xl border border-gray-800 p-8">
           <h2 className="text-white font-bold text-xl m-0 mb-1">歡迎回來</h2>
-          <p className="text-gray-500 text-sm m-0 mb-6">登入以存取 RE:BOX 營運後台</p>
+          <p className="text-gray-500 text-base m-0 mb-6">登入以存取 RE:BOX 營運後台</p>
 
           <div className="mb-4">
-            <label className="block text-gray-400 text-xs font-bold mb-1.5 tracking-widest">電子郵件</label>
+            <label className="block text-gray-400 text-tag-sm font-bold mb-1.5 tracking-widest">電子郵件</label>
             <input type="email" placeholder="admin@rebox.tw"
-              className="w-full bg-gray-800 border border-gray-700 text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-cyber-green transition"
+              className="w-full bg-gray-800 border border-gray-700 text-white rounded-xl px-4 py-3 text-base outline-none focus:border-cyber-green transition"
               style={{ '--cyber-green': C.cyberGreen } as React.CSSProperties} />
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-400 text-xs font-bold mb-1.5 tracking-widest">密碼</label>
+            <label className="block text-gray-400 text-tag-sm font-bold mb-1.5 tracking-widest">密碼</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••"
-              className="w-full bg-gray-800 border border-gray-700 text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-cyber-green transition"
+              className="w-full bg-gray-800 border border-gray-700 text-white rounded-xl px-4 py-3 text-base outline-none focus:border-cyber-green transition"
               style={{ '--cyber-green': C.cyberGreen } as React.CSSProperties}/>
           </div>
 
           <button onClick={handleLogin} disabled={loading}
-            className="w-full text-gray-900 font-bold border-none rounded-xl p-3 text-sm cursor-pointer mb-2.5 disabled:opacity-70"
+            className="w-full text-gray-900 font-bold border-none rounded-xl p-3 text-base cursor-pointer mb-2.5 disabled:opacity-70"
             style={{ background:C.cyberGreen }}>
             {loading ? (
               <span className="flex items-center justify-center gap-2 text-gray-900">
@@ -534,12 +534,12 @@ function AdminPage() {
 
           <div className="flex items-center gap-2.5 my-3.5">
             <div className="flex-1 h-px bg-gray-800" />
-            <span className="text-gray-600 text-xs">或</span>
+            <span className="text-gray-600 text-tag-sm">或</span>
             <div className="flex-1 h-px bg-gray-800" />
           </div>
 
           <button onClick={handleGoogle} disabled={loading}
-            className="w-full bg-white text-gray-800 font-semibold border-none rounded-xl p-3 text-sm cursor-pointer flex items-center justify-center gap-2.5 disabled:opacity-70">
+            className="w-full bg-white text-gray-800 font-semibold border-none rounded-xl p-3 text-base cursor-pointer flex items-center justify-center gap-2.5 disabled:opacity-70">
             {loading ? (
               <span className="flex items-center gap-2 text-gray-500">
                 <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -563,8 +563,8 @@ function AdminPage() {
         </div>
 
         <div className="mt-4 rounded-xl p-3 flex gap-2 items-start" style={{ border:"1px solid #78350f55", background:"#78350f0d" }}>
-          <span className="text-amber-400 text-sm flex-shrink-0">⚠️</span>
-          <p className="text-gray-500 text-xs leading-relaxed m-0">
+          <span className="text-amber-400 text-base flex-shrink-0">⚠️</span>
+          <p className="text-gray-500 text-tag-sm leading-relaxed m-0">
             本區塊目前為<span className="font-bold text-amber-300">靜態 UI 原型展示</span>。後續將移轉至 Windsurf 串接 Supabase Auth，實現正式 Google 身分驗證與 10 台 MVP 測試機之真實數據儀表板。
           </p>
         </div>
@@ -582,14 +582,14 @@ function HeroSection() {
       <div className="max-w-4xl mx-auto w-full">
         <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5" style={{ border:`1px solid ${C.cyberGreen}40`, background:`${C.cyberGreen}0d` }}>
           <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background:C.cyberGreen }} />
-          <span className="text-sm font-medium" style={{ color:C.cyberGreen }}>ESG × 單向純回收 × 無人智取站</span>
+          <span className="text-base font-medium" style={{ color:C.cyberGreen }}>ESG × 單向純回收 × 無人智取站</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-black text-white leading-tight mb-3.5">
+        <h1 className="text-h1-mobile md:text-h1-desktop font-black text-white leading-tight mb-3.5">
           RE:BOX 智能循環機<br />
           <span style={{ color:C.cyberGreen }}>啟動無人店的綠色微循環</span>
         </h1>
-        <p className="text-gray-400 text-lg max-w-lg mb-2.5">零髒亂、真回收，為智取店量身打造的 ESG 智能寄取站。</p>
-        <p className="text-sm mb-12" style={{ color:`${C.warmWhite}66` }}>2700K 暖白光 LED 照明 · 內凹防呆工作台 · 單向純回收機制</p>
+        <p className="text-gray-400 text-base max-w-lg mb-2.5">零髒亂、真回收，為智取店量身打造的 ESG 智能寄取站。</p>
+        <p className="text-base mb-12" style={{ color:`${C.warmWhite}66` }}>2700K 暖白光 LED 照明 · 內凹防呆工作台 · 單向純回收機制</p>
         <div className="w-full aspect-video rounded-2xl bg-black border border-gray-800 relative">
           <img src="/hero.png" alt="RE:BOX AI 透視效果圖" className="absolute inset-0 w-full h-full object-cover rounded-2xl" />
           
@@ -621,8 +621,8 @@ function PainSolutionSection() {
     <section className="py-20 px-12 bg-gray-900">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-white font-black text-3xl mb-2">痛點與解法對比</h2>
-          <p className="text-gray-500 text-base">現況問題一次解決，從源頭重新設計循環邏輯。</p>
+        <h2 className="text-h2-mobile md:text-h2-desktop font-black text-white mb-2">痛點與解法對比</h2>
+        <p className="text-gray-500 text-base">現況問題一次解決，從源頭重新設計循環邏輯。</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
@@ -632,14 +632,14 @@ function PainSolutionSection() {
             <div key={col.label} className="bg-gray-950 rounded-2xl p-6" style={{ border:`1px solid ${col.accentCol}33` }}>
               <div className="flex items-center gap-2.5 mb-5">
                 <span className="w-1.5 h-8 rounded-full block" style={{ background:col.accentCol }} />
-                <h3 className="font-bold text-lg" style={{ color:col.labelCol }}>{col.label}</h3>
+                <h3 className="font-bold text-h3-mobile md:text-h3-desktop" style={{ color:col.labelCol }}>{col.label}</h3>
               </div>
               {col.items.map(it => (
                 <div key={it.title} className="flex gap-3.5 items-start mb-4 last:mb-0">
                   <span className="text-2xl">{it.icon}</span>
                   <div>
-                    <div className="font-semibold text-sm mb-1" style={{ color:col.labelCol }}>{it.title}</div>
-                    <div className="text-gray-400 text-sm leading-relaxed">{it.desc}</div>
+                    <div className="font-semibold text-base mb-1" style={{ color:col.labelCol }}>{it.title}</div>
+                    <div className="text-gray-400 text-base leading-relaxed">{it.desc}</div>
                   </div>
                 </div>
               ))}
@@ -662,8 +662,8 @@ function FeaturesSection() {
     <section className="py-20 px-12 bg-gray-950">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-white font-black text-3xl mb-2">硬體與防呆亮點</h2>
-          <p className="text-gray-500 text-base">每一個設計細節，都是為了讓站點零客訴、零管理成本。</p>
+        <h2 className="text-h2-mobile md:text-h2-desktop font-black text-white mb-2">硬體與防呆亮點</h2>
+        <p className="text-gray-500 text-base">每一個設計細節，都是為了讓站點零客訴、零管理成本。</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {FEATURES.map(f => (
@@ -673,10 +673,10 @@ function FeaturesSection() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
                 </svg>
               </div>
-              <span className="text-xs font-bold tracking-widest" style={{ color:C.cyberGreen }}>{f.tag}</span>
-              <h3 className="text-white font-bold text-base my-1">{f.title}</h3>
-              <p className="text-xs mb-2" style={{ color:`${C.warmWhite}55` }}>{f.sub}</p>
-              <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
+              <span className="text-tag-sm font-bold tracking-widest" style={{ color:C.cyberGreen }}>{f.tag}</span>
+              <h3 className="text-white font-bold text-h3-mobile md:text-h3-desktop my-1">{f.title}</h3>
+              <p className="text-tag-sm mb-2" style={{ color:`${C.warmWhite}55` }}>{f.sub}</p>
+              <p className="text-gray-400 text-base leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -706,8 +706,8 @@ function PartnershipSection() {
     <section className="py-20 px-12 bg-gray-900">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-white font-black text-3xl mb-2">雙贏合作方案</h2>
-          <p className="text-gray-500 text-base">一條龍標配 vs ESG 逆物流選配，靈活組合最適模式。</p>
+        <h2 className="text-h2-mobile md:text-h2-desktop font-black text-white mb-2">雙贏合作方案</h2>
+        <p className="text-gray-500 text-base">一條龍標配 vs ESG 逆物流選配，靈活組合最適模式。</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
           {plans.map(p => (
@@ -715,24 +715,24 @@ function PartnershipSection() {
               <div className="absolute top-0 right-0 w-24 h-24 rounded-bl-full" style={{ background:`${p.col}09` }} />
               <div className="flex justify-between mb-4">
                 <div>
-                  <span className="text-xs px-2.5 py-1 rounded-full font-bold" style={{ background:`${p.col}22`, color:p.col }}>{p.badge}</span>
-                  <h3 className="text-white font-black text-xl my-2">{p.title}</h3>
-                  <p className="text-gray-500 text-xs">{p.sub}</p>
+                  <span className="text-tag-sm px-2.5 py-1 rounded-full font-bold" style={{ background:`${p.col}22`, color:p.col }}>{p.badge}</span>
+                  <h3 className="text-white font-black text-h3-mobile md:text-h3-desktop my-2">{p.title}</h3>
+                  <p className="text-gray-500 text-tag-sm">{p.sub}</p>
                 </div>
                 <span className="text-3xl">{p.emoji}</span>
               </div>
               <div className="mb-4">
                 {p.items.map((it,i) => (
                   <div key={i} className="flex gap-2.5 items-start mb-2.5">
-                    <span className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold mt-px"
+                    <span className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-tag-sm font-bold mt-px"
                       style={{ background: it.hi ? p.col : "#1f2937", color: it.hi ? (p.col===C.cyberGreen?"#111":"#fff") : p.col }}>
                       {it.hi ? "✓" : "·"}
                     </span>
-                    <span className={`text-sm ${it.hi ? 'font-semibold' : 'text-gray-300'}`} style={{ color: it.hi ? p.col : undefined }}>{it.t}</span>
+                    <span className={`text-base ${it.hi ? 'font-semibold' : 'text-gray-300'}`} style={{ color: it.hi ? p.col : undefined }}>{it.t}</span>
                   </div>
                 ))}
               </div>
-              <div className="rounded-lg p-3 text-xs" style={{ background:`${p.col}12`, color:p.col }}>{p.note}</div>
+              <div className="rounded-lg p-3 text-tag-sm" style={{ background:`${p.col}12`, color:p.col }}>{p.note}</div>
             </div>
           ))}
         </div>
@@ -753,7 +753,7 @@ function ProposalPage() {
       <PainSolutionSection />
       <FeaturesSection />
       <PartnershipSection />
-      <footer className="bg-gray-950 border-t border-gray-800 p-7 text-center text-gray-600 text-sm">
+      <footer className="bg-gray-950 border-t border-gray-800 p-7 text-center text-gray-600 text-base">
         © 2025 RE:BOX 智能綠色寄取循環站 · 保留一切權利
       </footer>
     </div>

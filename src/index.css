@@ -1,6 +1,102 @@
 @import "tailwindcss";
 
+/* ════════════════════════════════════════════════
+   TYPOGRAPHY SCALE - 字級系統
+════════════════════════════════════════════════ */
+
+/* 基礎設定 */
 body {
+  font-family: "Noto Sans TC", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 18px;
+    line-height: 1.8;
+  }
+}
+
+/* 標題系統 - 確保足夠視覺衝擊力 */
+.text-h1-mobile {
+  font-size: 2rem;      /* 32px - 手機主標題 */
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+@media (min-width: 768px) {
+  .text-h1-desktop {
+    font-size: 3rem;    /* 48px - 桌面主標題 */
+    line-height: 1.1;
+    font-weight: 900;
+  }
+}
+
+.text-h2-mobile {
+  font-size: 1.5rem;    /* 24px - 手機次標題 */
+  line-height: 1.3;
+  font-weight: 900;
+}
+
+@media (min-width: 768px) {
+  .text-h2-desktop {
+    font-size: 2.25rem; /* 36px - 桌面次標題 */
+    line-height: 1.2;
+    font-weight: 900;
+  }
+}
+
+.text-h3-mobile {
+  font-size: 1.125rem;  /* 18px - 區塊標題 */
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .text-h3-desktop {
+    font-size: 1.25rem;  /* 20px - 桌面區塊標題 */
+    line-height: 1.4;
+    font-weight: 600;
+  }
+}
+
+/* 內文系統 - 確保可讀性 */
+.text-body-base {
+  font-size: 1rem;      /* 16px - 標準內文 */
+  line-height: 1.7;
+}
+
+.text-body-lg {
+  font-size: 1.125rem;  /* 18px - 強調內文 */
+  line-height: 1.6;
+}
+
+/* 標籤系統 - 最小安全字級 14px */
+.text-tag-base {
+  font-size: 0.875rem;  /* 14px - 標準標籤 */
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.text-tag-sm {
+  font-size: 0.875rem;  /* 14px - 小標籤（不低於 14px） */
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* 輔助文字 */
+.text-caption {
+  font-size: 0.875rem;  /* 14px - 說明文字 */
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+.text-meta {
+  font-size: 0.875rem;  /* 14px - 元數據 */
+  line-height: 1.4;
+  color: #9ca3af;
 }

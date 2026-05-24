@@ -896,7 +896,7 @@ function ContactSection() {
                       <h3 className="text-base font-bold text-white">Telegram 官方頻道</h3>
                       <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-[#39FF14]/20 text-[#39FF14]">即時</span>
                     </div>
-                    <p className="text-[#39FF14] text-sm font-mono mt-1">@rebox_official</p>
+                    <p className="text-[#39FF14] text-sm font-mono mt-1">@rebox99</p>
                     <p className="text-white/40 text-xs mt-1">點擊開啟 Telegram →</p>
                   </div>
                 </div>

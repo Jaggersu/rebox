@@ -94,7 +94,7 @@ export default function ViBrandSection() {
               <img 
                 src="/logo.png" 
                 alt="RE:BOX" 
-                className="h-20 md:h-28 w-auto drop-shadow-[0_0_40px_rgba(212,175,55,0.3)] group-hover:scale-105 transition-transform duration-500"
+                className="h-16 md:h-20 lg:h-28 w-auto drop-shadow-[0_0_40px_rgba(212,175,55,0.3)] group-hover:scale-105 transition-transform duration-500"
               />
             </div>
           </div>

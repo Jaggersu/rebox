@@ -35,9 +35,8 @@ function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-8 h-16 md:h-20 backdrop-blur-md bg-zinc-950/70 border-b border-white/10">
       {/* 左側：LOGO */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center">
         <img src="/logo.png" alt="RE:BOX" className="h-8 md:h-10 w-auto" />
-        <span className="hidden md:block text-white/60 text-sm font-medium">RE:BOX</span>
       </div>
 
       {/* 右側：錨點選單 + 大分頁切換 */}

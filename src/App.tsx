@@ -432,7 +432,7 @@ function PartnershipSection() {
         {/* CTA - 只保留 PDF 下載，玻璃擬態高級感 */}
         <div className="flex justify-center">
           <a 
-            href="/REBOX_Proposal.pdf" 
+            href="/REBOX.pdf" 
             download
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full font-medium text-white transition-all duration-300"
             style={{

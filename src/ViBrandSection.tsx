@@ -1,145 +1,203 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
 export default function ViBrandSection() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // 品牌色彩系統
+  const colors = [
+    {
+      name: 'Cyber Green',
+      hex: '#39FF14',
+      desc: '綠色循環的視覺指引',
+      usage: 'UI 主色・互動提示'
+    },
+    {
+      name: 'Shopee Orange',
+      hex: '#EE4D2D',
+      desc: '品牌識別的色彩連結',
+      usage: '合作象徵・品牌共鳴'
+    },
+    {
+      name: 'Warm White',
+      hex: '#FFF4E0',
+      desc: '2700K 溫潤陪伴光',
+      usage: '照明設計・溫度感知'
+    }
+  ];
+
   return (
-    <div className="relative w-full bg-[#1A1A1A] text-white font-sans">
-      
-      {/* 🟢 兩區交界處：Hero 下方與下個區塊的紅框交界線示意（做成細緻的半透明品牌橘色微光切線） */}
-      <div className="w-full h-[1px] bg-[#EE4D2D]/20 relative z-30" />
+    <div className="relative w-full bg-[#0d0d0d] text-white font-sans overflow-hidden">
+      {/* 頂部發光線條 */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#39FF14]/40 to-transparent" />
 
-      {/* 核心佈局容器 */}
-      <div className="mx-auto max-w-4xl px-4 relative z-20">
+      {/* 主要內容容器 */}
+      <div className="mx-auto max-w-5xl px-6 py-16 md:py-24">
         
-        {/* 📦 VI 匣子本體：
-          1. 未展開時：收納縮窄為 max-w-2xl，高度鎖死在 110px，只讓頂部的 Logo「露點頭」出來。
-          2. 展開時：平滑擴展寬度為 max-w-4xl，高度完全往下抽開 (max-h-[1500px])。
-        */}
-        <div 
-          className={`mx-auto bg-[#2B2B2B] rounded-t-xl border-t border-x border-white/10 shadow-2xl transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) overflow-hidden relative
-            ${isOpen ? 'max-w-4xl mt-6' : 'max-w-2xl mt-0'}`}
-          style={{ 
-            // 透過變動 max-height 來達成極具物理拉伸感的「往下抽開信件」特效
-            maxHeight: isOpen ? '1500px' : '90px'
-          }}
-        >
-          {/* 匣子未展開時的底部漸層遮罩：
-            當區塊藏在匣裡時，底部有一層平滑的黑色漸層，讓文案隱約露出，創造「藏鞘」的精緻層次。
-          */}
-          {!isOpen && (
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#2B2B2B] via-[#2B2B2B]/80 to-transparent z-10 pointer-events-none" />
-          )}
+        {/* 區塊標題 */}
+        <div className="text-center mb-12 md:mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#39FF14]/10 text-[#39FF14] text-sm font-medium mb-4">
+            Brand Identity
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 tracking-tight">
+            品牌識別系統
+          </h2>
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            以科技感為基底，創造溫暖而有記憶點的視覺體驗
+          </p>
+        </div>
 
-          {/* 露頭區塊：無論開合都固定置頂，展示完美雙正圓發光 Logo */}
-          <div className="p-6 pb-2 flex flex-col items-center justify-center bg-[#2B2B2B]">
-            
-            {/* 純血 Logo：替換為實體圖片，並保留一點發光質感 */}
-            <img 
-              src="/logo.png" 
-              alt="RE:BOX Logo" 
-              className="h-10 drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] select-none" 
-            />
-            
-            {/* 稍微露出的引言頭部（客戶路過時會看到這一行溫暖導引） */}
-             <p className="text-base text-gray-400 mt-5 text-center max-w-md font-normal tracking-wide opacity-80">
-               運用科技與體貼的設計細節，為門市空間提供優雅的綠色延伸
-             </p>
-          </div>
-
-          {/* 📬 匣子內藏的完整信件內容：點擊按鈕後才會順暢現形 */}
-          <div className="px-8 pb-10 pt-4 space-y-8 text-gray-300 font-light tracking-wide text-base border-t border-white/5">
-            
-            {/* 核心理念 */}
-             <div className="border-l-2 border-[#39FF14] pl-4 py-1.5 bg-white/5 rounded-r">
-               <span className="font-medium text-white block mb-1 text-h3-mobile">品牌核心理念</span>
-               <p className="text-base leading-1.7 text-gray-300 font-normal">
-                 RE:BOX 以溫和低調的消光深灰為基底，融合高對比的品牌發光線條，完美契合現代無人智取店的科技感，共同打造更友善、潔淨的互動體驗。
-               </p>
-             </div>
-
-            {/* 區塊 1 */}
-            <div className="space-y-3">
-              <h4 className="text-white font-medium flex items-center gap-2 text-h3-mobile">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#EE4D2D]" />
-                1. 品牌標準字體與「溫暖冒號」
-              </h4>
-              <div className="pl-3 space-y-2 text-gray-400 leading-1.7 text-base">
-                <p className="font-normal">
-                  <strong className="text-white">● 字體外型：幾何無襯線粗體</strong> —— 
-                  筆劃厚實飽滿、結構均衡。這份札實的線條，能與實體機身的金屬工藝完美呼應，在視覺上給人安心、穩固且值得信賴的直覺感受。
-                </p>
-                <p className="font-normal">
-                  <strong className="text-white">● 靈魂細節：雙正圓發光冒號 ( : )</strong> —— 
-                  設計的核心聚焦在兩個細緻的發光正圓形。這兩個圓點像是數據網絡間互通的溫暖微光，將前半段的循環科技「RE」，與後半段的實體包材「BOX」緊密串聯，在簡約中點綴出精緻的數位細節。
-                </p>
+        {/* 核心理念卡片 */}
+        <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-10 mb-10 md:mb-16 border border-white/10">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+            <div className="flex-shrink-0">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-[#39FF14]/20 flex items-center justify-center">
+                <span className="text-3xl md:text-4xl">💡</span>
               </div>
             </div>
-
-            {/* 區塊 2 */}
-            <div className="space-y-3">
-              <h4 className="text-white font-medium flex items-center gap-2 text-h3-mobile">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#EE4D2D]" />
-                2. 品牌標準色與跳色邏輯
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pl-3 pt-1">
-                <div className="bg-[#1A1A1A] p-4 rounded border border-white/5">
-                 <span className="text-[#39FF14] font-medium block mb-1 text-h3-mobile">🟢 Cyber Green</span>
-                 <p className="text-base text-gray-400 leading-1.7 font-normal">
-                   象徵綠色循環與貼心的科技導引。高飽和度的螢光綠在深色機身中扮演溫柔的指引角色，讓消費者在拆箱、處理隱私個資時，能直覺流暢地完成每一步動作。
-                 </p>
-                </div>
-                <div className="bg-[#1A1A1A] p-4 rounded border border-white/5">
-                 <span className="text-[#EE4D2D] font-medium block mb-1 text-h3-mobile">🟠 Shopee Orange</span>
-                 <p className="text-base text-gray-400 leading-1.7 font-normal">
-                   一致的色彩語彙，是我們對合作夥伴的致敬與商務誠意。這個橘色能完美融入門市的招牌氛圍，讓 RE:BOX 成為店內生態系最和諧、最亮眼的延伸組件。
-                 </p>
-                </div>
-                <div className="bg-[#1A1A1A] p-4 rounded border border-white/5">
-                 <span className="text-white font-medium block mb-1 text-h3-mobile">⚪ 2700K Warm White</span>
-                 <p className="text-base text-gray-400 leading-1.7 font-normal">
-                   網頁上帶有柔和的外發光，實體機台則採用 2700K 溫潤白光。我們希望為深夜進店寄取件的消費者，帶來一抹相伴的安心感與溫暖互動。
-                 </p>
-                </div>
-              </div>
-            </div>
-
-            {/* 區塊 3 */}
-            <div className="space-y-2">
-              <h4 className="text-white font-medium flex items-center gap-2 text-h3-mobile">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#EE4D2D]" />
-                3. 機身本體塗裝
-              </h4>
-              <p className="text-gray-400 pl-3 leading-1.7 text-base font-normal">
-                全機體採用抗刮、防指紋的<span className="text-white">消光金屬鐵灰</span>烤漆。低調且具質感的微沙粒底漆，能優雅地收納、包容門市日常運作中的繁雜視覺，讓精緻的發光 Logo 更具質感，達到相互輝映的視覺層次。
+            <div className="flex-1">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">
+                設計哲學
+              </h3>
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-4">
+                RE:BOX 以溫和低調的消光深灰為基底，融合高對比的品牌發光線條。
+                雙正圓發光冒號是靈魂細節，象徵數據網絡間互通的溫暖微光。
               </p>
+              <div className="flex flex-wrap gap-3">
+                <span className="px-3 py-1.5 rounded-full bg-white/5 text-gray-400 text-sm">
+                  幾何無襯線字體
+                </span>
+                <span className="px-3 py-1.5 rounded-full bg-white/5 text-gray-400 text-sm">
+                  高對比配色
+                </span>
+                <span className="px-3 py-1.5 rounded-full bg-white/5 text-gray-400 text-sm">
+                  消光金屬質感
+                </span>
+              </div>
             </div>
-            
           </div>
         </div>
 
-        {/* 🟢 螢光綠色標準色按鈕（抽屜拉環） */}
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-[-28px] z-30">
+        {/* 色彩系統 - 大色塊展示 */}
+        <div className="mb-10 md:mb-16">
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-6 md:mb-8 text-center">
+            色彩系統
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {colors.map((color) => (
+              <div 
+                key={color.name}
+                className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-300"
+              >
+                {/* 大色塊 */}
+                <div 
+                  className="h-32 md:h-40 w-full relative"
+                  style={{ backgroundColor: color.hex }}
+                >
+                  {/* 光澤效果 */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
+                </div>
+                {/* 色塊資訊 */}
+                <div className="p-5 md:p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-lg md:text-xl font-bold text-white">
+                      {color.name}
+                    </h4>
+                    <span 
+                      className="text-xs md:text-sm font-mono px-2 py-1 rounded bg-white/10"
+                      style={{ color: color.hex }}
+                    >
+                      {color.hex}
+                    </span>
+                  </div>
+                  <p className="text-gray-400 text-sm md:text-base mb-2">
+                    {color.desc}
+                  </p>
+                  <p className="text-gray-500 text-xs md:text-sm">
+                    {color.usage}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 字體與機身規格 - 摺疊區塊 */}
+        <div className="bg-white/[0.03] rounded-2xl border border-white/10 overflow-hidden">
+          {/* 摺疊按鈕 */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg bg-[#39FF14] text-[#1A1A1A] flex flex-col items-center justify-center shadow-[0_0_15px_rgba(57,255,20,0.6)] hover:bg-[#39FF14]/90 transition-all duration-300 focus:outline-none px-5 py-2"
-            aria-label="拉開品牌識別匣"
+            className="w-full flex items-center justify-between p-5 md:p-6 hover:bg-white/[0.02] transition-colors"
           >
-            <span className="text-tag-sm font-bold tracking-widest leading-none mb-1.5 antialiased">VI識別</span>
-            {/* 點擊後箭頭會滑順旋轉 180 度 */}
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center">
+                <span className="text-2xl">📐</span>
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg md:text-xl font-bold text-white">字體與機身規格</h3>
+                <p className="text-gray-500 text-sm md:text-base">查看更多技術細節</p>
+              </div>
+            </div>
             <svg 
-              className={`w-4 h-4 transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) ${isOpen ? 'rotate-180' : 'rotate-0'}`} 
+              className={`w-6 h-6 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </button>
+
+          {/* 摺疊內容 */}
+          <div 
+            className={`overflow-hidden transition-all duration-500 ease-out ${isOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
+          >
+            <div className="p-5 md:p-6 pt-0 border-t border-white/10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pt-6">
+                {/* 字體規格 */}
+                <div className="space-y-4">
+                  <h4 className="text-base md:text-lg font-bold text-white flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#39FF14]" />
+                    字體系統
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="bg-white/[0.03] rounded-xl p-4">
+                      <p className="text-2xl md:text-3xl font-black text-white mb-2">RE:BOX</p>
+                      <p className="text-gray-500 text-sm">幾何無襯線粗體 · 厚重飽滿</p>
+                    </div>
+                    <p className="text-gray-400 text-base leading-relaxed">
+                      筆劃厚實飽滿、結構均衡，與實體機身的金屬工藝完美呼應，給人安心穩固的信賴感。
+                    </p>
+                  </div>
+                </div>
+
+                {/* 機身規格 */}
+                <div className="space-y-4">
+                  <h4 className="text-base md:text-lg font-bold text-white flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#EE4D2D]" />
+                    機身塗裝
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="bg-white/[0.03] rounded-xl p-4 flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-lg bg-[#4A4A4A] border border-white/10" />
+                      <div>
+                        <p className="text-white font-medium">消光金屬鐵灰</p>
+                        <p className="text-gray-500 text-sm">抗刮防指紋烤漆</p>
+                      </div>
+                    </div>
+                    <p className="text-gray-400 text-base leading-relaxed">
+                      微沙粒底漆質感，優雅收納門市日常繁雜視覺，讓發光 Logo 相互輝映。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
 
+      {/* 底部發光線條 */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#39FF14]/20 to-transparent" />
     </div>
   );
 }

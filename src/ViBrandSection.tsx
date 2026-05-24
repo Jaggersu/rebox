@@ -121,22 +121,75 @@ export default function ViBrandSection() {
               {/* 內容滾動區 */}
               <div className="p-5 md:p-8 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
                 
-                {/* 設計理念 */}
-                <div className="bg-white/[0.03] rounded-2xl p-5 md:p-6 border border-white/10">
-                  <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-5 bg-[#39FF14] rounded-full" />
-                    設計哲學
+                {/* LOGO 識別系統 */}
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-5 bg-[#D4AF37] rounded-full" />
+                    品牌核心圖騰（Brand Logo）
                   </h3>
-                  <p className="text-white/60 leading-relaxed">
-                    RE:BOX 以溫和低調的消光深灰為基底，融合高對比的品牌發光線條。
-                    雙正圓發光冒號是靈魂細節，象徵數據網絡間互通的溫暖微光。
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {['幾何無襯線字體', '高對比配色', '消光金屬質感'].map(tag => (
-                      <span key={tag} className="px-3 py-1 rounded-full bg-white/5 text-white/50 text-sm">
-                        {tag}
-                      </span>
-                    ))}
+                  
+                  {/* LOGO 大圖展示 */}
+                  <div 
+                    className="rounded-2xl p-8 md:p-12 mb-6 flex items-center justify-center relative overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(20, 20, 20, 0.8) 100%)',
+                      border: '1px solid rgba(212, 175, 55, 0.3)',
+                      boxShadow: '0 0 30px rgba(212, 175, 55, 0.15), inset 0 0 60px rgba(0,0,0,0.5)'
+                    }}
+                  >
+                    {/* 背景發光效果 */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent" />
+                    
+                    {/* LOGO 圖片 */}
+                    <div className="relative z-10">
+                      <img 
+                        src="/logo.png" 
+                        alt="RE:BOX Logo" 
+                        className="h-24 md:h-32 w-auto drop-shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* LOGO 分析卡片 - 三欄佈局 */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* 卡片 1：幾何與無襯線 */}
+                    <div className="bg-white/[0.03] rounded-xl p-5 border border-white/10 hover:border-[#39FF14]/30 transition-all">
+                      <div className="w-10 h-10 rounded-lg bg-[#39FF14]/20 flex items-center justify-center mb-3">
+                        <span className="text-xl">⭕</span>
+                      </div>
+                      <h4 className="text-base font-bold text-white mb-2">
+                        幾何與無襯線 <span className="text-[#39FF14]">:)</span>
+                      </h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        設計核心聚焦在 <span className="text-[#39FF14] font-bold">:</span> 兩個精細發光正圓。筆劃厚實飽滿，與金屬工藝完美呼應。
+                      </p>
+                    </div>
+
+                    {/* 卡片 2：循環與科技 */}
+                    <div className="bg-white/[0.03] rounded-xl p-5 border border-white/10 hover:border-[#39FF14]/30 transition-all">
+                      <div className="w-10 h-10 rounded-lg bg-[#39FF14]/20 flex items-center justify-center mb-3">
+                        <span className="text-xl">♻️</span>
+                      </div>
+                      <h4 className="text-base font-bold text-white mb-2">
+                        循環與科技 <span className="text-[#39FF14]">RE:</span>
+                      </h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        符號像是數據網絡間互通的溫暖微光，將前半段循環科技「RE」無縫串聯。
+                      </p>
+                    </div>
+
+                    {/* 卡片 3：溫暖冒號 */}
+                    <div className="bg-white/[0.03] rounded-xl p-5 border border-white/10 hover:border-[#39FF14]/30 transition-all">
+                      <div className="w-10 h-10 rounded-lg bg-[#D4AF37]/20 flex items-center justify-center mb-3">
+                        <span className="text-xl">✨</span>
+                      </div>
+                      <h4 className="text-base font-bold text-white mb-2">
+                        溫暖冒號 <span className="text-[#D4AF37]">:</span>
+                      </h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        在簡約中點綴純粹的數位細節，象徵更友善、潔淨的互動體驗。
+                      </p>
+                    </div>
                   </div>
                 </div>
 

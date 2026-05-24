@@ -1,102 +1,214 @@
 @import "tailwindcss";
 
 /* ════════════════════════════════════════════════
-   TYPOGRAPHY SCALE - 字級系統
+   SCATTERSTORM STYLE SYSTEM
+   深色優雅風格 + 手機優先字級系統
 ════════════════════════════════════════════════ */
 
-/* 基礎設定 */
+:root {
+  /* 品牌色 */
+  --cyber-green: #39FF14;
+  --shopee-orange: #EE4D2D;
+  --warm-white: #FFF4E0;
+  --gold: #D4AF37;
+  
+  /* 背景色系 */
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #141414;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-glass: rgba(20, 20, 20, 0.8);
+  
+  /* 文字色系 */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  
+  /* 邊框 */
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+}
+
+/* 基礎設定 - 手機優先 */
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 16px;
-  line-height: 1.7;
-  letter-spacing: 0.05em;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
 }
 
-@media (min-width: 768px) {
-  body {
-    font-size: 18px;
-    line-height: 1.8;
-  }
-}
+/* 響應式字級系統 - 手機優先 */
 
-/* 標題系統 - 確保足夠視覺衝擊力 */
-.text-h1-mobile {
-  font-size: 2rem;      /* 32px - 手機主標題 */
-  line-height: 1.2;
+/* 主標題: 手機 28px → 桌面 48px */
+.text-hero {
+  font-size: 1.75rem;      /* 28px */
+  line-height: 1.15;
   font-weight: 900;
+  letter-spacing: -0.02em;
 }
 
 @media (min-width: 768px) {
-  .text-h1-desktop {
-    font-size: 3rem;    /* 48px - 桌面主標題 */
+  .text-hero {
+    font-size: 3rem;         /* 48px */
     line-height: 1.1;
-    font-weight: 900;
   }
 }
 
-.text-h2-mobile {
-  font-size: 1.5rem;    /* 24px - 手機次標題 */
-  line-height: 1.3;
-  font-weight: 900;
+/* 大標題: 手機 24px → 桌面 36px */
+.text-display {
+  font-size: 1.5rem;       /* 24px */
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 @media (min-width: 768px) {
-  .text-h2-desktop {
-    font-size: 2.25rem; /* 36px - 桌面次標題 */
-    line-height: 1.2;
-    font-weight: 900;
+  .text-display {
+    font-size: 2.25rem;      /* 36px */
   }
 }
 
-.text-h3-mobile {
-  font-size: 1.125rem;  /* 18px - 區塊標題 */
+/* 區塊標題: 手機 20px → 桌面 28px */
+.text-headline {
+  font-size: 1.25rem;      /* 20px */
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .text-headline {
+    font-size: 1.75rem;      /* 28px */
+  }
+}
+
+/* 小標題: 手機 18px → 桌面 22px */
+.text-title {
+  font-size: 1.125rem;     /* 18px */
   line-height: 1.4;
   font-weight: 600;
 }
 
 @media (min-width: 768px) {
-  .text-h3-desktop {
-    font-size: 1.25rem;  /* 20px - 桌面區塊標題 */
-    line-height: 1.4;
-    font-weight: 600;
+  .text-title {
+    font-size: 1.375rem;      /* 22px */
   }
 }
 
-/* 內文系統 - 確保可讀性 */
-.text-body-base {
-  font-size: 1rem;      /* 16px - 標準內文 */
+/* 內文大: 手機 16px → 桌面 18px */
+.text-body {
+  font-size: 1rem;         /* 16px */
   line-height: 1.7;
+  font-weight: 400;
 }
 
-.text-body-lg {
-  font-size: 1.125rem;  /* 18px - 強調內文 */
-  line-height: 1.6;
+@media (min-width: 768px) {
+  .text-body {
+    font-size: 1.125rem;     /* 18px */
+    line-height: 1.75;
+  }
 }
 
-/* 標籤系統 - 最小安全字級 14px */
-.text-tag-base {
-  font-size: 0.875rem;  /* 14px - 標準標籤 */
+/* 內文小: 手機 14px (最小安全字級) */
+.text-small {
+  font-size: 0.875rem;     /* 14px */
   line-height: 1.5;
-  font-weight: 600;
+  font-weight: 400;
 }
 
-.text-tag-sm {
-  font-size: 0.875rem;  /* 14px - 小標籤（不低於 14px） */
+/* 標籤/輔助: 手機 12px (僅限標籤使用) */
+.text-label {
+  font-size: 0.75rem;      /* 12px */
   line-height: 1.4;
   font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
-/* 輔助文字 */
-.text-caption {
-  font-size: 0.875rem;  /* 14px - 說明文字 */
-  line-height: 1.5;
-  color: #6b7280;
+@media (min-width: 768px) {
+  .text-label {
+    font-size: 0.875rem;     /* 14px */
+  }
 }
 
-.text-meta {
-  font-size: 0.875rem;  /* 14px - 元數據 */
-  line-height: 1.4;
-  color: #9ca3af;
+/* 玻璃擬態效果 */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 發光效果 */
+.glow-green {
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+/* 漸層文字 */
+.gradient-text {
+  background: linear-gradient(135deg, var(--cyber-green), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 卡片懸浮效果 */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* 動畫 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* 滾動條美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }

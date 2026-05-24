@@ -870,7 +870,7 @@ function ContactSection() {
 
             {/* Telegram 卡片 - 可點擊 */}
             <a 
-              href="https://t.me/rebox_official"
+              href="https://t.me/rebox99"
               target="_blank"
               rel="noopener noreferrer"
               className="block group"

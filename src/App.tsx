@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ViBrandSection from "./ViBrandSection";
 
 /* ════════════════════════════════════════════════
-   BRAND TOKENS - ScatterStorm Style
+   BRAND TOKENS
 ════════════════════════════════════════════════ */
 const C = {
   cyberGreen:   "#39FF14",
@@ -11,33 +11,77 @@ const C = {
   gold:         "#D4AF37",
 };
 
-const NAV_TABS = ["蝦皮專案提案", "內部營運後台"];
-
 /* ════════════════════════════════════════════════
-   GLASS NAVBAR
+   NEW NAVBAR - 毛玻璃 + 錨點導航
 ════════════════════════════════════════════════ */
-function Navbar({ active, setActive }: { active: string; setActive: (tab: string) => void }) {
+type NavMode = "product" | "admin";
+
+interface NavbarProps {
+  mode: NavMode;
+  setMode: (mode: NavMode) => void;
+  activeSection: string;
+  scrollToSection: (id: string) => void;
+}
+
+function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) {
+  const productNavItems = [
+    { id: "hero", label: "首頁" },
+    { id: "vibrand", label: "VI品牌識別" },
+    { id: "spec", label: "機身規格" },
+    { id: "demo", label: "後台監控 Demo" },
+    { id: "contact", label: "聯繫我們" },
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 md:h-20 flex items-center justify-between px-4 md:px-8">
-      <div className="absolute inset-0 glass border-b border-white/10" />
-      <div className="relative z-10">
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-8 h-16 md:h-20 backdrop-blur-md bg-zinc-950/70 border-b border-white/10">
+      {/* 左側：LOGO */}
+      <div className="flex items-center gap-3">
         <img src="/logo.png" alt="RE:BOX" className="h-8 md:h-10 w-auto" />
+        <span className="hidden md:block text-white/60 text-sm font-medium">RE:BOX</span>
       </div>
-      <div className="relative z-10 flex gap-1 p-1 rounded-full bg-white/5 border border-white/10">
-        {NAV_TABS.map((t) => (
+
+      {/* 右側：錨點選單 + 大分頁切換 */}
+      <div className="flex items-center gap-4 md:gap-6">
+        {/* 產品提案模式時顯示錨點選單 */}
+        {mode === "product" && (
+          <div className="hidden lg:flex items-center gap-1">
+            {productNavItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`px-3 py-1.5 rounded-full text-sm transition-all duration-300 ${
+                  activeSection === item.id
+                    ? "text-[#39FF14] bg-[#39FF14]/10 font-medium"
+                    : "text-white/60 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* 大分頁切換 */}
+        <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10">
           <button
-            key={t}
-            onClick={() => setActive(t)}
-            className={`px-3 md:px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              active === t
-                ? "text-black font-bold"
-                : "text-white/70 hover:text-white hover:bg-white/5"
+            onClick={() => setMode("product")}
+            className={`px-3 md:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              mode === "product" ? "text-black bg-[#39FF14]" : "text-white/60 hover:text-white"
             }`}
-            style={{ background: active === t ? C.cyberGreen : "transparent" }}
           >
-            {t}
+            <span className="hidden md:inline">產品提案</span>
+            <span className="md:hidden">產品</span>
           </button>
-        ))}
+          <button
+            onClick={() => setMode("admin")}
+            className={`px-3 md:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              mode === "admin" ? "text-black bg-[#39FF14]" : "text-white/60 hover:text-white"
+            }`}
+          >
+            <span className="hidden md:inline">商業數據</span>
+            <span className="md:hidden">數據</span>
+          </button>
+        </div>
       </div>
     </nav>
   );
@@ -62,11 +106,11 @@ function GlassCard({ children, accent, className = "" }: { children: React.React
 }
 
 /* ════════════════════════════════════════════════
-   HERO SECTION - ScatterStorm Style
+   HERO SECTION - 首頁 (帶 id 支援錨點)
 ════════════════════════════════════════════════ */
 function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col justify-center pt-24 pb-16 px-4 md:px-8 relative overflow-hidden">
+    <section id="hero" className="min-h-screen flex flex-col justify-center pt-24 pb-16 px-4 md:px-8 relative overflow-hidden scroll-mt-20">
       {/* 背景發光效果 */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#39FF14]/5 rounded-full blur-[120px] pointer-events-none" />
       
@@ -400,32 +444,190 @@ function Footer() {
 }
 
 /* ════════════════════════════════════════════════
-   PROPOSAL PAGE
+   SPEC SECTION - 機身規格
+════════════════════════════════════════════════ */
+function SpecSection() {
+  return (
+    <section id="spec" className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12 md:mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-4">
+            Hardware Specs
+          </span>
+          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">機身規格</h2>
+          <p className="text-lg text-white/50">極致工藝打造，每一個細節都為實戰而生</p>
+        </div>
+        
+        {/* 規格卡片外殼 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <GlassCard>
+            <div className="p-6 md:p-8">
+              <h3 className="text-lg font-bold text-white mb-4">機身尺寸</h3>
+              <p className="text-white/50">規格內容待補充...</p>
+            </div>
+          </GlassCard>
+          <GlassCard>
+            <div className="p-6 md:p-8">
+              <h3 className="text-lg font-bold text-white mb-4">電力系統</h3>
+              <p className="text-white/50">規格內容待補充...</p>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ════════════════════════════════════════════════
+   DEMO SECTION - 後台監控 Demo
+════════════════════════════════════════════════ */
+function DemoSection() {
+  return (
+    <section id="demo" className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12 md:mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#39FF14]/10 border border-[#39FF14]/20 text-sm text-[#39FF14] mb-4">
+            Live Demo
+          </span>
+          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">後台監控 Demo</h2>
+          <p className="text-lg text-white/50">即時數據掌握，營運狀態一目瞭然</p>
+        </div>
+        
+        {/* Demo 外殼 */}
+        <GlassCard accent={C.cyberGreen}>
+          <div className="p-6 md:p-8">
+            <div className="aspect-video bg-black/50 rounded-xl flex items-center justify-center">
+              <p className="text-white/30">監控面板 Demo 內容待補充...</p>
+            </div>
+          </div>
+        </GlassCard>
+      </div>
+    </section>
+  );
+}
+
+/* ════════════════════════════════════════════════
+   CONTACT SECTION - 聯繫我們
+════════════════════════════════════════════════ */
+function ContactSection() {
+  return (
+    <section id="contact" className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12 md:mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-4">
+            Get in Touch
+          </span>
+          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">聯繫我們</h2>
+          <p className="text-lg text-white/50">有任何問題或合作意向，歡迎與我們聯繫</p>
+        </div>
+        
+        {/* 聯繫資訊外殼 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <GlassCard>
+            <div className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📧</span>
+              </div>
+              <h3 className="text-base font-bold text-white mb-2">電子郵件</h3>
+              <p className="text-white/50 text-sm">hello@rebox.tw</p>
+            </div>
+          </GlassCard>
+          <GlassCard>
+            <div className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📱</span>
+              </div>
+              <h3 className="text-base font-bold text-white mb-2">電話</h3>
+              <p className="text-white/50 text-sm">+886 2-xxxx-xxxx</p>
+            </div>
+          </GlassCard>
+          <GlassCard>
+            <div className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📍</span>
+              </div>
+              <h3 className="text-base font-bold text-white mb-2">地址</h3>
+              <p className="text-white/50 text-sm">台北市 xxxx 區</p>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ════════════════════════════════════════════════
+   PROPOSAL PAGE - 產品提案 (客戶)
 ════════════════════════════════════════════════ */
 function ProposalPage() {
   return (
-    <div>
-      <HeroSection />
-      <ViBrandSection />
+    <div className="scroll-smooth">
+      <section id="hero">
+        <HeroSection />
+      </section>
+      <section id="vibrand">
+        <ViBrandSection />
+      </section>
       <PainSolutionSection />
       <FeaturesSection />
+      <SpecSection />
+      <DemoSection />
       <PartnershipSection />
+      <ContactSection />
       <Footer />
     </div>
   );
 }
 
 /* ════════════════════════════════════════════════
-   APP ROOT
+   APP ROOT - 整合平滑滾動與錨點追蹤
 ════════════════════════════════════════════════ */
 export default function App() {
-  const [activeTab, setActiveTab] = useState("蝦皮專案提案");
+  const [mode, setMode] = useState<NavMode>("product");
+  const [activeSection, setActiveSection] = useState("hero");
+
+  // 平滑滾動到指定區塊
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveSection(id);
+    }
+  };
+
+  // 監聽滾動更新當前區塊
+  useEffect(() => {
+    if (mode !== "product") return;
+
+    const sections = ["hero", "vibrand", "spec", "demo", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -80% 0px", threshold: 0 }
+    );
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [mode]);
+
   return (
-    <div className="min-h-screen" style={{ background: "#0d0d0d" }}>
-      <Navbar active={activeTab} setActive={setActiveTab} />
-      <div className="pt-16 md:pt-20">
-        {activeTab === "蝦皮專案提案" ? <ProposalPage /> : <AdminPage />}
-      </div>
+    <div className="min-h-screen bg-[#0d0d0d]">
+      <Navbar 
+        mode={mode} 
+        setMode={setMode} 
+        activeSection={activeSection}
+        scrollToSection={scrollToSection}
+      />
+      {mode === "product" ? <ProposalPage /> : <AdminPage />}
     </div>
   );
 }

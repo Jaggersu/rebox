@@ -88,6 +88,31 @@ function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) 
 }
 
 /* ════════════════════════════════════════════════
+   SCROLL REVEAL HOOK - 滾動淡入動畫
+════════════════════════════════════════════════ */
+function useScrollReveal() {
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, visible };
+}
+
+/* ════════════════════════════════════════════════
    GLASS CARD PRIMITIVES
 ════════════════════════════════════════════════ */
 function GlassCard({ children, accent, className = "" }: { children: React.ReactNode; accent?: string; className?: string }) {
@@ -444,13 +469,26 @@ function Footer() {
 }
 
 /* ════════════════════════════════════════════════
-   SPEC SECTION - 機身規格
+   SPEC SECTION - 機身規格 (含 3D X-RAY 預留區)
 ════════════════════════════════════════════════ */
 function SpecSection() {
+  const { ref, visible } = useScrollReveal();
+
+  const specs = [
+    { label: "機身高度", value: "180 cm", desc: "符合人體工學，輕鬆投遞" },
+    { label: "機身寬度", value: "60 cm", desc: "薄型設計，極致坪效" },
+    { label: "機身深度", value: "75 cm", desc: "內凹防呆工作台" },
+    { label: "材質", value: "SGCC 鍍鋅鋼板", desc: "消光金屬鐵灰烤漆" },
+    { label: "容量", value: "約 200 個紙箱", desc: "單次清運週期約 3-5 天" },
+    { label: "電力需求", value: "110V / 200W", desc: "隨插即用，無須改電" },
+    { label: "去個資滾輪", value: "亂碼覆蓋章", desc: "一滾遮蔽面單個資" },
+    { label: "照明系統", value: "2700K 暖白光", desc: "溫潤不刺眼" },
+  ];
+
   return (
-    <section id="spec" className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
+    <section id="spec" ref={ref} className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
+        <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-4">
             Hardware Specs
           </span>
@@ -458,20 +496,79 @@ function SpecSection() {
           <p className="text-lg text-white/50">極致工藝打造，每一個細節都為實戰而生</p>
         </div>
         
-        {/* 規格卡片外殼 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <GlassCard>
-            <div className="p-6 md:p-8">
-              <h3 className="text-lg font-bold text-white mb-4">機身尺寸</h3>
-              <p className="text-white/50">規格內容待補充...</p>
+          {/* 左側：3D X-RAY 預留區 */}
+          <div 
+            className={`relative transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          >
+            <div 
+              className="h-full min-h-[400px] rounded-2xl flex flex-col items-center justify-center relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(30,30,30,0.6) 100%)',
+                border: '2px dashed rgba(100,100,100,0.3)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              {/* 科技感裝飾線 */}
+              <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-[#39FF14]/30" />
+              <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-[#39FF14]/30" />
+              <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-[#39FF14]/30" />
+              <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-[#39FF14]/30" />
+              
+              {/* 尺寸標註線視覺 */}
+              <div className="absolute left-2 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+              <div className="absolute right-2 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+              <div className="absolute top-2 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              <div className="absolute bottom-2 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              
+              {/* 中央內容 */}
+              <div className="text-center z-10">
+                <div className="w-20 h-20 rounded-xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">📐</span>
+                </div>
+                <p className="text-[#39FF14] font-mono text-sm tracking-wider mb-2">[ 3D X-RAY VIEW ]</p>
+                <p className="text-white/40 text-xs">機身透視尺寸圖</p>
+                <p className="text-white/30 text-xs mt-1">PENDING</p>
+              </div>
+              
+              {/* 掃描線效果 */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#39FF14]/5 to-transparent animate-pulse" />
             </div>
-          </GlassCard>
-          <GlassCard>
-            <div className="p-6 md:p-8">
-              <h3 className="text-lg font-bold text-white mb-4">電力系統</h3>
-              <p className="text-white/50">規格內容待補充...</p>
+          </div>
+
+          {/* 右側：硬體規格表 */}
+          <div 
+            className={`transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          >
+            <div 
+              className="h-full rounded-2xl p-6 md:p-8"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                <span className="w-1 h-5 bg-[#39FF14] rounded-full" />
+                硬體規格
+              </h3>
+              
+              <div className="space-y-4">
+                {specs.map((spec) => (
+                  <div 
+                    key={spec.label}
+                    className="flex items-start justify-between py-3 border-b border-white/5 last:border-0"
+                  >
+                    <div>
+                      <p className="text-white/60 text-sm">{spec.label}</p>
+                      <p className="text-white/40 text-xs mt-0.5">{spec.desc}</p>
+                    </div>
+                    <p className="text-white font-bold text-base text-right">{spec.value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </GlassCard>
+          </div>
         </div>
       </div>
     </section>
@@ -479,13 +576,22 @@ function SpecSection() {
 }
 
 /* ════════════════════════════════════════════════
-   DEMO SECTION - 後台監控 Demo
+   DEMO SECTION - 後台監控 Demo (智慧看板)
 ════════════════════════════════════════════════ */
 function DemoSection() {
+  const { ref, visible } = useScrollReveal();
+
+  // 模擬智取店數據
+  const stores = [
+    { name: "板橋店", fullness: 85, status: "擠壓中", color: "#EE4D2D" },
+    { name: "三重店", fullness: 40, status: "正常", color: "#39FF14" },
+    { name: "永和店", fullness: 95, status: "滿載警戒", color: "#EE4D2D" },
+  ];
+
   return (
-    <section id="demo" className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
+    <section id="demo" ref={ref} className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
+        <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#39FF14]/10 border border-[#39FF14]/20 text-sm text-[#39FF14] mb-4">
             Live Demo
           </span>
@@ -493,27 +599,116 @@ function DemoSection() {
           <p className="text-lg text-white/50">即時數據掌握，營運狀態一目瞭然</p>
         </div>
         
-        {/* Demo 外殼 */}
-        <GlassCard accent={C.cyberGreen}>
+        <div 
+          className={`rounded-3xl overflow-hidden transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(57,255,20,0.2)',
+            backdropFilter: 'blur(10px)',
+          }}
+        >
           <div className="p-6 md:p-8">
-            <div className="aspect-video bg-black/50 rounded-xl flex items-center justify-center">
-              <p className="text-white/30">監控面板 Demo 內容待補充...</p>
+            {/* 頂部：減碳數據大卡 */}
+            <div 
+              className="rounded-2xl p-6 md:p-8 mb-8 text-center relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(57,255,20,0.1) 0%, rgba(20,20,20,0.8) 100%)',
+                border: '1px solid rgba(57,255,20,0.2)',
+              }}
+            >
+              {/* 發光效果 */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#39FF14]/5 via-transparent to-[#39FF14]/5" />
+              
+              <div className="relative z-10">
+                <p className="text-white/60 text-sm mb-2">全台智取店累計減碳量</p>
+                <p 
+                  className="text-4xl md:text-6xl font-black tracking-tight"
+                  style={{ 
+                    color: '#39FF14',
+                    textShadow: '0 0 30px rgba(57,255,20,0.5)',
+                  }}
+                >
+                  124,580 <span className="text-2xl md:text-3xl">kg</span>
+                </p>
+                <p className="text-white/40 text-xs mt-3">相當於種植 6,200 棵樹的年吸碳量</p>
+              </div>
+            </div>
+
+            {/* 下方：三家店鋪滿載率 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {stores.map((store) => (
+                <div 
+                  key={store.name}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <p className="text-white font-bold">{store.name}</p>
+                      <p className="text-xs" style={{ color: store.color }}>{store.status}</p>
+                    </div>
+                    <span className="text-2xl font-bold" style={{ color: store.color }}>
+                      {store.fullness}%
+                    </span>
+                  </div>
+                  
+                  {/* 進度條 */}
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full rounded-full transition-all duration-1000"
+                      style={{ 
+                        width: `${store.fullness}%`,
+                        background: store.color,
+                        boxShadow: `0 0 10px ${store.color}50`,
+                      }}
+                    />
+                  </div>
+                  
+                  <p className="text-white/30 text-xs mt-2">
+                    預估 {store.fullness > 80 ? '2 天內' : '5 天內'} 需清運
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* 底部說明 */}
+            <div className="mt-6 text-center">
+              <p className="text-white/30 text-xs">
+                🔔 系統自動推播通知：滿載率超過 90% 時發送清運提醒
+              </p>
             </div>
           </div>
-        </GlassCard>
+        </div>
       </div>
     </section>
   );
 }
 
 /* ════════════════════════════════════════════════
-   CONTACT SECTION - 聯繫我們
+   CONTACT SECTION - 聯繫我們 (含 B2B 表單)
 ════════════════════════════════════════════════ */
 function ContactSection() {
+  const { ref, visible } = useScrollReveal();
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    phone: "",
+    interest: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("表單已送出！我們將盡快與您聯繫。");
+  };
+
   return (
-    <section id="contact" className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
+    <section id="contact" ref={ref} className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
+        <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-4">
             Get in Touch
           </span>
@@ -521,35 +716,140 @@ function ContactSection() {
           <p className="text-lg text-white/50">有任何問題或合作意向，歡迎與我們聯繫</p>
         </div>
         
-        {/* 聯繫資訊外殼 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <GlassCard>
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📧</span>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* 左側：聯繫資訊 (2欄) */}
+          <div 
+            className={`lg:col-span-2 space-y-4 transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          >
+            <GlassCard>
+              <div className="p-5 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center shrink-0">
+                  <span className="text-2xl">📧</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white mb-1">電子郵件</h3>
+                  <p className="text-white/50 text-sm">hello@rebox.tw</p>
+                </div>
               </div>
-              <h3 className="text-base font-bold text-white mb-2">電子郵件</h3>
-              <p className="text-white/50 text-sm">hello@rebox.tw</p>
-            </div>
-          </GlassCard>
-          <GlassCard>
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📱</span>
+            </GlassCard>
+            <GlassCard>
+              <div className="p-5 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center shrink-0">
+                  <span className="text-2xl">📱</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white mb-1">電話</h3>
+                  <p className="text-white/50 text-sm">+886 2-1234-5678</p>
+                </div>
               </div>
-              <h3 className="text-base font-bold text-white mb-2">電話</h3>
-              <p className="text-white/50 text-sm">+886 2-xxxx-xxxx</p>
-            </div>
-          </GlassCard>
-          <GlassCard>
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📍</span>
+            </GlassCard>
+            <GlassCard>
+              <div className="p-5 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#39FF14]/20 flex items-center justify-center shrink-0">
+                  <span className="text-2xl">📍</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white mb-1">地址</h3>
+                  <p className="text-white/50 text-sm">台北市信義區松高路1號</p>
+                </div>
               </div>
-              <h3 className="text-base font-bold text-white mb-2">地址</h3>
-              <p className="text-white/50 text-sm">台北市 xxxx 區</p>
+            </GlassCard>
+          </div>
+
+          {/* 右側：B2B 商務諮詢表單 (3欄) */}
+          <div 
+            className={`lg:col-span-3 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          >
+            <div 
+              className="rounded-2xl p-6 md:p-8 h-full"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                <span className="w-1 h-5 bg-[#39FF14] rounded-full" />
+                B2B 商務諮詢
+              </h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-white/60 text-sm mb-1.5 block">姓名 *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-[#39FF14] transition-colors"
+                      placeholder="您的姓名"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white/60 text-sm mb-1.5 block">公司名稱 *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.company}
+                      onChange={(e) => setFormData({...formData, company: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-[#39FF14] transition-colors"
+                      placeholder="公司名稱"
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-white/60 text-sm mb-1.5 block">聯絡電話 *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-[#39FF14] transition-colors"
+                      placeholder="09xx-xxx-xxx"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white/60 text-sm mb-1.5 block">合作意向 *</label>
+                    <select
+                      required
+                      value={formData.interest}
+                      onChange={(e) => setFormData({...formData, interest: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/10 text-white text-base focus:outline-none focus:border-[#39FF14] transition-colors appearance-none cursor-pointer"
+                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '20px' }}
+                    >
+                      <option value="">請選擇</option>
+                      <option value="設備租賃">設備租賃</option>
+                      <option value="場地合作">場地合作</option>
+                      <option value="清運服務">清運服務</option>
+                      <option value="ESG 專案">ESG 專案</option>
+                      <option value="其他">其他</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="text-white/60 text-sm mb-1.5 block">留言內容</label>
+                  <textarea
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-[#39FF14] transition-colors resize-none"
+                    placeholder="請描述您的需求或問題..."
+                  />
+                </div>
+                
+                <button
+                  type="submit"
+                  className="w-full py-4 rounded-xl font-bold text-black bg-[#39FF14] transition-all duration-300 hover:shadow-[0_0_30px_rgba(57,255,20,0.4)] hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  確認送出
+                </button>
+              </form>
             </div>
-          </GlassCard>
+          </div>
         </div>
       </div>
     </section>

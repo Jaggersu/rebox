@@ -235,6 +235,63 @@ body {
 .delay-400 { transition-delay: 400ms; }
 .delay-500 { transition-delay: 500ms; }
 
+/* ════════════════════════════════════════════════
+   AMBIENT GLOW 背景光暈呼吸動畫
+════════════════════════════════════════════════ */
+
+/* 光暈動畫 1：緩慢位移 + 輕微縮放 + 透明度呼吸 */
+@keyframes glow-pulse-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.12;
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.03);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(20px, 20px) scale(1.05);
+    opacity: 0.1;
+  }
+  75% {
+    transform: translate(-10px, 10px) scale(1.02);
+    opacity: 0.14;
+  }
+}
+
+/* 光暈動畫 2：橢圓漂移軌跡 */
+@keyframes glow-pulse-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.12;
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.04);
+    opacity: 0.08;
+  }
+  66% {
+    transform: translate(30px, -40px) scale(1.02);
+    opacity: 0.16;
+  }
+}
+
+/* 光暈動畫 Utility Classes */
+.animate-glow-slow-1 {
+  animation: glow-pulse-1 18s linear infinite;
+}
+
+.animate-glow-slow-2 {
+  animation: glow-pulse-2 15s linear infinite;
+}
+
+/* 減緩動畫 (prefers-reduced-motion) */
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-slow-1,
+  .animate-glow-slow-2 {
+    animation: none;
+  }
+}
+
 /* 滾動條美化 */
 ::-webkit-scrollbar {
   width: 8px;

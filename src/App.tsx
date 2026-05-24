@@ -1001,12 +1001,22 @@ function ContactSection() {
 }
 
 /* ════════════════════════════════════════════════
-   AMBIENT GLOW - 環境光暈元件
+   AMBIENT GLOW - 環境光暈元件 (含呼吸動畫)
 ════════════════════════════════════════════════ */
-function AmbientGlow({ color, position, size = 400 }: { color: string; position: string; size?: number }) {
+function AmbientGlow({ 
+  color, 
+  position, 
+  size = 400, 
+  animationClass 
+}: { 
+  color: string; 
+  position: string; 
+  size?: number;
+  animationClass?: string;
+}) {
   return (
     <div
-      className="absolute pointer-events-none z-0"
+      className={`absolute pointer-events-none z-0 ${animationClass || ''}`}
       style={{
         ...parsePosition(position),
         width: size,
@@ -1039,9 +1049,9 @@ function parsePosition(pos: string): React.CSSProperties {
 function ProposalPage() {
   return (
     <div className="scroll-smooth relative">
-      {/* 全局背景光暈 */}
-      <AmbientGlow color="#39FF14" position="top-20 left-10" size={500} />
-      <AmbientGlow color="#EE4D2D" position="top-60 right-20" size={400} />
+      {/* 全局背景光暈 - 帶呼吸動畫 */}
+      <AmbientGlow color="#39FF14" position="top-20 left-10" size={500} animationClass="animate-glow-slow-1" />
+      <AmbientGlow color="#EE4D2D" position="top-60 right-20" size={400} animationClass="animate-glow-slow-2" />
       
       <section id="hero">
         <HeroSection />

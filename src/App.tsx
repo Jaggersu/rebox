@@ -576,27 +576,57 @@ function SpecSection() {
 }
 
 /* ════════════════════════════════════════════════
-   DEMO SECTION - 後台監控 Demo (智慧看板)
+   DEMO SECTION - 桃園試點監控中心 (10家店鋪)
 ════════════════════════════════════════════════ */
+interface StoreData {
+  name: string;
+  fullness: number;
+  alert: "正常" | "擠壓中" | "滿載警戒";
+  inkLevel: number;
+  glueBottles: number;
+  labelRolls: number;
+}
+
 function DemoSection() {
   const { ref, visible } = useScrollReveal();
 
-  // 模擬智取店數據
-  const stores = [
-    { name: "板橋店", fullness: 85, status: "擠壓中", color: "#EE4D2D" },
-    { name: "三重店", fullness: 40, status: "正常", color: "#39FF14" },
-    { name: "永和店", fullness: 95, status: "滿載警戒", color: "#EE4D2D" },
+  // 桃園試點 10 家智取店完整監控數據
+  const stores: StoreData[] = [
+    { name: "桃園總店", fullness: 92, alert: "滿載警戒", inkLevel: 85, glueBottles: 24, labelRolls: 8 },
+    { name: "中壢店", fullness: 78, alert: "擠壓中", inkLevel: 62, glueBottles: 18, labelRolls: 12 },
+    { name: "八德店", fullness: 45, alert: "正常", inkLevel: 91, glueBottles: 32, labelRolls: 15 },
+    { name: "平鎮店", fullness: 88, alert: "滿載警戒", inkLevel: 15, glueBottles: 9, labelRolls: 6 },
+    { name: "楊梅店", fullness: 52, alert: "正常", inkLevel: 73, glueBottles: 28, labelRolls: 10 },
+    { name: "大溪店", fullness: 67, alert: "擠壓中", inkLevel: 48, glueBottles: 21, labelRolls: 7 },
+    { name: "蘆竹店", fullness: 35, alert: "正常", inkLevel: 88, glueBottles: 35, labelRolls: 18 },
+    { name: "大園店", fullness: 81, alert: "擠壓中", inkLevel: 55, glueBottles: 16, labelRolls: 5 },
+    { name: "龜山店", fullness: 95, alert: "滿載警戒", inkLevel: 32, glueBottles: 12, labelRolls: 4 },
+    { name: "龍潭店", fullness: 58, alert: "正常", inkLevel: 77, glueBottles: 29, labelRolls: 11 },
   ];
+
+  const getAlertColor = (alert: string) => {
+    switch (alert) {
+      case "滿載警戒": return "#EE4D2D";
+      case "擠壓中": return "#FFA500";
+      default: return "#39FF14";
+    }
+  };
+
+  const getInkStatus = (level: number) => {
+    if (level < 20) return { text: "補件提醒", color: "#EE4D2D" };
+    if (level < 50) return { text: "偏低", color: "#FFA500" };
+    return { text: "充足", color: "#39FF14" };
+  };
 
   return (
     <section id="demo" ref={ref} className="py-16 md:py-24 px-4 md:px-8 scroll-mt-20">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#39FF14]/10 border border-[#39FF14]/20 text-sm text-[#39FF14] mb-4">
-            Live Demo
+            Live Dashboard
           </span>
-          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">後台監控 Demo</h2>
-          <p className="text-lg text-white/50">即時數據掌握，營運狀態一目瞭然</p>
+          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">桃園試點監控中心</h2>
+          <p className="text-lg text-white/50">即時掌握 10 家智取店營運狀態</p>
         </div>
         
         <div 
@@ -616,11 +646,13 @@ function DemoSection() {
                 border: '1px solid rgba(57,255,20,0.2)',
               }}
             >
-              {/* 發光效果 */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#39FF14]/5 via-transparent to-[#39FF14]/5" />
               
               <div className="relative z-10">
-                <p className="text-white/60 text-sm mb-2">全台智取店累計減碳量</p>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse" />
+                  <p className="text-white/60 text-sm">桃園區智取店累計減碳量</p>
+                </div>
                 <p 
                   className="text-4xl md:text-6xl font-black tracking-tight"
                   style={{ 
@@ -628,57 +660,143 @@ function DemoSection() {
                     textShadow: '0 0 30px rgba(57,255,20,0.5)',
                   }}
                 >
-                  124,580 <span className="text-2xl md:text-3xl">kg</span>
+                  45,280 <span className="text-2xl md:text-3xl">kg</span>
                 </p>
-                <p className="text-white/40 text-xs mt-3">相當於種植 6,200 棵樹的年吸碳量</p>
+                <p className="text-white/40 text-xs mt-3">10 家試點店鋪共同達成 | 相當於種植 2,260 棵樹</p>
               </div>
             </div>
 
-            {/* 下方：三家店鋪滿載率 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {stores.map((store) => (
-                <div 
-                  key={store.name}
-                  className="rounded-xl p-4"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                  }}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-white font-bold">{store.name}</p>
-                      <p className="text-xs" style={{ color: store.color }}>{store.status}</p>
-                    </div>
-                    <span className="text-2xl font-bold" style={{ color: store.color }}>
-                      {store.fullness}%
-                    </span>
-                  </div>
-                  
-                  {/* 進度條 */}
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full rounded-full transition-all duration-1000"
-                      style={{ 
-                        width: `${store.fullness}%`,
-                        background: store.color,
-                        boxShadow: `0 0 10px ${store.color}50`,
-                      }}
-                    />
-                  </div>
-                  
-                  <p className="text-white/30 text-xs mt-2">
-                    預估 {store.fullness > 80 ? '2 天內' : '5 天內'} 需清運
-                  </p>
-                </div>
-              ))}
+            {/* 監控數據標題 */}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-bold text-white/80 flex items-center gap-2">
+                <span className="w-1 h-4 bg-[#39FF14] rounded-full" />
+                即時店鋪監控列表
+              </h3>
+              <span className="text-xs text-white/40">共 10 家 | 更新於 2 分鐘前</span>
             </div>
 
-            {/* 底部說明 */}
-            <div className="mt-6 text-center">
-              <p className="text-white/30 text-xs">
-                🔔 系統自動推播通知：滿載率超過 90% 時發送清運提醒
-              </p>
+            {/* 10家店鋪滾動列表 */}
+            <div 
+              className="max-h-[400px] overflow-y-auto pr-2 space-y-3"
+              style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(255,255,255,0.2) transparent',
+              }}
+            >
+              {stores.map((store) => {
+                const alertColor = getAlertColor(store.alert);
+                const inkStatus = getInkStatus(store.inkLevel);
+                
+                return (
+                  <div 
+                    key={store.name}
+                    className="rounded-xl p-4 md:p-5"
+                    style={{
+                      background: 'rgba(255,255,255,0.03)',
+                      border: `1px solid ${store.alert === "滿載警戒" ? 'rgba(238,77,45,0.3)' : 'rgba(255,255,255,0.08)'}`,
+                    }}
+                  >
+                    {/* 第一行：店名 + 滿載率 */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg">🏪</span>
+                        <span className="font-bold text-white">{store.name}</span>
+                        <span 
+                          className="px-2 py-0.5 rounded text-xs font-medium"
+                          style={{ 
+                            background: `${alertColor}20`,
+                            color: alertColor,
+                          }}
+                        >
+                          {store.alert}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-bold" style={{ color: alertColor }}>
+                          {store.fullness}%
+                        </span>
+                        <p className="text-white/30 text-xs">回收箱滿載率</p>
+                      </div>
+                    </div>
+
+                    {/* 進度條 */}
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-4">
+                      <div 
+                        className="h-full rounded-full transition-all duration-1000"
+                        style={{ 
+                          width: `${store.fullness}%`,
+                          background: alertColor,
+                          boxShadow: `0 0 10px ${alertColor}50`,
+                        }}
+                      />
+                    </div>
+
+                    {/* 第二行：詳細監控數據 */}
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                      {/* 油墨剩餘量 */}
+                      <div className="rounded-lg p-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                        <p className="text-white/40 text-xs mb-1">🖨️ 除個資油墨</p>
+                        <p className="text-base font-bold" style={{ color: inkStatus.color }}>
+                          {store.inkLevel}%
+                        </p>
+                        <p className="text-white/30 text-[10px]">{inkStatus.text}</p>
+                      </div>
+                      
+                      {/* 除膠劑 */}
+                      <div className="rounded-lg p-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                        <p className="text-white/40 text-xs mb-1">🧴 除膠劑</p>
+                        <p className="text-base font-bold text-white">
+                          {store.glueBottles} <span className="text-xs font-normal text-white/50">瓶</span>
+                        </p>
+                        <p className="text-white/30 text-[10px]">
+                          {store.glueBottles < 15 ? "低庫存" : "庫存正常"}
+                        </p>
+                      </div>
+                      
+                      {/* 標籤捲 */}
+                      <div className="rounded-lg p-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                        <p className="text-white/40 text-xs mb-1">🏷️ 條碼標籤</p>
+                        <p className="text-base font-bold text-white">
+                          {store.labelRolls} <span className="text-xs font-normal text-white/50">捲</span>
+                        </p>
+                        <p className="text-white/30 text-[10px]">
+                          {store.labelRolls < 6 ? "需補充" : "充足"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* 底部統計 */}
+            <div className="mt-6 pt-4 border-t border-white/10">
+              <div className="grid grid-cols-4 gap-4 text-center">
+                <div>
+                  <p className="text-[#EE4D2D] font-bold text-xl">
+                    {stores.filter(s => s.alert === "滿載警戒").length}
+                  </p>
+                  <p className="text-white/40 text-xs">滿載警戒</p>
+                </div>
+                <div>
+                  <p className="text-[#FFA500] font-bold text-xl">
+                    {stores.filter(s => s.alert === "擠壓中").length}
+                  </p>
+                  <p className="text-white/40 text-xs">擠壓中</p>
+                </div>
+                <div>
+                  <p className="text-[#39FF14] font-bold text-xl">
+                    {stores.filter(s => s.inkLevel < 20).length}
+                  </p>
+                  <p className="text-white/40 text-xs">油墨待補</p>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-xl">
+                    {stores.filter(s => s.glueBottles < 15 || s.labelRolls < 6).length}
+                  </p>
+                  <p className="text-white/40 text-xs">耗材待補</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -910,15 +1028,15 @@ function ProposalPage() {
         <ViBrandSection />
       </section>
       
-      <PainSolutionSection />
-      <FeaturesSection />
-      
-      {/* 機身規格 - 帶光暈 */}
+      {/* 機身規格 - 移到VI之後 */}
       <section id="spec" className="relative overflow-hidden">
         <AmbientGlow color="#EE4D2D" position="top-20 left-10" size={400} />
         <AmbientGlow color="#39FF14" position="bottom-10 right-1/4" size={350} />
         <SpecSection />
       </section>
+      
+      <PainSolutionSection />
+      <FeaturesSection />
       
       <DemoSection />
       <PartnershipSection />

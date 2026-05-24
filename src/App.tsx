@@ -1001,73 +1001,71 @@ function ContactSection() {
 }
 
 /* ════════════════════════════════════════════════
-   AMBIENT GLOW - 環境光暈元件 (含呼吸動畫)
+   GLOBAL PARALLAX GLOW - 全局滑鼠視差光暈
 ════════════════════════════════════════════════ */
-function AmbientGlow({ 
-  color, 
-  position, 
-  size = 400, 
-  animationClass 
-}: { 
-  color: string; 
-  position: string; 
-  size?: number;
-  animationClass?: string;
-}) {
+function GlobalParallaxGlow({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
+  // 將滑鼠座標轉換為視差偏移 (限制在 30px 範圍內)
+  const offsetX = (mouseX - 0.5) * 40; // -20px ~ +20px
+  const offsetY = (mouseY - 0.5) * 40; // -20px ~ +20px
+
   return (
-    <div
-      className={`absolute pointer-events-none z-0 ${animationClass || ''}`}
-      style={{
-        ...parsePosition(position),
-        width: size,
-        height: size,
-        background: color,
-        borderRadius: '50%',
-        filter: 'blur(130px)',
-        opacity: 0.12,
-      }}
-    />
+    <div className="fixed inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+      {/* 左上紅橘光暈 */}
+      <div
+        className="absolute animate-glow-slow-1"
+        style={{
+          top: '-100px',
+          left: '-100px',
+          width: '600px',
+          height: '600px',
+          background: '#EE4D2D',
+          borderRadius: '50%',
+          filter: 'blur(180px)',
+          opacity: 0.15,
+          transform: `translate(${offsetX * 0.8}px, ${offsetY * 0.8}px)`,
+          transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
+        }}
+      />
+      {/* 右下螢光綠光暈 */}
+      <div
+        className="absolute animate-glow-slow-2"
+        style={{
+          bottom: '-100px',
+          right: '-100px',
+          width: '700px',
+          height: '700px',
+          background: '#39FF14',
+          borderRadius: '50%',
+          filter: 'blur(160px)',
+          opacity: 0.12,
+          transform: `translate(${-offsetX * 1.2}px, ${-offsetY * 1.2}px)`,
+          transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
+        }}
+      />
+    </div>
   );
 }
 
-// 解析位置字符串為 style 屬性
-function parsePosition(pos: string): React.CSSProperties {
-  const parts = pos.split(' ');
-  const style: React.CSSProperties = {};
-  parts.forEach(part => {
-    if (part.includes('top-')) style.top = `${parseInt(part.replace('top-', '')) * 4}px`;
-    if (part.includes('bottom-')) style.bottom = `${parseInt(part.replace('bottom-', '')) * 4}px`;
-    if (part.includes('left-')) style.left = `${parseInt(part.replace('left-', '')) * 4}px`;
-    if (part.includes('right-')) style.right = `${parseInt(part.replace('right-', '')) * 4}px`;
-  });
-  return style;
-}
-
 /* ════════════════════════════════════════════════
-   PROPOSAL PAGE - 產品提案 (客戶) + 光暈效果
+   PROPOSAL PAGE - 產品提案 (客戶) + 全局光暈
 ════════════════════════════════════════════════ */
-function ProposalPage() {
+function ProposalPage({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   return (
     <div className="scroll-smooth relative">
-      {/* 全局背景光暈 - 帶呼吸動畫 */}
-      <AmbientGlow color="#39FF14" position="top-20 left-10" size={500} animationClass="animate-glow-slow-1" />
-      <AmbientGlow color="#EE4D2D" position="top-60 right-20" size={400} animationClass="animate-glow-slow-2" />
+      {/* 全局滑鼠視差光暈背景層 */}
+      <GlobalParallaxGlow mouseX={mouseX} mouseY={mouseY} />
       
       <section id="hero">
         <HeroSection />
       </section>
       
-      {/* VI品牌識別 - 帶光暈 */}
-      <section id="vibrand" className="relative overflow-hidden">
-        <AmbientGlow color="#39FF14" position="top-10 left-1/4" size={350} />
-        <AmbientGlow color="#D4AF37" position="bottom-20 right-10" size={300} />
+      {/* VI品牌識別 */}
+      <section id="vibrand">
         <ViBrandSection />
       </section>
       
       {/* 機身規格 - 移到VI之後 */}
-      <section id="spec" className="relative overflow-hidden">
-        <AmbientGlow color="#EE4D2D" position="top-20 left-10" size={400} />
-        <AmbientGlow color="#39FF14" position="bottom-10 right-1/4" size={350} />
+      <section id="spec">
         <SpecSection />
       </section>
       
@@ -1083,11 +1081,27 @@ function ProposalPage() {
 }
 
 /* ════════════════════════════════════════════════
-   APP ROOT - 整合平滑滾動與錨點追蹤
+   APP ROOT - 整合平滑滾動、錨點追蹤與滑鼠視差
 ════════════════════════════════════════════════ */
 export default function App() {
   const [mode, setMode] = useState<NavMode>("product");
   const [activeSection, setActiveSection] = useState("hero");
+  
+  // 滑鼠視差追蹤 (0~1 正規化座標)
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+
+  // 監聽滑鼠移動
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   // 平滑滾動到指定區塊
   const scrollToSection = (id: string) => {
@@ -1135,7 +1149,7 @@ export default function App() {
         activeSection={activeSection}
         scrollToSection={scrollToSection}
       />
-      {mode === "product" ? <ProposalPage /> : <AdminPage />}
+      {mode === "product" ? <ProposalPage mouseX={mousePos.x} mouseY={mousePos.y} /> : <AdminPage />}
     </div>
   );
 }

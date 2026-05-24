@@ -24,6 +24,8 @@ interface NavbarProps {
 }
 
 function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   const productNavItems = [
     { id: "hero", label: "首頁" },
     { id: "vibrand", label: "VI品牌識別" },
@@ -31,6 +33,11 @@ function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) 
     { id: "demo", label: "後台監控 Demo" },
     { id: "contact", label: "聯繫我們" },
   ];
+
+  const handleNavClick = (id: string) => {
+    scrollToSection(id);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-8 h-16 md:h-20 backdrop-blur-md bg-zinc-950/70 border-b border-white/10">
@@ -41,7 +48,7 @@ function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) 
 
       {/* 右側：錨點選單 + 大分頁切換 */}
       <div className="flex items-center gap-4 md:gap-6">
-        {/* 產品提案模式時顯示錨點選單 */}
+        {/* 桌面版：產品提案模式時顯示錨點選單 */}
         {mode === "product" && (
           <div className="hidden lg:flex items-center gap-1">
             {productNavItems.map((item) => (
@@ -81,7 +88,45 @@ function Navbar({ mode, setMode, activeSection, scrollToSection }: NavbarProps) 
             <span className="md:hidden">數據</span>
           </button>
         </div>
+
+        {/* 手機版：漢堡選單按鈕（僅產品模式顯示） */}
+        {mode === "product" && (
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-all"
+            aria-label="開啟選單"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        )}
       </div>
+
+      {/* 手機版下拉選單 */}
+      {mobileMenuOpen && mode === "product" && (
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-zinc-950/95 backdrop-blur-md border-b border-white/10 py-4 px-4 shadow-2xl">
+          <div className="flex flex-col gap-2">
+            {productNavItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`px-4 py-3 rounded-xl text-left text-base transition-all duration-300 ${
+                  activeSection === item.id
+                    ? "text-[#39FF14] bg-[#39FF14]/10 font-medium"
+                    : "text-white/70 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

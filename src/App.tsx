@@ -836,7 +836,7 @@ function ContactSection() {
           >
             {/* Email 卡片 - 可點擊 */}
             <a 
-              href="mailto:hello@rebox.tw"
+              href="mailto:jaggersu@gmail.com"
               className="block group"
             >
               <div 
@@ -861,7 +861,7 @@ function ContactSection() {
                       <h3 className="text-base font-bold text-white">商務電子郵件</h3>
                       <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-[#39FF14]/20 text-[#39FF14]">推薦</span>
                     </div>
-                    <p className="text-[#39FF14] text-sm font-mono mt-1">hello@rebox.tw</p>
+                    <p className="text-[#39FF14] text-sm font-mono mt-1">jaggersu@gmail.com</p>
                     <p className="text-white/40 text-xs mt-1">點擊直接發送郵件 →</p>
                   </div>
                 </div>

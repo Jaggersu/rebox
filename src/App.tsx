@@ -130,9 +130,28 @@ function GlassCard({ children, accent, className = "" }: { children: React.React
 }
 
 /* ════════════════════════════════════════════════
-   HERO SECTION - 首頁 (帶 id 支援錨點)
+   HERO SECTION - 首頁 (帶入場動畫)
 ════════════════════════════════════════════════ */
 function HeroSection() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // 100ms 延遲觸發入場動畫，確保瀏覽器已渲染
+    const timer = setTimeout(() => setMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // 動畫狀態類別 - 使用完整字串避免 Tailwind purge
+  const fadeInUp = mounted 
+    ? "opacity-100 translate-y-0" 
+    : "opacity-0 translate-y-8";
+  const fadeIn = mounted 
+    ? "opacity-100" 
+    : "opacity-0";
+  const scaleIn = mounted 
+    ? "opacity-100 scale-100" 
+    : "opacity-0 scale-95";
+
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center pt-24 pb-16 px-4 md:px-8 relative overflow-hidden scroll-mt-20">
       {/* 背景發光效果 */}
@@ -140,38 +159,42 @@ function HeroSection() {
       
       <div className="max-w-4xl mx-auto w-full relative z-10">
         {/* 標籤 */}
-        <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-6 border border-[#39FF14]/30 bg-[#39FF14]/10">
+        <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-6 border border-[#39FF14]/30 bg-[#39FF14]/10 transition-all duration-700 ease-out ${fadeInUp}`}>
           <span className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse" />
           <span className="text-sm font-medium text-[#39FF14]">ESG × 單向純回收 × 無人智取站</span>
         </div>
         
         {/* 主標題 */}
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+        <h1 className={`text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6 transition-all duration-1000 delay-150 ease-out ${fadeInUp}`}>
           RE:BOX 智能循環機
           <br />
           <span className="text-[#39FF14]">啟動無人店的綠色微循環</span>
         </h1>
         
         {/* 副標題 */}
-        <p className="text-lg md:text-xl text-white/60 max-w-xl mb-8 leading-relaxed">
+        <p className={`text-lg md:text-xl text-white/60 max-w-xl mb-8 leading-relaxed transition-all duration-1000 delay-300 ease-out ${fadeInUp}`}>
           零髒亂、真回收，為智取店量身打造的 ESG 智能寄取站
         </p>
         
         {/* 特色標籤 */}
-        <div className="flex flex-wrap gap-3 mb-12">
-          {["2700K 暖白光", "內凹防呆工作台", "單向純回收"].map((tag) => (
-            <span key={tag} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70">
+        <div className={`flex flex-wrap gap-3 mb-12 transition-all duration-1000 delay-500 ease-out ${fadeInUp}`}>
+          {["2700K 暖白光", "內凹防呆工作台", "單向純回收"].map((tag, i) => (
+            <span 
+              key={tag} 
+              className={`px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 transition-all duration-700 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+              style={{ transitionDelay: `${600 + i * 100}ms` }}
+            >
               {tag}
             </span>
           ))}
         </div>
         
         {/* Hero 圖片區域 */}
-        <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 bg-black">
-          <img src="/hero.png" alt="RE:BOX" className="w-full h-full object-cover" />
+        <div className={`relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 bg-black transition-all duration-1200 delay-700 ease-out ${scaleIn}`}>
+          <img src="/hero.png" alt="RE:BOX" className={`w-full h-full object-cover transition-all duration-1000 delay-1000 ${fadeIn}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           {/* 底部發光線條 */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-[2px] bg-gradient-to-r from-transparent via-[#FFF4E0] to-transparent" 
+          <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-[2px] bg-gradient-to-r from-transparent via-[#FFF4E0] to-transparent transition-all duration-1000 delay-1200 ${fadeIn}`}
                style={{ boxShadow: "0 0 30px 5px rgba(255, 244, 224, 0.3)" }} />
         </div>
       </div>

@@ -4,6 +4,19 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  // Safelist: 確保動畫類別在生產環境不被 purge
+  safelist: [
+    // 淡入動畫類別
+    'opacity-0', 'opacity-100',
+    'translate-y-0', 'translate-y-4', 'translate-y-6', 'translate-y-8',
+    'scale-95', 'scale-100',
+    // 延遲動畫
+    'delay-100', 'delay-150', 'delay-300', 'delay-500', 'delay-700', 'delay-1000', 'delay-1200',
+    // 過渡時間
+    'duration-700', 'duration-1000', 'duration-1200',
+    // 動畫曲線
+    'ease-out',
+  ],
   theme: {
     extend: {
       fontSize: {

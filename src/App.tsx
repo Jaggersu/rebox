@@ -362,14 +362,32 @@ function PartnershipSection() {
           ))}
         </div>
         
-        {/* CTA 按鈕 */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="px-8 py-4 rounded-full font-bold text-black bg-[#39FF14] hover:bg-[#39FF14]/90 transition-all">
-            立即洽談合作
-          </button>
-          <button className="px-8 py-4 rounded-full font-medium text-white border border-white/20 hover:bg-white/5 transition-all">
-            下載完整提案 PDF
-          </button>
+        {/* CTA - 只保留 PDF 下載，玻璃擬態高級感 */}
+        <div className="flex justify-center">
+          <a 
+            href="/REBOX_Proposal.pdf" 
+            download
+            className="group inline-flex items-center gap-3 px-10 py-4 rounded-full font-medium text-white transition-all duration-300"
+            style={{
+              background: 'rgba(255, 255, 255, 0.03)',
+              border: '1px solid rgba(57, 255, 20, 0.3)',
+              backdropFilter: 'blur(10px)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(57, 255, 20, 0.1)';
+              e.currentTarget.style.borderColor = 'rgba(57, 255, 20, 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+              e.currentTarget.style.borderColor = 'rgba(57, 255, 20, 0.3)';
+            }}
+          >
+            <svg className="w-5 h-5 text-[#39FF14]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>下載完整提案 PDF</span>
+            <span className="text-[#39FF14]/60 text-sm">↓</span>
+          </a>
         </div>
       </div>
     </section>

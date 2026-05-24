@@ -557,20 +557,69 @@ function ContactSection() {
 }
 
 /* ════════════════════════════════════════════════
-   PROPOSAL PAGE - 產品提案 (客戶)
+   AMBIENT GLOW - 環境光暈元件
+════════════════════════════════════════════════ */
+function AmbientGlow({ color, position, size = 400 }: { color: string; position: string; size?: number }) {
+  return (
+    <div
+      className="absolute pointer-events-none z-0"
+      style={{
+        ...parsePosition(position),
+        width: size,
+        height: size,
+        background: color,
+        borderRadius: '50%',
+        filter: 'blur(130px)',
+        opacity: 0.12,
+      }}
+    />
+  );
+}
+
+// 解析位置字符串為 style 屬性
+function parsePosition(pos: string): React.CSSProperties {
+  const parts = pos.split(' ');
+  const style: React.CSSProperties = {};
+  parts.forEach(part => {
+    if (part.includes('top-')) style.top = `${parseInt(part.replace('top-', '')) * 4}px`;
+    if (part.includes('bottom-')) style.bottom = `${parseInt(part.replace('bottom-', '')) * 4}px`;
+    if (part.includes('left-')) style.left = `${parseInt(part.replace('left-', '')) * 4}px`;
+    if (part.includes('right-')) style.right = `${parseInt(part.replace('right-', '')) * 4}px`;
+  });
+  return style;
+}
+
+/* ════════════════════════════════════════════════
+   PROPOSAL PAGE - 產品提案 (客戶) + 光暈效果
 ════════════════════════════════════════════════ */
 function ProposalPage() {
   return (
-    <div className="scroll-smooth">
+    <div className="scroll-smooth relative">
+      {/* 全局背景光暈 */}
+      <AmbientGlow color="#39FF14" position="top-20 left-10" size={500} />
+      <AmbientGlow color="#EE4D2D" position="top-60 right-20" size={400} />
+      
       <section id="hero">
         <HeroSection />
       </section>
-      <section id="vibrand">
+      
+      {/* VI品牌識別 - 帶光暈 */}
+      <section id="vibrand" className="relative overflow-hidden">
+        <AmbientGlow color="#39FF14" position="top-10 left-1/4" size={350} />
+        <AmbientGlow color="#D4AF37" position="bottom-20 right-10" size={300} />
         <ViBrandSection />
       </section>
+      
       <PainSolutionSection />
       <FeaturesSection />
-      <SpecSection />
+      
+      {/* 機身規格 - 帶光暈 */}
+      <section id="spec" className="relative overflow-hidden">
+        <AmbientGlow color="#EE4D2D" position="top-20 left-10" size={400} />
+        <AmbientGlow color="#39FF14" position="bottom-10 right-1/4" size={350} />
+        <SpecSection />
+      </section>
+      
       <DemoSection />
       <PartnershipSection />
       <ContactSection />
@@ -620,7 +669,12 @@ export default function App() {
   }, [mode]);
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d]">
+    <div 
+      className="min-h-screen"
+      style={{
+        background: 'linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%)',
+      }}
+    >
       <Navbar 
         mode={mode} 
         setMode={setMode} 

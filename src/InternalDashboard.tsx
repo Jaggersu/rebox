@@ -583,11 +583,11 @@ const MODIFICATION_SPECS = [
   },
   {
     id: '05',
-    title: '包材販賣商品出口處',
+    title: '工作台頂置重力落料系統',
     items: [
-      '45°重力流動滑槽：不鏽鋼斜坡，扣款後包材自然滑出',
-      '單向防逆向防盜擋板：外部伸手往內掏取時卡死',
-      '內嵌下凹式防落物設計：10cm 口袋型，阻絕雨水與垃圾'
+      '工作台頂置重力落料 (Top-Down Gravity Drop)：出料口完美隱藏於中段內凹工作台（高度約 130cm 處）的天花板內部。完成扣款時，內部滾軸馬達將商品推至邊緣，直接掉落至下方的工作檯面上。消費者免彎腰、免下撈，在同一個檯面上完成「拿取包材、拉鋼索割箱、個資塗銷、現場打包」的一條龍動線。',
+      '零外部活動零件與閘門 (Zero Mechanical Maintenance)：全機外部與下半部完全「無外突托盤、無馬達掀蓋、無活動閘門」，下半部機身維持 100% 完整密閉鋼板。徹底杜絕因智取店環境積塵卡死、或消費者用手強行掰開造成的機械損壞公關風險。',
+      '天花板內嵌狹縫防惡意破壞 (Recessed Slot Ceiling)：出料口採內嵌狹縫設計且隱藏於工作台頂部天花板。此幾何位置極度防掏防盜，外部手臂與工具完全無法逆向伸入偷取庫存；同時完美防範門市消費者的惡意破壞，防止煙蒂、飲料罐等垃圾被順手塞入出料通道。'
     ]
   }
 ];
@@ -608,55 +608,57 @@ function MachineVisualCard() {
         <p className="text-xs text-slate-500 mt-2">智能寄取循環站</p>
       </div>
 
-      {/* 中段內凹檯面標記 */}
-      <div className="relative z-10 mx-2">
+      {/* 中段內凹檯面 + 頂置隱藏出料槽 */}
+      <div className="relative z-10 mx-2 space-y-2">
+        {/* 頂置隱藏出料槽標記 */}
+        <div className="border-2 border-dashed border-emerald-500/30 rounded-lg p-3 bg-slate-800/50">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-lg">📦</span>
+            <span className="text-xs font-bold text-emerald-400">頂置隱藏出料槽</span>
+          </div>
+          <p className="text-xs text-slate-500">工作台天花板 (H130cm) • 重力落料</p>
+        </div>
+        
+        {/* 中段內凹檯面標記 */}
         <div className="border-2 border-dashed border-[#39FF14]/30 rounded-lg p-4 bg-slate-800/50">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-lg">📐</span>
-            <span className="text-sm font-bold text-[#39FF14]">中段內凹檯面</span>
+            <span className="text-sm font-bold text-[#39FF14]">中段內凹工作台</span>
           </div>
           <p className="text-xs text-slate-400 mb-2">一體成型內凹挖空 (零活動零件)</p>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+          <div className="flex flex-wrap gap-1 text-xs text-slate-500">
             <span className="px-2 py-1 bg-slate-700 rounded">🪢 自動回捲鋼索</span>
-            <span className="px-2 py-1 bg-slate-700 rounded">🔪 安全割箱刀</span>
-            <span className="px-2 py-1 bg-slate-700 rounded">🔒 個資亂碼章</span>
+            <span className="px-2 py-1 bg-slate-700 rounded">🔪 割箱刀</span>
+            <span className="px-2 py-1 bg-slate-700 rounded">🔒 個資章</span>
           </div>
         </div>
       </div>
 
-      {/* 下半部回收槽標記 */}
+      {/* 下半部回收槽 - 100% 密閉鋼板 */}
       <div className="relative z-10 mx-2">
         <div className="border-2 border-dashed border-[#EE4D2D]/30 rounded-lg p-4 bg-slate-800/50">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-lg">♻️</span>
             <span className="text-sm font-bold text-[#EE4D2D]">單向回收槽</span>
+            <span className="px-2 py-0.5 rounded text-[10px] bg-[#EE4D2D]/20 text-[#EE4D2D]">100% 密閉</span>
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-400">入口寬度</span>
+              <span className="text-slate-400">回收口</span>
               <span className="text-white font-medium">1.5~2cm 極限狹長</span>
             </div>
             <div className="flex justify-between text-xs">
+              <span className="text-slate-400">外部結構</span>
+              <span className="text-[#FFF4E0]">完整密閉鋼板</span>
+            </div>
+            <div className="flex justify-between text-xs">
               <span className="text-slate-400">監測視窗</span>
-              <span className="text-[#FFF4E0]">高強度壓克力</span>
+              <span className="text-slate-300">高強度壓克力</span>
             </div>
             <div className="h-1.5 rounded-full bg-slate-700 mt-2">
               <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-[#EE4D2D] to-[#39FF14]" />
             </div>
             <p className="text-xs text-slate-500 text-center mt-1">滿載度動態監測</p>
-          </div>
-        </div>
-      </div>
-
-      {/* 底端商品出口 */}
-      <div className="relative z-10 mx-2">
-        <div className="border-2 border-dashed border-emerald-500/30 rounded-lg p-3 bg-slate-800/50">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📦</span>
-            <div>
-              <span className="text-xs font-bold text-emerald-400">商品出口處</span>
-              <p className="text-xs text-slate-500">45°滑槽 + 單向防盜擋板</p>
-            </div>
           </div>
         </div>
       </div>

@@ -561,8 +561,8 @@ function SpecSection() {
 
   const specs = [
     { label: "機身高度", value: "180 cm", desc: "符合人體工學，輕鬆投遞" },
-    { label: "機身寬度", value: "60 cm", desc: "薄型設計，極致坪效" },
-    { label: "機身深度", value: "75 cm", desc: "內凹防呆工作台" },
+    { label: "機身寬度", value: "120 cm", desc: "薄型設計，極致坪效" },
+    { label: "機身深度", value: "60 cm", desc: "內凹防呆工作台" },
     { label: "材質", value: "SGCC 鍍鋅鋼板", desc: "消光金屬鐵灰烤漆" },
     { label: "容量", value: "約 200 個紙箱", desc: "單次清運週期約 3-5 天" },
     { label: "電力需求", value: "110V / 200W", desc: "隨插即用，無須改電" },

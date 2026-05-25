@@ -555,6 +555,196 @@ function InventoryBar({
   );
 }
 
+/* ═══════════════════════════════════════════════════════════
+   COMPONENT: Hardware Specs Panel - 機體 3D 視覺與規格
+═══════════════════════════════════════════════════════════ */
+
+// 硬體改裝工藝明細（包含新的商品出口處）
+const MODIFICATION_SPECS = [
+  {
+    id: '01',
+    title: '薄型化金屬烤漆機身',
+    items: ['SGCC 鍍鋅鋼板材質', '消光金屬鐵灰烤漆', '全機防水車貼噴墨']
+  },
+  {
+    id: '02',
+    title: '中段內凹挖空檯面',
+    items: ['一體成型零活動零件', '自動回捲伸縮鋼索', '懸吊安全割箱刀與個資亂碼章']
+  },
+  {
+    id: '03',
+    title: '物理防呆狹長入口槽',
+    items: ['1.5~2cm 極限狹長入口設計', '強迫壓平紙箱機制']
+  },
+  {
+    id: '04',
+    title: '高強度透明壓克力視窗',
+    items: ['下半部回收槽滿載度動態監測', '2700K 溫潤白光 LED 燈條']
+  },
+  {
+    id: '05',
+    title: '包材販賣商品出口處',
+    items: [
+      '45°重力流動滑槽：不鏽鋼斜坡，扣款後包材自然滑出',
+      '單向防逆向防盜擋板：外部伸手往內掏取時卡死',
+      '內嵌下凹式防落物設計：10cm 口袋型，阻絕雨水與垃圾'
+    ]
+  }
+];
+
+function MachineVisualCard() {
+  return (
+    <div className="aspect-[9/16] bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+      {/* 背景發光效果 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#39FF14]/5 via-transparent to-[#EE4D2D]/5 pointer-events-none" />
+      
+      {/* 頂端 Logo 呈現 */}
+      <div className="relative z-10 text-center">
+        <h2 className="text-4xl font-black tracking-tight">
+          <span style={{ color: '#39FF14' }}>R</span>
+          <span style={{ color: '#EE4D2D' }}>E</span>
+          <span className="text-[#FFF4E0] drop-shadow-[0_0_25px_rgba(255,244,224,0.6)]">:BOX</span>
+        </h2>
+        <p className="text-xs text-slate-500 mt-2">智能寄取循環站</p>
+      </div>
+
+      {/* 中段內凹檯面標記 */}
+      <div className="relative z-10 mx-2">
+        <div className="border-2 border-dashed border-[#39FF14]/30 rounded-lg p-4 bg-slate-800/50">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-lg">📐</span>
+            <span className="text-sm font-bold text-[#39FF14]">中段內凹檯面</span>
+          </div>
+          <p className="text-xs text-slate-400 mb-2">一體成型內凹挖空 (零活動零件)</p>
+          <div className="flex items-center gap-2 text-xs text-slate-500">
+            <span className="px-2 py-1 bg-slate-700 rounded">🪢 自動回捲鋼索</span>
+            <span className="px-2 py-1 bg-slate-700 rounded">🔪 安全割箱刀</span>
+            <span className="px-2 py-1 bg-slate-700 rounded">🔒 個資亂碼章</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 下半部回收槽標記 */}
+      <div className="relative z-10 mx-2">
+        <div className="border-2 border-dashed border-[#EE4D2D]/30 rounded-lg p-4 bg-slate-800/50">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-lg">♻️</span>
+            <span className="text-sm font-bold text-[#EE4D2D]">單向回收槽</span>
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-400">入口寬度</span>
+              <span className="text-white font-medium">1.5~2cm 極限狹長</span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-400">監測視窗</span>
+              <span className="text-[#FFF4E0]">高強度壓克力</span>
+            </div>
+            <div className="h-1.5 rounded-full bg-slate-700 mt-2">
+              <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-[#EE4D2D] to-[#39FF14]" />
+            </div>
+            <p className="text-xs text-slate-500 text-center mt-1">滿載度動態監測</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 底端商品出口 */}
+      <div className="relative z-10 mx-2">
+        <div className="border-2 border-dashed border-emerald-500/30 rounded-lg p-3 bg-slate-800/50">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">📦</span>
+            <div>
+              <span className="text-xs font-bold text-emerald-400">商品出口處</span>
+              <p className="text-xs text-slate-500">45°滑槽 + 單向防盜擋板</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HardwareSpecsPanel() {
+  const [expanded, setExpanded] = useState<string | null>('05');
+
+  return (
+    <section className="py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* 標題 */}
+        <div className="mb-8">
+          <h2 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-3">
+            <span>🔧</span>
+            機體硬體規格與改裝工藝
+          </h2>
+          <p className="text-slate-400 mt-2">Hardware Specs & Modification Details • 10 台 MVP 桃園測試機規格基準</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* 左側：3D 機體視覺卡片 */}
+          <div className="lg:col-span-1">
+            <MachineVisualCard />
+          </div>
+
+          {/* 右側：5 大改裝工藝 Accordion */}
+          <div className="lg:col-span-2 space-y-3">
+            {MODIFICATION_SPECS.map((spec) => (
+              <div 
+                key={spec.id}
+                className={`rounded-xl border transition-all duration-300 overflow-hidden ${
+                  expanded === spec.id 
+                    ? 'bg-slate-800/80 border-[#39FF14]/50' 
+                    : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                <button
+                  onClick={() => setExpanded(expanded === spec.id ? null : spec.id)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className={`text-lg font-bold ${
+                      expanded === spec.id ? 'text-[#39FF14]' : 'text-slate-500'
+                    }`}>
+                      {spec.id}
+                    </span>
+                    <span className={`font-medium ${
+                      expanded === spec.id ? 'text-white' : 'text-slate-300'
+                    }`}>
+                      {spec.title}
+                    </span>
+                    {spec.id === '05' && (
+                      <span className="px-2 py-0.5 rounded text-xs bg-emerald-500/20 text-emerald-400 font-medium">
+                        NEW
+                      </span>
+                    )}
+                  </div>
+                  <span className={`text-slate-400 transition-transform duration-300 ${
+                    expanded === spec.id ? 'rotate-180' : ''
+                  }`}>
+                    ▼
+                  </span>
+                </button>
+                
+                {expanded === spec.id && (
+                  <div className="px-6 pb-4 border-t border-slate-700/50">
+                    <div className="pt-4 space-y-2">
+                      {spec.items.map((item, idx) => (
+                        <div key={idx} className="flex items-start gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#39FF14] mt-2 flex-shrink-0" />
+                          <p className="text-sm text-slate-300 leading-relaxed">{item}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function MachineMonitoring() {
   // TODO: 未來替換為 Supabase 即時訂閱
   const [machines] = useState<MachineStatus[]>(MOCK_MACHINES);
@@ -772,6 +962,14 @@ export default function InternalDashboard() {
         {/* SOP 分工 */}
         <SOPPanel />
         
+        {/* 分隔線 */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-px bg-slate-800"></div>
+        </div>
+
+        {/* 機體硬體規格 */}
+        <HardwareSpecsPanel />
+
         {/* 分隔線 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-px bg-slate-800"></div>

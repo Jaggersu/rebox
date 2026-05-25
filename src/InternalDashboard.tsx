@@ -406,7 +406,7 @@ function FinancialDashboard() {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="text-slate-400 text-sm">五年總淨利預估</p>
-                <p className="text-3xl font-black text-[#39FF14]">$13,150萬+</p>
+                <p className="text-3xl font-black text-[#39FF14]">$131,500,000+</p>
               </div>
               <div className="text-right">
                 <p className="text-slate-400 text-sm">最終規模</p>

@@ -613,29 +613,23 @@ function MachineVisualCard() {
         <p className="text-xs text-slate-500 mt-2">智能寄取循環站</p>
       </div>
 
-      {/* 中段內凹檯面 + 頂置隱藏出料槽 */}
-      <div className="relative z-10 mx-2 space-y-2">
-        {/* 頂置隱藏出料槽標記 */}
+      {/* 實機 3D 外觀圖片 */}
+      <div className="relative z-10 w-full h-[450px] overflow-hidden rounded-xl bg-slate-950/50 border border-slate-800 flex items-center justify-center my-4">
+        <img 
+          src="/spec-xray.png" 
+          alt="RE:BOX 實機 3D 外觀規格" 
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(57,255,20,0.15)]"
+        />
+      </div>
+
+      {/* 頂置隱藏出料槽標記 */}
+      <div className="relative z-10 mx-2">
         <div className="border-2 border-dashed border-emerald-500/30 rounded-lg p-3 bg-slate-800/50">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-lg">📦</span>
+            <span className="text-lg">�</span>
             <span className="text-xs font-bold text-emerald-400">頂置隱藏出料槽</span>
           </div>
           <p className="text-xs text-slate-500">工作台天花板 (H130cm) • 重力落料</p>
-        </div>
-        
-        {/* 中段內凹檯面標記 */}
-        <div className="border-2 border-dashed border-[#39FF14]/30 rounded-lg p-4 bg-slate-800/50">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">📐</span>
-            <span className="text-sm font-bold text-[#39FF14]">中段內凹工作台</span>
-          </div>
-          <p className="text-xs text-slate-400 mb-2">一體成型內凹挖空 (零活動零件)</p>
-          <div className="flex flex-wrap gap-1 text-xs text-slate-500">
-            <span className="px-2 py-1 bg-slate-700 rounded">🪢 自動回捲鋼索</span>
-            <span className="px-2 py-1 bg-slate-700 rounded">🔪 割箱刀</span>
-            <span className="px-2 py-1 bg-slate-700 rounded">🔒 個資章</span>
-          </div>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ViBrandSection from "./ViBrandSection";
+import InternalDashboard from "./InternalDashboard";
 
 /* ════════════════════════════════════════════════
    BRAND TOKENS
@@ -464,78 +465,13 @@ function PartnershipSection() {
 /* ════════════════════════════════════════════════
    ADMIN PAGE - Simplified
 ════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════
+   ADMIN PAGE - Internal Dashboard (暫免登入驗證)
+════════════════════════════════════════════════ */
 function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleLogin = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setAuthed(true);
-    }, 1500);
-  };
-
-  if (authed) {
-    return (
-      <div className="min-h-screen pt-24 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="glass rounded-3xl p-8 md:p-12 text-center">
-            <div className="w-20 h-20 rounded-full bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-6">
-              <span className="text-4xl">📊</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-black text-white mb-4">營運儀表板</h2>
-            <p className="text-white/50 mb-8">數據正在載入中...</p>
-            <button
-              onClick={() => setAuthed(false)}
-              className="px-6 py-3 rounded-full border border-white/20 text-white hover:bg-white/5 transition-all"
-            >
-              登出
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen flex items-center justify-center p-4 pt-24">
-      <div className="w-full max-w-md">
-        <div className="glass rounded-3xl p-8 md:p-10">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-[#39FF14]/20 flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">🔐</span>
-            </div>
-            <h2 className="text-2xl font-black text-white mb-2">內部管理系統</h2>
-            <p className="text-white/50">登入以存取營運後台</p>
-          </div>
-
-          <div className="space-y-4">
-            <input
-              type="email"
-              placeholder="admin@rebox.tw"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#39FF14]/50"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="密碼"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#39FF14]/50"
-            />
-            <button
-              onClick={handleLogin}
-              disabled={loading}
-              className="w-full py-4 rounded-xl font-bold text-black bg-[#39FF14] hover:bg-[#39FF14]/90 transition-all disabled:opacity-50"
-            >
-              {loading ? "驗證中..." : "登入"}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  // 暫時繞過登入驗證，直接顯示完整後台
+  // TODO: 正式環境恢復 Auth Guard
+  return <InternalDashboard />;
 }
 
 /* ════════════════════════════════════════════════

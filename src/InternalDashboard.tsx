@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 /* ═══════════════════════════════════════════════════════════
    TYPE DEFINITIONS
@@ -376,8 +376,8 @@ function InventoryBar({
 
 function MachineMonitoring() {
   // TODO: 未來替換為 Supabase 即時訂閱
-  const [machines, setMachines] = useState<MachineStatus[]>(MOCK_MACHINES);
-  const [lastUpdate, setLastUpdate] = useState(new Date());
+  const [machines] = useState<MachineStatus[]>(MOCK_MACHINES);
+  const [lastUpdate] = useState(new Date());
 
   /*
   // TODO: 正式環境啟用 Supabase 訂閱

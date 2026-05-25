@@ -439,42 +439,42 @@ function SOPPanel() {
           <p className="text-slate-400">三端協作，確保專案順利推進</p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        {/* Tabs - 手機優化：滿寬按鈕、可橫向滑動 */}
+        <div className="flex sm:flex-wrap gap-2 mb-6 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
           {SOP_DATA.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl font-medium transition-all duration-300 flex-shrink-0 active:scale-95 ${
                 activeTab === tab.id
-                  ? 'text-black'
+                  ? 'text-black shadow-lg'
                   : 'text-slate-400 hover:text-white bg-slate-800/50 hover:bg-slate-800'
               }`}
               style={{
                 background: activeTab === tab.id ? tab.color : undefined,
+                boxShadow: activeTab === tab.id ? `0 4px 20px ${tab.color}40` : undefined
               }}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.title}</span>
+              <span className="text-lg">{tab.icon}</span>
+              <span className="whitespace-nowrap">{tab.title}</span>
             </button>
           ))}
         </div>
 
-        {/* 內容面板 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* 內容面板 - 手機優化：只顯示活動卡片，減少干擾 */}
+        <div className="block lg:grid lg:grid-cols-3 gap-6">
           {SOP_DATA.map((dept) => (
             <div
               key={dept.id}
               className={`rounded-2xl p-6 transition-all duration-300 ${
                 activeTab === dept.id
-                  ? 'bg-slate-800/80 border-2 scale-[1.02] shadow-2xl'
-                  : 'bg-slate-900/30 border border-slate-800 opacity-60'
+                  ? 'bg-slate-800/80 border-2 shadow-2xl block'
+                  : 'hidden lg:block bg-slate-900/30 border border-slate-800 opacity-60'
               }`}
               style={{
                 borderColor: activeTab === dept.id ? dept.color : undefined,
                 boxShadow: activeTab === dept.id ? `0 0 30px ${dept.color}20` : undefined
               }}
-              onClick={() => setActiveTab(dept.id)}
             >
               <div className="flex items-center gap-3 mb-5">
                 <div 
@@ -506,6 +506,11 @@ function SOPPanel() {
             </div>
           ))}
         </div>
+        
+        {/* 手機端：滑動提示 */}
+        <p className="lg:hidden text-center text-xs text-slate-500 mt-4">
+          左右滑動切換頁籤 ↑
+        </p>
       </div>
     </section>
   );

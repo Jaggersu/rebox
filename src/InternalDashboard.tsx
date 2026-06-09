@@ -18,17 +18,18 @@ interface MachineStatus {
    TODO: 未來替換為 Supabase client fetch
 ═══════════════════════════════════════════════════════════ */
 
+// RE:BOX 2.0 Mock Data: 600-unit max capacity, $15/unit, red warning <20% (<120 units) or >80% full
 const MOCK_MACHINES: MachineStatus[] = [
-  { machine_id: 'TAOYUAN_A01', status: 'online', bag_inventory: 65, tape_inventory: 45, yesterday_revenue: 2450, bin_fill_rate: 35 },
-  { machine_id: 'TAOYUAN_A02', status: 'online', bag_inventory: 18, tape_inventory: 72, yesterday_revenue: 1890, bin_fill_rate: 62 },
-  { machine_id: 'TAOYUAN_A03', status: 'online', bag_inventory: 82, tape_inventory: 15, yesterday_revenue: 3120, bin_fill_rate: 28 },
-  { machine_id: 'TAOYUAN_A04', status: 'offline', bag_inventory: 45, tape_inventory: 38, yesterday_revenue: 0, bin_fill_rate: 0 },
-  { machine_id: 'TAOYUAN_A05', status: 'online', bag_inventory: 55, tape_inventory: 88, yesterday_revenue: 2780, bin_fill_rate: 85 },
-  { machine_id: 'TAOYUAN_A06', status: 'online', bag_inventory: 92, tape_inventory: 25, yesterday_revenue: 1950, bin_fill_rate: 42 },
-  { machine_id: 'TAOYUAN_A07', status: 'online', bag_inventory: 30, tape_inventory: 12, yesterday_revenue: 2240, bin_fill_rate: 55 },
-  { machine_id: 'TAOYUAN_A08', status: 'online', bag_inventory: 78, tape_inventory: 92, yesterday_revenue: 3560, bin_fill_rate: 22 },
-  { machine_id: 'TAOYUAN_A09', status: 'online', bag_inventory: 42, tape_inventory: 68, yesterday_revenue: 2100, bin_fill_rate: 91 },
-  { machine_id: 'TAOYUAN_A10', status: 'offline', bag_inventory: 25, tape_inventory: 35, yesterday_revenue: 0, bin_fill_rate: 0 },
+  { machine_id: 'TAOYUAN_A01', status: 'online', bag_inventory: 65, tape_inventory: 45, yesterday_revenue: 315, bin_fill_rate: 35 },  // 21 units × $15
+  { machine_id: 'TAOYUAN_A02', status: 'online', bag_inventory: 18, tape_inventory: 72, yesterday_revenue: 240, bin_fill_rate: 62 },  // 16 units × $15 ⚠️ low stock
+  { machine_id: 'TAOYUAN_A03', status: 'online', bag_inventory: 82, tape_inventory: 15, yesterday_revenue: 420, bin_fill_rate: 28 },  // 28 units × $15
+  { machine_id: 'TAOYUAN_A04', status: 'offline', bag_inventory: 45, tape_inventory: 38, yesterday_revenue: 0, bin_fill_rate: 0 },     // offline
+  { machine_id: 'TAOYUAN_A05', status: 'online', bag_inventory: 55, tape_inventory: 88, yesterday_revenue: 375, bin_fill_rate: 85 },  // 25 units × $15 ⚠️ bin full
+  { machine_id: 'TAOYUAN_A06', status: 'online', bag_inventory: 92, tape_inventory: 25, yesterday_revenue: 285, bin_fill_rate: 42 },  // 19 units × $15
+  { machine_id: 'TAOYUAN_A07', status: 'online', bag_inventory: 30, tape_inventory: 12, yesterday_revenue: 195, bin_fill_rate: 55 },  // 13 units × $15 ⚠️ low stock
+  { machine_id: 'TAOYUAN_A08', status: 'online', bag_inventory: 78, tape_inventory: 92, yesterday_revenue: 495, bin_fill_rate: 22 },  // 33 units × $15 (high performer)
+  { machine_id: 'TAOYUAN_A09', status: 'online', bag_inventory: 42, tape_inventory: 68, yesterday_revenue: 255, bin_fill_rate: 91 },  // 17 units × $15 ⚠️ bin full
+  { machine_id: 'TAOYUAN_A10', status: 'offline', bag_inventory: 25, tape_inventory: 35, yesterday_revenue: 0, bin_fill_rate: 0 },     // offline
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -109,20 +110,21 @@ function AlertBanner() {
    COMPONENT: Financial Blueprint - 專業財務精算區塊
 ═══════════════════════════════════════════════════════════ */
 
-// 營收來源數據
+// 營收來源數據 (RE:BOX 2.0 - 600-unit capacity optimized)
 const REVENUE_STREAMS = [
   {
     id: 'packaging',
-    name: '軟包材零售',
-    subtitle: '高毛利主動收入',
+    name: '純扁平破壞袋/氣泡袋零售',
+    subtitle: '高毛利主動收入 (單機600份庫存)',
     icon: '📦',
-    dailyCustomers: 8,
-    avgOrderValue: 50,
-    marginRate: 0.60,
-    monthlyRevenue: 12000,
-    monthlyProfit: 7200,
-    formula: '8人 × $50 × 30天',
-    products: ['大/中/小破壞袋', '環保膠帶', '寄件急救包']
+    dailyCustomers: 20,
+    avgOrderValue: 15,
+    marginRate: 0.70,
+    monthlyRevenue: 9000,
+    monthlyProfit: 6300,
+    formula: '20件 × $15 × 30天',
+    products: ['扁平破壞袋', '氣泡袋', '環保膠帶'],
+    capacity: 600
   },
   {
     id: 'recycling',
@@ -158,21 +160,21 @@ const CAPEX_BREAKDOWN = [
   { category: '營運週轉與初期備品', amount: 80000, items: ['首批軟包材進貨', '耗損墨水與刀片準備金'], percent: 9.5 }
 ];
 
-// OpEx 每月營運
+// OpEx 每月營運 (RE:BOX 2.0 - 70% margin model)
 const OPEX_MONTHLY = [
-  { item: '銷貨成本 (COGS)', amount: 4200, unit: '包材進貨 35% 比例', note: '零售額 $12,000 × 35%' },
+  { item: '銷貨成本 (COGS)', amount: 2700, unit: '包材進貨 30% 比例', note: '零售額 $9,000 × 30% (Cost $4.5/unit)' },
   { item: '4G IoT 網卡費', amount: 1500, unit: '$150/台 × 10台', note: '固定通訊規費' },
   { item: '維護與折舊準備金', amount: 5000, unit: '$500/台 × 10台', note: '單機耗材與維護' },
-  { item: '物流清運成本', amount: 0, unit: 'iRent 短租按日計費', note: '變動成本，無固定開銷', highlight: true }
+  { item: '物流清運成本', amount: 0, unit: 'iRent 短租按日計費 (月補貨1次)', note: '600-unit高容量，月補貨1次即可', highlight: true }
 ];
 
-// 五年擴張計劃
+// 五年擴張計劃 (RE:BOX 2.0 - Ultra-thin 88×38cm form factor)
 const FIVE_YEAR_PLAN = [
-  { year: '第一年', machines: 10, phase: 'MVP 驗證期', netProfit: 1100000, marginRate: 0.61, notes: '桃園區驗證單機 8~10 月回本模型' },
-  { year: '第二年', machines: 50, phase: '規模經濟期', netProfit: 7500000, marginRate: 0.68, notes: '包材成本下降 10%，物流路線優化' },
-  { year: '第三年', machines: 120, phase: '區域壟斷期', netProfit: 20000000, marginRate: 0.72, notes: 'DOOH 廣告矩陣效應形成' },
-  { year: '第四年', machines: 200, phase: '通路壟斷期', netProfit: 38000000, marginRate: 0.75, notes: '廣告版位價值翻倍，高壁壘確立' },
-  { year: '第五年', machines: 300, phase: 'SaaS + IoT 王國', netProfit: 65000000, marginRate: 0.78, notes: '全台佈局完成，品牌溢價最大化' }
+  { year: '第一年', machines: 10, phase: 'MVP 驗證期', netProfit: 1275000, marginRate: 0.68, notes: '桃園區驗證單機 600-unit容量，月毛利$4,200~$6,300' },
+  { year: '第二年', machines: 50, phase: '規模經濟期', netProfit: 8500000, marginRate: 0.72, notes: '超薄機身降低進駐門檻，物流路線優化' },
+  { year: '第三年', machines: 120, phase: '區域壟斷期', netProfit: 22000000, marginRate: 0.75, notes: '88×38×180cm標準規模，DOOH廣告矩陣' },
+  { year: '第四年', machines: 200, phase: '通路壟斷期', netProfit: 42000000, marginRate: 0.77, notes: '24H無人店全面覆蓋，高壁壘確立' },
+  { year: '第五年', machines: 300, phase: 'SaaS + IoT 王國', netProfit: 72000000, marginRate: 0.80, notes: '全台300台佈局完成，被動收入最大化' }
 ];
 
 function FinancialDashboard() {
@@ -255,6 +257,7 @@ function FinancialDashboard() {
                           <p className="text-xs text-slate-600 mt-1">{stream.products.join('、')}</p>
                         )}
                         {stream.note && <p className="text-xs text-[#39FF14] mt-1">{stream.note}</p>}
+                        {(stream as any).capacity && <p className="text-xs text-emerald-500/70 mt-1">單機容量: {(stream as any).capacity}份</p>}
                       </td>
                       <td className="py-4 px-4 text-right font-medium text-white">
                         ${stream.monthlyRevenue.toLocaleString()}
@@ -288,7 +291,7 @@ function FinancialDashboard() {
                 MVP 建置預算 (CapEx)
                 <span className="text-2xl font-black text-[#39FF14] ml-auto">${totalCapex.toLocaleString()}</span>
               </h3>
-              <p className="text-sm text-slate-400 mt-1">10 台測試機初期總投入 • 單機平均 $85,000</p>
+              <p className="text-sm text-slate-400 mt-1">RE:BOX 2.0 (88×38×180cm) • 10台總投入 75-95萬 • 單機85,000 • 600-unit庫存</p>
             </div>
             <div className="p-6 space-y-4">
               {CAPEX_BREAKDOWN.map((item, idx) => (
@@ -564,12 +567,16 @@ function InventoryBar({
    COMPONENT: Hardware Specs Panel - 機體 3D 視覺與規格
 ═══════════════════════════════════════════════════════════ */
 
-// 硬體改裝工藝明細（包含新的商品出口處）
+// 硬體改裝工藝明細（RE:BOX 2.0 Ultra-thin 88×38×180cm + 600-unit capacity）
 const MODIFICATION_SPECS = [
   {
     id: '01',
-    title: '薄型化金屬烤漆機身',
-    items: ['SGCC 鍍鋅鋼板材質', '消光金屬鐵灰烤漆', '全機防水車貼噴墨']
+    title: '超薄機身設計 88×38×180cm',
+    items: [
+      '極致薄型：寬88cm × 深38cm × 高180cm，佔地僅0.1坪（0.33㎡），類ATM/壁櫃深度',
+      '600份純扁平包材庫存：優化儲位設計，單機最大容量600份破壞袋/氣泡袋',
+      '窄道零干擾：38cm超薄機身確保不阻礙無人店狹窄動線，大幅降低進駐門檻'
+    ]
   },
   {
     id: '02',
@@ -578,8 +585,12 @@ const MODIFICATION_SPECS = [
   },
   {
     id: '03',
-    title: '物理防呆狹長入口槽',
-    items: ['1.5~2cm 極限狹長入口設計', '強迫壓平紙箱機制']
+    title: '重力幾何防呆入口槽 78×2cm',
+    items: [
+      '78cm寬入口：適配蝦皮最大45×30×30cm紙箱壓平後75cm寬度，「一次直投，免二次對折」',
+      '2.0cm極限高度：物理阻擋咖啡杯等立體垃圾，僅允許扁平紙箱進入',
+      '38cm深度強制水平堆疊：紙箱無法垂直插入，強制水平扁平堆疊，避免誤報滿載'
+    ]
   },
   {
     id: '04',
@@ -609,8 +620,9 @@ function MachineVisualCard() {
           <span style={{ color: '#39FF14' }}>R</span>
           <span style={{ color: '#EE4D2D' }}>E</span>
           <span className="text-[#FFF4E0] drop-shadow-[0_0_25px_rgba(255,244,224,0.6)]">:BOX</span>
+          <span className="text-xs align-top ml-1" style={{ color: '#39FF14' }}>2.0</span>
         </h2>
-        <p className="text-xs text-slate-500 mt-2">智能寄取循環站</p>
+        <p className="text-xs text-slate-500 mt-2">88×38×180cm • 600-unit Ultra-thin</p>
       </div>
 
       {/* 實機 3D 外觀圖片 */}
@@ -643,16 +655,20 @@ function MachineVisualCard() {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
+              <span className="text-slate-400">機身尺寸</span>
+              <span className="text-white font-medium">88×38×180cm (0.1坪)</span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-400">包材庫存</span>
+              <span className="text-[#39FF14] font-medium">600份 純扁平設計</span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-400">單件售價</span>
+              <span className="text-[#FFF4E0]">$15 (Cost $4.5, Margin 70%)</span>
+            </div>
+            <div className="flex justify-between text-xs">
               <span className="text-slate-400">回收口</span>
-              <span className="text-white font-medium">1.5~2cm 極限狹長</span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-400">外部結構</span>
-              <span className="text-[#FFF4E0]">完整密閉鋼板</span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-400">監測視窗</span>
-              <span className="text-slate-300">高強度壓克力</span>
+              <span className="text-white">78×2cm 重力防呆</span>
             </div>
             <div className="h-1.5 rounded-full bg-slate-700 mt-2">
               <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-[#EE4D2D] to-[#39FF14]" />
@@ -946,9 +962,11 @@ export default function InternalDashboard() {
         <div className="py-8 px-4 sm:px-6 lg:px-8 border-b border-slate-800/50">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-3xl sm:text-4xl font-black text-white mb-2">
-              <span className="text-[#39FF14]">RE:BOX</span> 內部營運後台
+              <span className="text-[#39FF14]">RE:BOX</span>
+              <span className="text-[#EE4D2D] text-2xl align-top">2.0</span>
+              <span className="text-white"> 內部營運後台</span>
             </h1>
-            <p className="text-slate-400">合夥人儀表板 Dashboard • MVP 桃園測試機群監測</p>
+            <p className="text-slate-400">88×38×180cm Ultra-thin • 600-unit Capacity • MVP 桃園測試機群監測</p>
           </div>
         </div>
 

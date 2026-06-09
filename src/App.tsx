@@ -253,13 +253,14 @@ function HeroSection() {
 ════════════════════════════════════════════════ */
 function PainSolutionSection() {
   const pains = [
-    { icon: "📦", title: "紙箱爆滿佔空間", desc: "門市廢紙箱無處堆放，嚴重影響動線" },
-    { icon: "💸", title: "清運成本不透明", desc: "自行委外清運頻率高、費用模糊難管控" },
-    { icon: "😤", title: "個資外洩客訴多", desc: "拆箱區凌亂、面單隨意棄置引發隱私疑慮" },
+    { icon: "🏪", title: "24H無人店營運真空", desc: "70%蝦皮門市(約2,000家)已轉型24H無人智取店，現場零店員，寄件者緊急包材需求無人回應" },
+    { icon: "�", title: "廢棄包裹治理危機", desc: "無人環境下廢紙箱與包材隨意堆積，造成環境髒亂與個資外洩公關風險" },
+    { icon: "�", title: "清運成本不透明", desc: "自行委外清運頻率高、費用模糊難管控" },
   ];
   
   const solutions = [
-    { icon: "🔒", title: "單向純回收機制", desc: "物理防呆設計，紙箱只進不出不設共享" },
+    { icon: "🤖", title: "RE:BOX自動化守門員", desc: "24H自動化回收與包材零售，填補無人店營運真空，創造高端包材零售收益" },
+    { icon: "🔒", title: "單向純回收機制", desc: "物理防呆設計，紙箱只進不出不設共享，杜絕廢棄物堆積與個資外洩風險" },
     { icon: "🖊️", title: "個資亂碼滾輪章", desc: "內凹工作台內建亂碼章，一滾即去個資" },
     { icon: "📊", title: "ESG 減碳數據報告", desc: "即時產出精準回收數據協助永續揭露" },
   ];
@@ -272,8 +273,8 @@ function PainSolutionSection() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-4">
             Problem & Solution
           </span>
-          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">痛點與解法</h2>
-          <p className="text-lg text-white/50">現況問題一次解決，從源頭重新設計循環邏輯</p>
+          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">痛點與解決方案</h2>
+          <p className="text-lg text-white/50">2026市場洞察：70%蝦皮門市已轉型24H無人智取店，RE:BOX成為自動化守門員，消除營運真空與公關風險</p>
         </div>
         
         {/* 雙欄佈局 */}
@@ -497,11 +498,14 @@ function SpecSection() {
 
   const specs = [
     { label: "機身高度", value: "180 cm", desc: "符合人體工學，輕鬆投遞" },
-    { label: "機身寬度", value: "120 cm", desc: "薄型設計，極致坪效" },
-    { label: "機身深度", value: "60 cm", desc: "內凹防呆工作台" },
+    { label: "機身寬度", value: "88 cm", desc: "極致薄型，佔地僅約0.1坪" },
+    { label: "機身深度", value: "38 cm", desc: "超薄機身，類ATM/壁櫃深度，零干擾窄道動線" },
+    { label: "佔地面積", value: "0.33 ㎡", desc: "約0.1坪，大幅降低進駐門檻" },
+    { label: "回收入口寬度", value: "78 cm", desc: "適配蝦皮最大紙箱壓平後寬度(75cm)，一次直投免對折" },
+    { label: "回收入口高度", value: "2.0 cm", desc: "重力幾何防呆：物理阻擋立體垃圾，強制水平插入" },
     { label: "材質", value: "SGCC 鍍鋅鋼板", desc: "消光金屬鐵灰烤漆" },
-    { label: "容量", value: "約 200 個紙箱", desc: "單次清運週期約 3-5 天" },
-    { label: "電力需求", value: "110V / 200W", desc: "隨插即用，無須改電" },
+    { label: "容量", value: "約 150 個紙箱", desc: "單次清運週期約 3-5 天" },
+    { label: "電力需求", value: "110V / 150W", desc: "隨插即用，無須改電，零能耗壓扁機制" },
     { label: "去個資滾輪", value: "亂碼覆蓋章", desc: "一滾遮蔽面單個資" },
     { label: "照明系統", value: "2700K 暖白光", desc: "溫潤不刺眼" },
   ];
@@ -513,8 +517,8 @@ function SpecSection() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-4">
             Hardware Specs
           </span>
-          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">機身規格</h2>
-          <p className="text-lg text-white/50">極致工藝打造，每一個細節都為實戰而生</p>
+          <h2 className="text-2xl md:text-4xl font-black text-white mb-4">硬體模組規格</h2>
+          <p className="text-lg text-white/50">超薄38cm機身深度，零干擾無人店窄道動線，佔地僅0.1坪大幅降低進駐門檻</p>
         </div>
         
         <div className="flex flex-col items-center gap-8">
@@ -546,10 +550,10 @@ function SpecSection() {
             >
               <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
                 <span className="w-1 h-5 bg-[#39FF14] rounded-full" />
-                硬體規格
+                機身規格與防呆入口設計
               </h3>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {specs.map((spec) => (
                   <div 
                     key={spec.label}
@@ -564,6 +568,24 @@ function SpecSection() {
                     <p className="text-white/30 text-xs">{spec.desc}</p>
                   </div>
                 ))}
+              </div>
+              
+              {/* 機械設計邏輯說明 */}
+              <div className="mt-8 p-5 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
+                <h4 className="text-sm font-bold text-[#39FF14] mb-3 flex items-center gap-2">
+                  <span>⚙️</span>
+                  機械設計邏輯與重力幾何防呆
+                </h4>
+                <div className="space-y-2 text-sm text-white/70">
+                  <p>
+                    <span className="text-white font-medium">【入口寬度78cm設計】</span>
+                    蝦皮最大允許包裹尺寸為45×30×30cm，拆開壓平後寬度恰好為75cm。78cm寬入口讓最大紙箱能<span className="text-[#39FF14]">「一次直投，免二次對折」</span>，提升用戶體驗。
+                  </p>
+                  <p>
+                    <span className="text-white font-medium">【2.0cm高度重力防呆】</span>
+                    僅2.0cm的狹縫高度物理阻擋立體垃圾（如咖啡杯），配合38cm嚴格機身深度，強制紙箱<span className="text-[#39FF14]">水平插入、扁平堆疊</span>，避免未壓扁紙箱或垂直插入導致的誤報滿載。純被動自動化，無需耗能壓扁機構。
+                  </p>
+                </div>
               </div>
             </div>
           </div>

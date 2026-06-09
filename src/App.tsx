@@ -327,11 +327,12 @@ function PainSolutionSection() {
 }
 
 /* ════════════════════════════════════════════════
-   FEATURES - Glass Cards Grid
+   FEATURES - Glass Cards Grid (RE:BOX 2.0 Premium Delivery)
 ════════════════════════════════════════════════ */
 function FeaturesSection() {
   const features = [
-    { tag: "硬體", title: "薄型 60cm 機身", desc: "110V 隨插即用，極致坪效不擋動線", icon: "📐" },
+    { tag: "硬體", title: "超薄 88×38×180cm", desc: "佔地僅0.1坪，38cm壁櫃深度零干擾無人店窄道動線", icon: "📐" },
+    { tag: "出貨", title: "人體工學檯面直滑出貨", desc: "45°低摩擦重力滑道，包材直落工作檯面，免彎腰優雅取件", icon: "✨" },
     { tag: "防呆", title: "內凹式工作台", desc: "安全割刀・亂碼滾輪章・2700K 暖白光", icon: "🛡️" },
     { tag: "純回收", title: "無共享・無現金", desc: "嚴格單向純回收，確保 ESG 數據乾淨", icon: "♻️" },
   ];
@@ -348,8 +349,8 @@ function FeaturesSection() {
           <p className="text-lg text-white/50">每一個設計細節，都是為了讓站點零客訴、零管理成本</p>
         </div>
         
-        {/* 特色卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 特色卡片 - 2x2 Grid for 4 features */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {features.map((f) => (
             <GlassCard key={f.title} accent={C.cyberGreen}>
               <div className="p-6">
@@ -364,6 +365,50 @@ function FeaturesSection() {
               </div>
             </GlassCard>
           ))}
+        </div>
+
+        {/* Engineering & Architectural Benefits */}
+        <div className="mt-12 rounded-2xl p-6 md:p-8 border border-[#39FF14]/20 bg-gradient-to-br from-[#39FF14]/5 to-transparent">
+          <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+            <span className="w-1 h-5 bg-[#39FF14] rounded-full" />
+            <span>工程架構優勢</span>
+            <span className="text-xs font-normal text-[#39FF14] ml-2">Engineering & Architectural Benefits</span>
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Feature 1: Premium User Experience */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🎯</span>
+                <h4 className="text-sm font-bold text-white">Premium User Experience</h4>
+              </div>
+              <p className="text-xs text-white/60 leading-relaxed">
+                消費者在同一個站立視線高度完成「付款→取件→打包」全流程，<span className="text-[#39FF14]">免彎腰、免蹲地</span>。45°低摩擦重力滑道確保包材平穩滑出，優雅取件體驗。
+              </p>
+            </div>
+
+            {/* Feature 2: Space Maximization */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">📦</span>
+                <h4 className="text-sm font-bold text-white">Space Maximization</h4>
+              </div>
+              <p className="text-xs text-white/60 leading-relaxed">
+                將取件口提升至中段工作檯面，<span className="text-[#39FF14]">38cm超薄機身下半部100%解放</span>，全部容積專用於水平扁平紙箱回收，最大化空間利用效率。
+              </p>
+            </div>
+
+            {/* Feature 3: Passive Anti-Theft Architecture */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🔒</span>
+                <h4 className="text-sm font-bold text-white">Passive Anti-Theft Architecture</h4>
+              </div>
+              <p className="text-xs text-white/60 leading-relaxed">
+                45°傾斜幾何與狹窄出貨口自然形成<span className="text-[#39FF14]">物理防盜屏障</span>，外部手臂與工具無法逆向伸入偷取庫存。純被動機制，無需複雜感應器或馬達閘門。
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

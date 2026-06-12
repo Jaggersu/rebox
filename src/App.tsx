@@ -797,7 +797,7 @@ function DemoSection() {
                     </div>
 
                     {/* 第二行：詳細監控數據 */}
-                    <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
                       {/* 油墨剩餘量 */}
                       <div className="rounded-lg p-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
                         <p className="text-white/40 text-xs mb-1">🖨️ 除個資油墨</p>
@@ -836,7 +836,7 @@ function DemoSection() {
 
             {/* 底部統計 */}
             <div className="mt-6 pt-4 border-t border-white/10">
-              <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                 <div>
                   <p className="text-[#EE4D2D] font-bold text-xl">
                     {stores.filter(s => s.alert === "滿載警戒").length}

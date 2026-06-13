@@ -476,7 +476,8 @@ function PartnershipSection() {
           ))}
         </div>
         
-        {/* CTA - 只保留 PDF 下載，玻璃擬態高級感 */}
+        {/* CTA - 暫時隱藏 PDF 下載按鈕 */}
+        {/*
         <div className="flex justify-center">
           <a 
             href="/REBOX.pdf" 
@@ -503,6 +504,7 @@ function PartnershipSection() {
             <span className="text-[#39FF14]/60 text-sm">↓</span>
           </a>
         </div>
+        */}
       </div>
     </section>
   );

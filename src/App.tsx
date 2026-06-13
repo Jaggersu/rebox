@@ -615,21 +615,60 @@ function SpecSection() {
                 ))}
               </div>
               
-              {/* 機械設計邏輯說明 */}
-              <div className="mt-8 p-5 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
-                <h4 className="text-sm font-bold text-[#39FF14] mb-3 flex items-center gap-2">
-                  <span>⚙️</span>
-                  機械設計邏輯與重力幾何防呆
-                </h4>
-                <div className="space-y-2 text-sm text-white/70">
-                  <p>
-                    <span className="text-white font-medium">【入口寬度78cm設計】</span>
-                    蝦皮最大允許包裹尺寸為45×30×30cm，拆開壓平後寬度恰好為75cm。78cm寬入口讓最大紙箱能<span className="text-[#39FF14]">「一次直投，免二次對折」</span>，提升用戶體驗。
-                  </p>
-                  <p>
-                    <span className="text-white font-medium">【2.0cm高度重力防呆】</span>
-                    僅2.0cm的狹縫高度物理阻擋立體垃圾（如咖啡杯），配合38cm嚴格機身深度，強制紙箱<span className="text-[#39FF14]">水平插入、扁平堆疊</span>，避免未壓扁紙箱或垂直插入導致的誤報滿載。純被動自動化，無需耗能壓扁機構。
-                  </p>
+              {/* 被動工業設計邏輯說明 */}
+              <div className="mt-8 space-y-4">
+                {/* Step 1: 懸浮暗輪設計 */}
+                <div className="p-5 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
+                  <h4 className="text-sm font-bold text-[#39FF14] mb-3 flex items-center gap-2">
+                    <span>🛞</span>
+                    懸浮暗輪設計 Floating Aesthetic
+                  </h4>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <p>
+                      <span className="text-white font-medium">【2cm 視覺離地踢腳線】</span>
+                      機站外側板與前門向下延伸至距地面僅留<span className="text-[#39FF14]">「2cm 視覺離地踢腳線」</span>的極窄縫隙，整機呈現懸浮幾何量體感。
+                    </p>
+                    <p>
+                      <span className="text-white font-medium">【工程邏輯】</span>
+                      站體主承重輪組完全隱藏於倒裝內底盤平台內部，從任何視角均無法看見輪子。達成適配現代智慧空間的<span className="text-[#39FF14]">高端懸浮幾何一體量體外觀</span>，徹底隱藏移動機構。
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2: 緩坡直滑與提耳拉把 */}
+                <div className="p-5 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
+                  <h4 className="text-sm font-bold text-[#39FF14] mb-3 flex items-center gap-2">
+                    <span>⚙️</span>
+                    緩坡直滑與提耳拉把 Gravity Ramp & Loop Pull
+                  </h4>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <p>
+                      <span className="text-white font-medium">【板金折彎緩坡 45°】</span>
+                      內底盤平台前端過渡為一片朝前延伸的<span className="text-[#39FF14]">45度板金折彎緩坡（mini-ramp）</span>，與門市地磚無縫銜接，消除門檻高差。
+                    </p>
+                    <p>
+                      <span className="text-white font-medium">【補貨 SOP】</span>
+                      取消推車外部一切金屬把手。內集袋上的<span className="text-[#39FF14]">高強度織帶提耳</span>即為拉把——操作員直接拉提耳，帶輪推車順勢沿緩坡滑出落地：<span className="text-[#39FF14]">「提耳即拉把，順勢下緩坡」</span>，最大化站體內部深度利用率。
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 3: 空中扁鐵懸掛防呆 */}
+                <div className="p-5 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
+                  <h4 className="text-sm font-bold text-[#39FF14] mb-3 flex items-center gap-2">
+                    <span>🔩</span>
+                    空中扁鐵懸掛防呆 Flat-Iron Flange Overlap
+                  </h4>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <p>
+                      <span className="text-white font-medium">【取消地面軌道】</span>
+                      完全消除高維護成本的地面導軌。於站體框架左右內壁焊接水平<span className="text-[#39FF14]">扁鐵護欄（鋼製導向凸緣）</span>，帶輪推車頂部邊緣對應外凸扁鐵翼板。
+                    </p>
+                    <p>
+                      <span className="text-white font-medium">【工程邏輯】</span>
+                      推入推車時，上方扁鐵翼板自動與站體護欄<span className="text-[#39FF14]">「空中扁鐵物理重疊」</span>，純重力架構鎖定推車左右位移，完美置中於78cm投入口正下方，零電子感測、零氣壓缸。
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

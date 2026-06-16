@@ -568,7 +568,7 @@ function SpecSection() {
           <p className="text-lg text-white/50">超薄38cm機身深度，零干擾無人店窄道動線，佔地僅0.1坪大幅降低進駐門檻</p>
         </div>
         
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-4">
           {/* 上方：3D X-RAY 實圖放大展示 */}
           <div 
             className={`w-full max-w-4xl transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
@@ -618,7 +618,7 @@ function SpecSection() {
               </div>
               
               {/* 被動工業設計邏輯說明 */}
-              <div className="mt-8 space-y-4">
+              <div className="mt-8 space-y-4 hidden">
                 {/* Step 1: 懸浮暗輪設計 */}
                 <div className="p-5 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
                   <h4 className="text-sm font-bold text-[#39FF14] mb-3 flex items-center gap-2">

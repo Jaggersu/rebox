@@ -79,7 +79,7 @@ const SOP_DATA = [
 
 function AlertBanner() {
   return (
-    <div className="w-full bg-gradient-to-r from-[#0B0F19] via-slate-800/80 to-[#0B0F19] border-b border-[#39FF14]/10 backdrop-blur-md">
+    <div className="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between">
           {/* 左側：鎖定圖標 + 文字 */}
@@ -190,7 +190,6 @@ function FinancialDashboard() {
         {/* 標題區 */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <span className="w-1 h-8 bg-[#39FF14] rounded-full inline-block" />
             <span className="text-3xl">📊</span>
             <h2 className="text-2xl sm:text-3xl font-black text-white">
               財務損益與投資報酬分析
@@ -202,10 +201,9 @@ function FinancialDashboard() {
         {/* ═══════════════════════════════════════════════════════════
             1. 單機營收來源拆解 (Revenue Streams Formula)
         ═══════════════════════════════════════════════════════════ */}
-        <div className="rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/50 overflow-hidden hover:border-[#39FF14]/30 hover:shadow-[0_0_30px_rgba(57,255,20,0.08)] transition-all duration-300">
-          <div className="p-6 border-b border-slate-700/50 bg-gradient-to-r from-slate-900/80 to-slate-800/30">
+        <div className="rounded-2xl bg-slate-900/50 border border-slate-800 overflow-hidden">
+          <div className="p-6 border-b border-slate-800 bg-gradient-to-r from-slate-900 to-slate-800/50">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <span className="w-1 h-5 bg-[#39FF14] rounded-full inline-block mr-1" />
               <span className="text-[#39FF14]">01.</span>
               單機營收來源拆解
               <span className="text-sm font-normal text-slate-400 ml-2">Revenue Streams Formula</span>
@@ -215,15 +213,15 @@ function FinancialDashboard() {
           <div className="p-6">
             {/* 總計列 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="rounded-xl bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 p-4 text-center hover:border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all duration-200">
+              <div className="rounded-xl bg-slate-800/50 border border-slate-700 p-4 text-center">
                 <p className="text-slate-400 text-sm mb-1">單機月營收</p>
                 <p className="text-3xl font-black text-white">${totalMonthlyRevenue.toLocaleString()}</p>
               </div>
-              <div className="rounded-xl bg-slate-800/60 backdrop-blur-sm border border-[#39FF14]/20 p-4 text-center hover:border-[#39FF14]/50 hover:shadow-[0_0_20px_rgba(57,255,20,0.12)] transition-all duration-200">
+              <div className="rounded-xl bg-slate-800/50 border border-slate-700 p-4 text-center">
                 <p className="text-slate-400 text-sm mb-1">單機月毛利</p>
                 <p className="text-3xl font-black text-[#39FF14]">${totalMonthlyProfit.toLocaleString()}</p>
               </div>
-              <div className="rounded-xl bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 p-4 text-center hover:border-emerald-400/30 hover:shadow-[0_0_15px_rgba(52,211,153,0.1)] transition-all duration-200">
+              <div className="rounded-xl bg-slate-800/50 border border-slate-700 p-4 text-center">
                 <p className="text-slate-400 text-sm mb-1">毛利率</p>
                 <p className="text-3xl font-black text-emerald-400">{((totalMonthlyProfit/totalMonthlyRevenue)*100).toFixed(1)}%</p>
               </div>
@@ -233,17 +231,17 @@ function FinancialDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-slate-800/60">
-                    <th className="text-left py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">收入來源</th>
-                    <th className="text-left py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">計算公式</th>
-                    <th className="text-right py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">月營收</th>
-                    <th className="text-right py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">毛利率</th>
-                    <th className="text-right py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#39FF14]/70">月毛利</th>
+                  <tr className="border-b border-slate-700">
+                    <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">收入來源</th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">計算公式</th>
+                    <th className="text-right py-3 px-4 text-sm font-medium text-slate-400">月營收</th>
+                    <th className="text-right py-3 px-4 text-sm font-medium text-slate-400">毛利率</th>
+                    <th className="text-right py-3 px-4 text-sm font-medium text-slate-400 text-[#39FF14]">月毛利</th>
                   </tr>
                 </thead>
                 <tbody>
                   {REVENUE_STREAMS.map((stream) => (
-                    <tr key={stream.id} className="border-b border-slate-800/40 hover:bg-[#39FF14]/[0.03] transition-colors group">
+                    <tr key={stream.id} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-3">
                           <span className="text-2xl">{stream.icon}</span>
@@ -286,10 +284,9 @@ function FinancialDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
           {/* CapEx Breakdown */}
-          <div className="rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/50 overflow-hidden hover:border-[#39FF14]/30 hover:shadow-[0_0_25px_rgba(57,255,20,0.08)] transition-all duration-300">
-            <div className="p-6 border-b border-slate-700/50 bg-gradient-to-r from-slate-900/80 to-slate-800/30">
+          <div className="rounded-2xl bg-slate-900/50 border border-slate-800 overflow-hidden">
+            <div className="p-6 border-b border-slate-800 bg-gradient-to-r from-slate-900 to-slate-800/50">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <span className="w-1 h-5 bg-[#39FF14] rounded-full inline-block mr-1" />
                 <span className="text-[#39FF14]">02.</span>
                 MVP 建置預算 (CapEx)
                 <span className="text-2xl font-black text-[#39FF14] ml-auto">${totalCapex.toLocaleString()}</span>
@@ -322,10 +319,9 @@ function FinancialDashboard() {
           </div>
 
           {/* OpEx Monthly */}
-          <div className="rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/50 overflow-hidden hover:border-[#EE4D2D]/30 hover:shadow-[0_0_25px_rgba(238,77,45,0.08)] transition-all duration-300">
-            <div className="p-6 border-b border-slate-700/50 bg-gradient-to-r from-slate-900/80 to-slate-800/30">
+          <div className="rounded-2xl bg-slate-900/50 border border-slate-800 overflow-hidden">
+            <div className="p-6 border-b border-slate-800 bg-gradient-to-r from-slate-900 to-slate-800/50">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <span className="w-1 h-5 bg-[#EE4D2D] rounded-full inline-block mr-1" />
                 <span className="text-[#EE4D2D]">03.</span>
                 每月營運損益 (OpEx)
                 <span className="text-2xl font-black text-[#EE4D2D] ml-auto">${totalOpex.toLocaleString()}</span>
@@ -359,10 +355,9 @@ function FinancialDashboard() {
         {/* ═══════════════════════════════════════════════════════════
             4. 五年投資報酬與擴張分析
         ═══════════════════════════════════════════════════════════ */}
-        <div className="rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/50 overflow-hidden hover:border-emerald-400/30 hover:shadow-[0_0_30px_rgba(52,211,153,0.08)] transition-all duration-300">
-          <div className="p-6 border-b border-slate-700/50 bg-gradient-to-r from-slate-900/80 to-slate-800/30">
+        <div className="rounded-2xl bg-slate-900/50 border border-slate-800 overflow-hidden">
+          <div className="p-6 border-b border-slate-800 bg-gradient-to-r from-slate-900 to-slate-800/50">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <span className="w-1 h-5 bg-emerald-400 rounded-full inline-block mr-1" />
               <span className="text-emerald-400">04.</span>
               五年投資報酬與擴張分析
               <span className="text-sm font-normal text-slate-400 ml-2">5-Year ROI & Scalability</span>
@@ -441,8 +436,7 @@ function SOPPanel() {
       <div className="max-w-7xl mx-auto">
         {/* 標題 */}
         <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2 flex items-center gap-3">
-            <span className="w-1 h-8 bg-[#3B82F6] rounded-full inline-block" />
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
             🎯 SOP 責任分工
           </h2>
           <p className="text-slate-400">三端協作，確保專案順利推進</p>
@@ -696,7 +690,6 @@ function HardwareSpecsPanel() {
         {/* 標題 */}
         <div className="mb-8">
           <h2 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-3">
-            <span className="w-1 h-8 bg-[#39FF14] rounded-full inline-block" />
             <span>🔧</span>
             機體硬體規格與改裝工藝
           </h2>
@@ -825,14 +818,13 @@ function MachineMonitoring() {
         <div className="mb-8">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-2 flex items-center gap-3">
-                <span className="w-1 h-8 bg-[#EE4D2D] rounded-full inline-block" />
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
                 📡 機器即時監測
               </h2>
               <p className="text-slate-400">桃園測試機群 ({machines.length} 台) • 最後更新: {lastUpdate.toLocaleTimeString()}</p>
             </div>
             <div className="flex items-center gap-4 text-sm">
-              <span className="px-4 py-2 rounded-full bg-slate-900/60 backdrop-blur-sm border border-[#39FF14]/20 text-slate-300 shadow-[0_0_12px_rgba(57,255,20,0.08)]">
+              <span className="px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 text-slate-300">
                 昨日總營收: <span className="text-[#39FF14] font-bold">${stats.totalRevenue.toLocaleString()}</span>
               </span>
             </div>
@@ -875,10 +867,10 @@ function MachineMonitoring() {
             return (
               <div 
                 key={machine.machine_id}
-                className={`relative rounded-xl p-4 backdrop-blur-sm transition-all duration-300 ${
+                className={`relative rounded-xl p-4 transition-all duration-300 ${
                   hasWarning 
-                    ? 'bg-slate-800/70 border border-red-500/60 shadow-[0_0_25px_rgba(239,68,68,0.2)]' 
-                    : 'bg-slate-900/60 border border-slate-700/50 hover:border-[#39FF14]/30 hover:shadow-[0_0_15px_rgba(57,255,20,0.08)]'
+                    ? 'bg-slate-800/80 border border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.15)]' 
+                    : 'bg-slate-900/50 border border-slate-800 hover:border-slate-700'
                 }`}
               >
                 {/* 機器 ID 與狀態 */}
@@ -890,7 +882,7 @@ function MachineMonitoring() {
                     </span>
                   </div>
                   {hasWarning && (
-                    <span className="text-xs px-1.5 py-0.5 rounded bg-red-500/20 border border-red-500/40 text-red-400 font-bold animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.3)]">⚠</span>
+                    <span className="text-red-500 text-xs">⚠️</span>
                   )}
                 </div>
 
@@ -960,23 +952,16 @@ export default function InternalDashboard() {
   */
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0B0F19] via-[#111827] to-[#070A10] relative">
-      {/* Cyber Blueprint Grid */}
-      <div className="pointer-events-none fixed inset-0 z-0" style={{
-        backgroundImage: 'linear-gradient(rgba(57,255,20,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,0.03) 1px, transparent 1px)',
-        backgroundSize: '40px 40px'
-      }} />
+    <div className="min-h-screen bg-slate-950">
       {/* 頁頭提示條 */}
-      <div className="relative z-10">
       <AlertBanner />
       
-      </div>
       {/* 主要內容 */}
-      <main className="pb-12 relative z-10">
+      <main className="pb-12">
         {/* 頁面標題 */}
-        <div className="py-8 px-4 sm:px-6 lg:px-8 border-b border-slate-700/40 bg-slate-900/30 backdrop-blur-sm">
+        <div className="py-8 px-4 sm:px-6 lg:px-8 border-b border-slate-800/50">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 drop-shadow-[0_0_20px_rgba(57,255,20,0.2)]">
+            <h1 className="text-3xl sm:text-4xl font-black text-white mb-2">
               <span className="text-[#39FF14]">RE:BOX</span>
               <span className="text-[#EE4D2D] text-2xl align-top">2.0</span>
               <span className="text-white"> 內部營運後台</span>
@@ -990,7 +975,7 @@ export default function InternalDashboard() {
         
         {/* 分隔線 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent"></div>
+          <div className="h-px bg-slate-800"></div>
         </div>
 
         {/* SOP 分工 */}
@@ -998,7 +983,7 @@ export default function InternalDashboard() {
         
         {/* 分隔線 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent"></div>
+          <div className="h-px bg-slate-800"></div>
         </div>
 
         {/* 機體硬體規格 */}
@@ -1006,7 +991,7 @@ export default function InternalDashboard() {
 
         {/* 分隔線 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent"></div>
+          <div className="h-px bg-slate-800"></div>
         </div>
 
         {/* 機器監測 */}
@@ -1014,7 +999,7 @@ export default function InternalDashboard() {
       </main>
 
       {/* 頁尾 */}
-      <footer className="py-6 px-4 border-t border-slate-700/40 relative z-10 bg-slate-900/30 backdrop-blur-sm">
+      <footer className="py-6 px-4 border-t border-slate-800">
         <div className="max-w-7xl mx-auto text-center text-slate-500 text-sm">
           <p>RE:BOX Internal Dashboard • 僅限授權人員存取</p>
           <p className="mt-1 text-xs text-slate-600">

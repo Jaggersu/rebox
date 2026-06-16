@@ -214,7 +214,7 @@ function HeroSection() {
       <div className="group absolute right-0 top-0 bottom-0 w-[62%] z-10 overflow-hidden">
         {/* 機台圖片本體：只有圖片本身 scale，無任何遮罩 */}
         <img
-          src="/hero.png"
+          src="/hero_af.png"
           alt="RE:BOX 智能循環機"
           className={`
             absolute inset-0 w-full h-full object-contain object-center

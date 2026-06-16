@@ -197,9 +197,9 @@ function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative w-full overflow-hidden bg-[#0B0F19] min-h-[85vh] flex items-center scroll-mt-20"
+      className="relative w-full overflow-hidden bg-[#0B0F19] scroll-mt-20"
     >
-      {/* ── 細格線背景（純裝飾，不遮圖）── */}
+      {/* ── 細格線背景 ── */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -209,87 +209,95 @@ function HeroSection() {
         }}
       />
 
-      {/* ── 右側圖片區：絕對定位 65% 寬，左邊略微破格入侵文字區 ── */}
-      {/*    group 只掛在此容器，hover 只縮放機台本體，不動背景     */}
-      <div className="group absolute right-0 top-0 bottom-0 w-[62%] z-10 overflow-hidden">
-        {/* 機台圖片本體：只有圖片本身 scale，無任何遮罩 */}
-        <img
-          src="/hero_af.png"
-          alt="RE:BOX 智能循環機"
-          className={`
-            absolute inset-0 w-full h-full object-contain object-center
-            transition-transform duration-700 ease-out
-            group-hover:scale-105
-            ${fadeIn}
-          `}
-        />
+      {/* ════════════════════════════════
+          桌面版：破格文繞圖（lg 以上）
+      ════════════════════════════════ */}
+      <div className="hidden lg:flex items-center min-h-[85vh] relative">
+        {/* 右側圖片區：絕對定位 62% 寬，破格入侵文字區 */}
+        <div className="group absolute right-0 top-0 bottom-0 w-[62%] z-10 overflow-hidden">
+          <img
+            src="/hero_af.png"
+            alt="RE:BOX 智能循環機"
+            className={`
+              absolute inset-0 w-full h-full object-contain object-center
+              transition-transform duration-700 ease-out
+              group-hover:scale-105
+              ${fadeIn}
+            `}
+          />
+        </div>
+
+        {/* 文字區：z-20，嚴格靠左 */}
+        <div className={`relative z-20 text-left pl-16 xl:pl-24 pr-4 py-24 max-w-2xl transition-all duration-700 ease-out ${fadeInUp}`}>
+          <p
+            className="text-[11px] font-bold tracking-[0.24em] uppercase mb-5"
+            style={{ color: "#39FF14", textShadow: "0 0 12px rgba(57,255,20,0.5)" }}
+          >
+            RE:BOX COUNTER-MEASURE
+          </p>
+          <h1 className="text-5xl xl:text-7xl font-black text-white leading-[1.15] tracking-tight mb-6">
+            <span className="text-[#39FF14] drop-shadow-[0_0_18px_rgba(57,255,20,0.5)]">零</span>
+            髒亂、
+            <span className="text-[#EE4D2D] drop-shadow-[0_0_18px_rgba(238,77,45,0.5)]">真</span>
+            回收，
+            <br />
+            啟動無人店的綠色微循環
+          </h1>
+          <p className="text-slate-400 text-lg leading-relaxed max-w-sm mb-8">
+            為 24H 無人智取店量身打造的 ESG 智能包材站。
+            <br />
+            超薄 38cm 機身 · 零干擾動線 · 單向純回收。
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {["88×38×180cm", "600份庫存", "月補貨 1 次", "純回收"].map((tag) => (
+              <span key={tag} className="px-3 py-1.5 rounded-full text-xs text-white/40 border border-white/[0.08] bg-white/[0.03]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* ── 文字區：z-20，嚴格靠左，垂直居中 ── */}
-      <div
-        className={`
-          relative z-20 text-left
-          pl-8 sm:pl-12 lg:pl-20
-          pr-4
-          py-32
-          max-w-xl lg:max-w-2xl
-          transition-all duration-700 ease-out
-          ${fadeInUp}
-        `}
-      >
-        {/* Tagline */}
-        <p
-          className={`text-[11px] font-bold tracking-[0.24em] uppercase mb-5 transition-all duration-700 ease-out ${fadeInUp}`}
-          style={{ color: "#39FF14", textShadow: "0 0 12px rgba(57,255,20,0.5)" }}
-        >
-          RE:BOX COUNTER-MEASURE
-        </p>
+      {/* ════════════════════════════════
+          手機 / 平板版：上下堆疊（lg 以下）
+      ════════════════════════════════ */}
+      <div className="flex lg:hidden flex-col pt-24 pb-0">
+        {/* 文字區：置頂，置中對齊 */}
+        <div className={`text-center px-6 sm:px-10 pt-8 pb-6 transition-all duration-700 ease-out ${fadeInUp}`}>
+          <p
+            className="text-[10px] font-bold tracking-[0.2em] uppercase mb-4"
+            style={{ color: "#39FF14", textShadow: "0 0 10px rgba(57,255,20,0.5)" }}
+          >
+            RE:BOX COUNTER-MEASURE
+          </p>
+          <h1 className="text-3xl sm:text-4xl font-black text-white leading-[1.2] tracking-tight mb-4">
+            <span className="text-[#39FF14] drop-shadow-[0_0_14px_rgba(57,255,20,0.5)]">零</span>
+            髒亂、
+            <span className="text-[#EE4D2D] drop-shadow-[0_0_14px_rgba(238,77,45,0.5)]">真</span>
+            回收，
+            <br />
+            啟動無人店的綠色微循環
+          </h1>
+          <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-5 max-w-sm mx-auto">
+            為 24H 無人智取店量身打造的 ESG 智能包材站。超薄 38cm · 零干擾動線 · 單向純回收。
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {["88×38×180cm", "600份庫存", "月補貨 1 次", "純回收"].map((tag) => (
+              <span key={tag} className="px-3 py-1.5 rounded-full text-xs text-white/40 border border-white/[0.08] bg-white/[0.03]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
 
-        {/* 主標題：零 = 螢光綠 / 真 = 蝦皮橘 */}
-        <h1
-          className={`
-            text-4xl sm:text-5xl lg:text-7xl
-            font-black text-white leading-[1.15] tracking-tight
-            mb-6
-            transition-all duration-1000 delay-100 ease-out
-            ${fadeInUp}
-          `}
-        >
-          <span className="text-[#39FF14] drop-shadow-[0_0_18px_rgba(57,255,20,0.5)]">零</span>
-          髒亂、
-          <span className="text-[#EE4D2D] drop-shadow-[0_0_18px_rgba(238,77,45,0.5)]">真</span>
-          回收，
-          <br />
-          啟動無人店的
-          <br className="hidden sm:block" />
-          綠色微循環
-        </h1>
-
-        {/* 副標題 */}
-        <p
-          className={`
-            text-slate-400 text-sm sm:text-base lg:text-lg
-            leading-relaxed max-w-sm
-            mb-8
-            transition-all duration-1000 delay-200 ease-out
-            ${fadeInUp}
-          `}
-        >
-          為 24H 無人智取店量身打造的 ESG 智能包材站。
-          <br />
-          超薄 38cm 機身 · 零干擾動線 · 單向純回收。
-        </p>
-
-        {/* 特色 pill 標籤 */}
-        <div className={`flex flex-wrap gap-2 transition-all duration-1000 delay-300 ease-out ${fadeIn}`}>
-          {["88×38×180cm", "600份庫存", "月補貨 1 次", "純回收"].map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1.5 rounded-full text-xs text-white/40 border border-white/[0.08] bg-white/[0.03]"
-            >
-              {tag}
-            </span>
-          ))}
+        {/* 圖片區：置底，滿寬，hover 縮放 */}
+        <div className={`group relative w-full transition-all duration-700 ease-out ${fadeIn}`}>
+          <img
+            src="/hero_af.png"
+            alt="RE:BOX 智能循環機"
+            className="w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+            style={{ maxHeight: "60vh" }}
+          />
         </div>
       </div>
 

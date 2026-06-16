@@ -197,121 +197,93 @@ function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative bg-[#0B0F19] overflow-hidden scroll-mt-20"
+      className="group relative w-full overflow-hidden bg-[#0B0F19] min-h-[85vh] flex items-center scroll-mt-20"
     >
-      {/* 細格線背景 */}
+      {/* ── 細格線背景 ── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(57,255,20,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,0.025) 1px, transparent 1px)",
+            "linear-gradient(rgba(57,255,20,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,0.022) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
 
-      {/* ── 12 欄 Split Grid ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[88vh] pt-20">
+      {/* ── 右側圖片區（絕對定位，佔 65% 寬，向左溢出包圍文字）── */}
+      <div className="absolute right-0 top-0 bottom-0 w-[65%] pointer-events-none">
+        {/* 機器背後 radial glow，hover 時更亮 */}
+        <div
+          className="absolute inset-0 transition-opacity duration-700 opacity-60 group-hover:opacity-100"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 65% at 60% 55%, rgba(57,255,20,0.09) 0%, rgba(238,77,45,0.05) 45%, transparent 72%)",
+          }}
+        />
 
-        {/* ════ LEFT: 圖片區 (col 1-7) ════ */}
-        <div className={`relative lg:col-span-7 flex items-end justify-center lg:justify-end overflow-hidden transition-all duration-1000 ease-out ${fadeIn}`}>
-          {/* 產品圖 */}
-          <img
-            src="/hero.png"
-            alt="RE:BOX 智能循環機"
-            className="relative z-10 w-full max-w-sm sm:max-w-md lg:max-w-none lg:w-[90%] h-auto object-contain object-bottom drop-shadow-[0_0_60px_rgba(57,255,20,0.12)]"
-            style={{ marginBottom: "-2px" }}
-          />
-          {/* 右側熔接漸層：圖片無縫融入右側文字區 */}
-          <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-r from-transparent via-[#0B0F19]/40 to-[#0B0F19] pointer-events-none z-20" />
-          {/* 底部漸層 */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B0F19] to-transparent pointer-events-none z-20" />
-          {/* 左側輻射光暈 */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 60% at 40% 65%, rgba(57,255,20,0.06) 0%, transparent 65%)",
-            }}
-          />
-        </div>
+        {/* 產品圖：hover 時 scale + slight rotate */}
+        <img
+          src="/hero.png"
+          alt="RE:BOX 智能循環機"
+          className={`absolute inset-0 w-full h-full object-contain object-center
+            transition-all duration-700 ease-out
+            group-hover:scale-105 group-hover:rotate-1
+            drop-shadow-[0_0_80px_rgba(57,255,20,0.15)]
+            ${fadeIn}`}
+        />
 
-        {/* ════ RIGHT: 文字區 (col 8-12) ════ */}
-        <div className={`relative z-30 lg:col-span-5 flex flex-col justify-center text-left px-6 sm:px-10 lg:px-12 pb-16 lg:pb-0 transition-all duration-700 ease-out ${fadeInUp}`}>
+        {/* 左側遮罩：深色 → 透明，讓文字區永遠清晰 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19] via-[#0B0F19]/80 to-transparent" />
+        {/* 底部漸層 */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#0B0F19] to-transparent" />
+      </div>
 
-          {/* Tagline 1 */}
-          <p className={`text-xs font-bold tracking-[0.22em] uppercase mb-4 transition-all duration-700 ease-out ${fadeInUp}`}
-            style={{ color: "#39FF14", textShadow: "0 0 12px rgba(57,255,20,0.5)" }}
-          >
-            RE:BOX COUNTER-MEASURE
-          </p>
+      {/* ── 文字區（左對齊，z-10，最大寬 2xl）── */}
+      <div className={`relative z-10 text-left max-w-2xl pl-8 lg:pl-16 py-32 transition-all duration-700 ease-out ${fadeInUp}`}>
 
-          {/* 主標題 */}
-          <h1
-            className={`text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4 transition-all duration-1000 delay-100 ease-out ${fadeInUp}`}
-          >
-            零髒亂、真回收，
-            <br />
-            <span className="text-white/90">啟動無人店的</span>
-            <br />
-            <span className="text-white/90">綠色微循環</span>
-          </h1>
+        {/* Tagline */}
+        <p
+          className={`text-xs font-bold tracking-[0.22em] uppercase mb-5 transition-all duration-700 ease-out ${fadeInUp}`}
+          style={{ color: "#39FF14", textShadow: "0 0 14px rgba(57,255,20,0.55)" }}
+        >
+          RE:BOX COUNTER-MEASURE
+        </p>
 
-          {/* 副標題 */}
-          <p className={`text-slate-400 mt-2 text-base lg:text-lg leading-relaxed max-w-sm transition-all duration-1000 delay-200 ease-out ${fadeInUp}`}>
-            為 24H 無人智取店量身打造的 ESG 智能包材站——超薄 38cm 機身、零干擾動線、單向純回收。
-          </p>
+        {/* 主標題：inline 顏色高亮 */}
+        <h1
+          className={`text-5xl lg:text-7xl font-black text-white leading-tight mb-6 transition-all duration-1000 delay-100 ease-out ${fadeInUp}`}
+        >
+          <span className="text-[#39FF14] drop-shadow-[0_0_15px_rgba(57,255,20,0.4)]">零</span>
+          髒亂、
+          <span className="text-[#EE4D2D] drop-shadow-[0_0_15px_rgba(238,77,45,0.4)]">真</span>
+          回收，
+          <br />
+          啟動無人店的綠色微循環
+        </h1>
 
-          {/* 特色 pill 標籤 */}
-          <div className={`flex flex-wrap gap-2 mt-6 mb-8 transition-all duration-1000 delay-300 ease-out ${fadeIn}`}>
-            {["88×38×180cm", "600份庫存", "月補貨 1 次", "純回收零污染"].map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 rounded-full text-xs text-white/50 border border-white/10 bg-white/5"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+        {/* 副標題 */}
+        <p
+          className={`text-slate-400 text-base lg:text-lg leading-relaxed max-w-md mb-8 transition-all duration-1000 delay-200 ease-out ${fadeInUp}`}
+        >
+          為 24H 無人智取店量身打造的 ESG 智能包材站。
+          <br />
+          超薄 38cm 機身 · 零干擾動線 · 單向純回收。
+        </p>
 
-          {/* CTA 按鈕群 */}
-          <div className={`flex flex-wrap gap-3 transition-all duration-1000 delay-400 ease-out ${fadeInUp}`}>
-            {/* Primary：橘色 hover glow outline */}
-            <a
-              href="#partnership"
-              className="group inline-flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-sm text-white border border-white/20 bg-white/5 backdrop-blur-sm tracking-wide transition-all duration-250"
-              style={{ transition: "border-color 0.25s, box-shadow 0.25s, color 0.25s" }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "#EE4D2D";
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 18px rgba(238,77,45,0.35), inset 0 0 10px rgba(238,77,45,0.08)";
-                (e.currentTarget as HTMLAnchorElement).style.color = "#EE4D2D";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.2)";
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
-                (e.currentTarget as HTMLAnchorElement).style.color = "white";
-              }}
+        {/* 特色 pill 標籤 */}
+        <div className={`flex flex-wrap gap-2 transition-all duration-1000 delay-300 ease-out ${fadeIn}`}>
+          {["88×38×180cm 超薄機身", "600份純扁平庫存", "月補貨 1 次", "單向純回收"].map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1.5 rounded-full text-xs text-white/45 border border-white/10 bg-white/[0.04] backdrop-blur-sm"
             >
-              方案簡報
-              <span className="text-base">→</span>
-            </a>
-
-            {/* Secondary：綠色填充 */}
-            <a
-              href="#partnership"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-sm text-black tracking-wide"
-              style={{
-                background: "linear-gradient(135deg, #39FF14, #22c55e)",
-                boxShadow: "0 0 16px rgba(57,255,20,0.35)",
-              }}
-            >
-              立即諮詢合作
-            </a>
-          </div>
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
 
       {/* 底部分隔線 */}
-      <div className="h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700/40 to-transparent" />
     </section>
   );
 }

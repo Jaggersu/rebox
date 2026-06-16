@@ -216,7 +216,7 @@ function HeroSection() {
       </div>
 
       {/* ── 主體內容 ── */}
-      <div className={`relative z-10 flex flex-col items-center justify-center min-h-[70vh] px-4 pt-28 pb-16 text-center transition-all duration-700 ease-out ${fadeInUp}`}>
+      <div className={`relative z-10 flex flex-col items-center justify-center min-h-[80vh] sm:min-h-[70vh] px-4 sm:px-6 pt-20 sm:pt-28 pb-16 text-center transition-all duration-700 ease-out ${fadeInUp}`}>
 
         {/* Accent chip */}
         <div className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border transition-all duration-700 ease-out ${fadeInUp}`}
@@ -228,14 +228,14 @@ function HeroSection() {
           }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#39FF14] animate-pulse" />
-          <span className="text-xs font-bold tracking-[0.18em] uppercase text-white/80">
+          <span className="text-[10px] sm:text-xs font-bold tracking-[0.12em] sm:tracking-[0.18em] uppercase text-white/80">
             SHAPING THE FUTURE OF ESG
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#EE4D2D] animate-pulse" />
         </div>
 
         {/* 主標題 */}
-        <h1 className={`text-5xl lg:text-7xl font-black leading-tight mb-6 max-w-4xl transition-all duration-1000 delay-150 ease-out ${fadeInUp}`}
+        <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black leading-tight mb-6 max-w-4xl transition-all duration-1000 delay-150 ease-out ${fadeInUp}`}
           style={{
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -250,7 +250,7 @@ function HeroSection() {
         </h1>
 
         {/* 副標題 */}
-        <p className={`text-lg md:text-xl text-white/55 max-w-xl mb-10 leading-relaxed transition-all duration-1000 delay-300 ease-out ${fadeInUp}`}>
+        <p className={`text-sm sm:text-base md:text-xl text-white/55 max-w-xl mb-10 leading-relaxed transition-all duration-1000 delay-300 ease-out ${fadeInUp}`}>
           RE:BOX 智能循環機 — 為 24H 無人智取店量身打造的 ESG 包材站
         </p>
 
@@ -259,7 +259,7 @@ function HeroSection() {
           {/* Primary：發光填充按鈕 */}
           <a
             href="#partnership"
-            className="relative inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-black text-sm tracking-wide overflow-hidden group"
+            className="relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-black text-sm tracking-wide overflow-hidden group"
             style={{
               background: "linear-gradient(135deg, #39FF14, #22c55e)",
               boxShadow: "0 0 20px rgba(57,255,20,0.4), 0 0 40px rgba(57,255,20,0.15)",
@@ -273,7 +273,7 @@ function HeroSection() {
           {/* Secondary：毛玻璃描邊按鈕 */}
           <a
             href="#admin"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm tracking-wide border border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-white/35 transition-all duration-200"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-white text-sm tracking-wide border border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-white/35 transition-all duration-200"
             style={{
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)",
             }}

@@ -194,10 +194,6 @@ function HeroSection() {
   const fadeIn = mounted 
     ? "opacity-100" 
     : "opacity-0";
-  const scaleIn = mounted 
-    ? "opacity-100 scale-100" 
-    : "opacity-0 scale-95";
-
   return (
     <section id="hero" className="relative overflow-hidden scroll-mt-20">
       {/* ── 全幅背景圖 ── */}

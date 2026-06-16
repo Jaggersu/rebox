@@ -377,34 +377,34 @@ function FeaturesSection() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Feature 1: Premium User Experience */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🎯</span>
-                <h4 className="text-sm font-bold text-white">Premium User Experience</h4>
+            <div className="space-y-4 rounded-xl p-5 border border-white/10 bg-white/5">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">🎯</span>
+                <h4 className="text-base font-bold text-white">Premium User Experience</h4>
               </div>
-              <p className="text-xs text-white/60 leading-relaxed">
+              <p className="text-sm text-white/70 leading-relaxed">
                 消費者在同一個站立視線高度完成「付款→取件→打包」全流程，<span className="text-[#39FF14]">免彎腰、免蹲地</span>。45°低摩擦重力滑道確保包材平穩滑出，優雅取件體驗。
               </p>
             </div>
 
             {/* Feature 2: Space Maximization */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">📦</span>
-                <h4 className="text-sm font-bold text-white">Space Maximization</h4>
+            <div className="space-y-4 rounded-xl p-5 border border-white/10 bg-white/5">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">📦</span>
+                <h4 className="text-base font-bold text-white">Space Maximization</h4>
               </div>
-              <p className="text-xs text-white/60 leading-relaxed">
+              <p className="text-sm text-white/70 leading-relaxed">
                 將取件口提升至中段工作檯面，<span className="text-[#39FF14]">38cm超薄機身下半部100%解放</span>，全部容積專用於水平扁平紙箱回收，最大化空間利用效率。
               </p>
             </div>
 
             {/* Feature 3: Passive Anti-Theft Architecture */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🔒</span>
-                <h4 className="text-sm font-bold text-white">Passive Anti-Theft Architecture</h4>
+            <div className="space-y-4 rounded-xl p-5 border border-white/10 bg-white/5">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">🔒</span>
+                <h4 className="text-base font-bold text-white">Passive Anti-Theft Architecture</h4>
               </div>
-              <p className="text-xs text-white/60 leading-relaxed">
+              <p className="text-sm text-white/70 leading-relaxed">
                 45°傾斜幾何與狹窄出貨口自然形成<span className="text-[#39FF14]">物理防盜屏障</span>，外部手臂與工具無法逆向伸入偷取庫存。純被動機制，無需複雜感應器或馬達閘門。
               </p>
             </div>

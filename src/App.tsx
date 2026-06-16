@@ -197,72 +197,83 @@ function HeroSection() {
   return (
     <section
       id="hero"
-      className="group relative w-full overflow-hidden bg-[#0B0F19] min-h-[85vh] flex items-center scroll-mt-20"
+      className="relative w-full overflow-hidden bg-[#0B0F19] min-h-[85vh] flex items-center scroll-mt-20"
     >
-      {/* ── 細格線背景 ── */}
+      {/* ── 細格線背景（純裝飾，不遮圖）── */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-0"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(57,255,20,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,0.022) 1px, transparent 1px)",
+            "linear-gradient(rgba(57,255,20,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,0.018) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
 
-      {/* ── 右側圖片區（絕對定位，佔 65% 寬，向左溢出包圍文字）── */}
-      <div className="absolute right-0 top-0 bottom-0 w-[65%] pointer-events-none">
-        {/* 機器背後 radial glow，hover 時更亮 */}
-        <div
-          className="absolute inset-0 transition-opacity duration-700 opacity-60 group-hover:opacity-100"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 65% at 60% 55%, rgba(57,255,20,0.09) 0%, rgba(238,77,45,0.05) 45%, transparent 72%)",
-          }}
-        />
-
-        {/* 產品圖：hover 時 scale + slight rotate */}
+      {/* ── 右側圖片區：絕對定位 65% 寬，左邊略微破格入侵文字區 ── */}
+      {/*    group 只掛在此容器，hover 只縮放機台本體，不動背景     */}
+      <div className="group absolute right-0 top-0 bottom-0 w-[62%] z-10 overflow-hidden">
+        {/* 機台圖片本體：只有圖片本身 scale，無任何遮罩 */}
         <img
           src="/hero.png"
           alt="RE:BOX 智能循環機"
-          className={`absolute inset-0 w-full h-full object-contain object-center
-            transition-all duration-700 ease-out
-            group-hover:scale-105 group-hover:rotate-1
-            drop-shadow-[0_0_80px_rgba(57,255,20,0.15)]
-            ${fadeIn}`}
+          className={`
+            absolute inset-0 w-full h-full object-contain object-center
+            transition-transform duration-700 ease-out
+            group-hover:scale-105
+            ${fadeIn}
+          `}
         />
-
-        {/* 左側遮罩：深色 → 透明，讓文字區永遠清晰 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19] via-[#0B0F19]/80 to-transparent" />
-        {/* 底部漸層 */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#0B0F19] to-transparent" />
       </div>
 
-      {/* ── 文字區（左對齊，z-10，最大寬 2xl）── */}
-      <div className={`relative z-10 text-left max-w-2xl pl-8 lg:pl-16 py-32 transition-all duration-700 ease-out ${fadeInUp}`}>
-
+      {/* ── 文字區：z-20，嚴格靠左，垂直居中 ── */}
+      <div
+        className={`
+          relative z-20 text-left
+          pl-8 sm:pl-12 lg:pl-20
+          pr-4
+          py-32
+          max-w-xl lg:max-w-2xl
+          transition-all duration-700 ease-out
+          ${fadeInUp}
+        `}
+      >
         {/* Tagline */}
         <p
-          className={`text-xs font-bold tracking-[0.22em] uppercase mb-5 transition-all duration-700 ease-out ${fadeInUp}`}
-          style={{ color: "#39FF14", textShadow: "0 0 14px rgba(57,255,20,0.55)" }}
+          className={`text-[11px] font-bold tracking-[0.24em] uppercase mb-5 transition-all duration-700 ease-out ${fadeInUp}`}
+          style={{ color: "#39FF14", textShadow: "0 0 12px rgba(57,255,20,0.5)" }}
         >
           RE:BOX COUNTER-MEASURE
         </p>
 
-        {/* 主標題：inline 顏色高亮 */}
+        {/* 主標題：零 = 螢光綠 / 真 = 蝦皮橘 */}
         <h1
-          className={`text-5xl lg:text-7xl font-black text-white leading-tight mb-6 transition-all duration-1000 delay-100 ease-out ${fadeInUp}`}
+          className={`
+            text-4xl sm:text-5xl lg:text-7xl
+            font-black text-white leading-[1.15] tracking-tight
+            mb-6
+            transition-all duration-1000 delay-100 ease-out
+            ${fadeInUp}
+          `}
         >
-          <span className="text-[#39FF14] drop-shadow-[0_0_15px_rgba(57,255,20,0.4)]">零</span>
+          <span className="text-[#39FF14] drop-shadow-[0_0_18px_rgba(57,255,20,0.5)]">零</span>
           髒亂、
-          <span className="text-[#EE4D2D] drop-shadow-[0_0_15px_rgba(238,77,45,0.4)]">真</span>
+          <span className="text-[#EE4D2D] drop-shadow-[0_0_18px_rgba(238,77,45,0.5)]">真</span>
           回收，
           <br />
-          啟動無人店的綠色微循環
+          啟動無人店的
+          <br className="hidden sm:block" />
+          綠色微循環
         </h1>
 
         {/* 副標題 */}
         <p
-          className={`text-slate-400 text-base lg:text-lg leading-relaxed max-w-md mb-8 transition-all duration-1000 delay-200 ease-out ${fadeInUp}`}
+          className={`
+            text-slate-400 text-sm sm:text-base lg:text-lg
+            leading-relaxed max-w-sm
+            mb-8
+            transition-all duration-1000 delay-200 ease-out
+            ${fadeInUp}
+          `}
         >
           為 24H 無人智取店量身打造的 ESG 智能包材站。
           <br />
@@ -271,10 +282,10 @@ function HeroSection() {
 
         {/* 特色 pill 標籤 */}
         <div className={`flex flex-wrap gap-2 transition-all duration-1000 delay-300 ease-out ${fadeIn}`}>
-          {["88×38×180cm 超薄機身", "600份純扁平庫存", "月補貨 1 次", "單向純回收"].map((tag) => (
+          {["88×38×180cm", "600份庫存", "月補貨 1 次", "純回收"].map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1.5 rounded-full text-xs text-white/45 border border-white/10 bg-white/[0.04] backdrop-blur-sm"
+              className="px-3 py-1.5 rounded-full text-xs text-white/40 border border-white/[0.08] bg-white/[0.03]"
             >
               {tag}
             </span>
@@ -283,7 +294,7 @@ function HeroSection() {
       </div>
 
       {/* 底部分隔線 */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700/40 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700/35 to-transparent z-30" />
     </section>
   );
 }

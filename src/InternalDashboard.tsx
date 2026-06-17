@@ -178,24 +178,68 @@ const FIVE_YEAR_PLAN = [
 ];
 
 function FinancialDashboard() {
-  const totalMonthlyRevenue = REVENUE_STREAMS.reduce((sum, s) => sum + s.monthlyRevenue, 0);
-  const totalMonthlyProfit = REVENUE_STREAMS.reduce((sum, s) => sum + s.monthlyProfit, 0);
+  const [withAdRevenue, setWithAdRevenue] = useState(true);
+
+  // 根據 withAdRevenue 狀態過濾營收來源
+  const activeRevenueStreams = withAdRevenue 
+    ? REVENUE_STREAMS 
+    : REVENUE_STREAMS.filter(s => s.id !== 'advertising');
+
+  // 動態計算財務數據
+  const totalMonthlyRevenue = activeRevenueStreams.reduce((sum, s) => sum + s.monthlyRevenue, 0);
+  const totalMonthlyProfit = activeRevenueStreams.reduce((sum, s) => sum + s.monthlyProfit, 0);
   const totalCapex = CAPEX_BREAKDOWN.reduce((sum, c) => sum + c.amount, 0);
   const totalOpex = OPEX_MONTHLY.reduce((sum, o) => sum + o.amount, 0);
+  const marginRate = totalMonthlyRevenue > 0 ? (totalMonthlyProfit / totalMonthlyRevenue) : 0;
 
   return (
     <section className="py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         
-        {/* 標題區 */}
+        {/* 標題區 + Toggle Switch */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl">📊</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white">
-              財務損益與投資報酬分析
-            </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">📊</span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white">
+                財務損益與投資報酬分析
+              </h2>
+            </div>
+            
+            {/* Toggle Switch - 極限壓力測試 */}
+            <div className="flex items-center gap-3 bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-2.5">
+              <span className={`text-sm font-medium transition-colors duration-300 ${withAdRevenue ? 'text-slate-400' : 'text-[#39FF14]'}`}>
+                極限壓力測試
+              </span>
+              <button
+                onClick={() => setWithAdRevenue(!withAdRevenue)}
+                className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
+                  withAdRevenue ? 'bg-[#39FF14]' : 'bg-slate-600'
+                }`}
+              >
+                <span 
+                  className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform duration-300 ${
+                    withAdRevenue ? 'translate-x-6' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+              <span className={`text-sm font-medium transition-colors duration-300 ${withAdRevenue ? 'text-white' : 'text-slate-500'}`}>
+                廣告收入
+              </span>
+              {!withAdRevenue && (
+                <span className="ml-1 text-xs text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">
+                  廣告歸零
+                </span>
+              )}
+            </div>
           </div>
-          <p className="text-slate-400 ml-12">Financial & P&L Blueprint • 10 台 MVP 桃園測試機基準數據</p>
+          
+          <p className="text-slate-400 ml-12">
+            Financial & P&L Blueprint • 10 台 MVP 桃園測試機基準數據
+            {!withAdRevenue && (
+              <span className="ml-2 text-[#39FF14]">• 純包材零售脫水版模型</span>
+            )}
+          </p>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
@@ -213,17 +257,26 @@ function FinancialDashboard() {
           <div className="p-6">
             {/* 總計列 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="rounded-xl bg-slate-800/50 border border-slate-700 p-4 text-center">
+              <div className={`rounded-xl border p-4 text-center transition-all duration-500 ${withAdRevenue ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-800/30 border-slate-700/50'}`}>
                 <p className="text-slate-400 text-sm mb-1">單機月營收</p>
-                <p className="text-3xl font-black text-white">${totalMonthlyRevenue.toLocaleString()}</p>
+                <p className="text-3xl font-black text-white transition-all duration-500">${totalMonthlyRevenue.toLocaleString()}</p>
+                {!withAdRevenue && (
+                  <p className="text-xs text-red-400 mt-1">廣告收入已扣除</p>
+                )}
               </div>
-              <div className="rounded-xl bg-slate-800/50 border border-slate-700 p-4 text-center">
+              <div className={`rounded-xl border p-4 text-center transition-all duration-500 ${withAdRevenue ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-800/30 border-slate-700/50'}`}>
                 <p className="text-slate-400 text-sm mb-1">單機月毛利</p>
-                <p className="text-3xl font-black text-[#39FF14]">${totalMonthlyProfit.toLocaleString()}</p>
+                <p className="text-3xl font-black text-[#39FF14] transition-all duration-500">${totalMonthlyProfit.toLocaleString()}</p>
+                {!withAdRevenue && (
+                  <p className="text-xs text-red-400 mt-1">- ${(2000).toLocaleString()} 廣告毛利</p>
+                )}
               </div>
-              <div className="rounded-xl bg-slate-800/50 border border-slate-700 p-4 text-center">
+              <div className={`rounded-xl border p-4 text-center transition-all duration-500 ${withAdRevenue ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-800/30 border-slate-700/50'}`}>
                 <p className="text-slate-400 text-sm mb-1">毛利率</p>
-                <p className="text-3xl font-black text-emerald-400">{((totalMonthlyProfit/totalMonthlyRevenue)*100).toFixed(1)}%</p>
+                <p className="text-3xl font-black text-emerald-400 transition-all duration-500">{(marginRate * 100).toFixed(1)}%</p>
+                {!withAdRevenue && (
+                  <p className="text-xs text-[#39FF14] mt-1">純零售毛利率</p>
+                )}
               </div>
             </div>
 
@@ -240,38 +293,59 @@ function FinancialDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {REVENUE_STREAMS.map((stream) => (
-                    <tr key={stream.id} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
-                      <td className="py-4 px-4">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{stream.icon}</span>
-                          <div>
-                            <p className="font-medium text-white">{stream.name}</p>
-                            <p className="text-xs text-slate-500">{stream.subtitle}</p>
+                  {REVENUE_STREAMS.map((stream) => {
+                    const isAdvertising = stream.id === 'advertising';
+                    const isExcluded = isAdvertising && !withAdRevenue;
+                    
+                    return (
+                      <tr 
+                        key={stream.id} 
+                        className={`border-b border-slate-800/50 transition-all duration-500 ${
+                          isExcluded 
+                            ? 'opacity-30 bg-slate-800/10' 
+                            : 'hover:bg-slate-800/30'
+                        }`}
+                      >
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-3">
+                            <span className={`text-2xl transition-all duration-300 ${isExcluded ? 'grayscale' : ''}`}>{stream.icon}</span>
+                            <div>
+                              <p className={`font-medium transition-all duration-300 ${isExcluded ? 'text-slate-500 line-through' : 'text-white'}`}>
+                                {stream.name}
+                              </p>
+                              <p className="text-xs text-slate-500">{stream.subtitle}</p>
+                              {isExcluded && (
+                                <span className="text-xs text-red-400 bg-red-500/10 px-2 py-0.5 rounded mt-1 inline-block">
+                                  壓力測試：已排除
+                                </span>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-4 text-sm text-slate-400">
-                        <p>{stream.formula}</p>
-                        {stream.products && (
-                          <p className="text-xs text-slate-600 mt-1">{stream.products.join('、')}</p>
-                        )}
-                        {stream.note && <p className="text-xs text-[#39FF14] mt-1">{stream.note}</p>}
-                        {(stream as any).capacity && <p className="text-xs text-emerald-500/70 mt-1">單機容量: {(stream as any).capacity}份</p>}
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium text-white">
-                        ${stream.monthlyRevenue.toLocaleString()}
-                      </td>
-                      <td className="py-4 px-4 text-right">
-                        <span className={`${stream.marginRate >= 0.8 ? 'text-[#39FF14]' : 'text-slate-300'}`}>
-                          {(stream.marginRate * 100).toFixed(0)}%
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 text-right">
-                        <span className="font-bold text-[#39FF14]">${stream.monthlyProfit.toLocaleString()}</span>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="py-4 px-4 text-sm text-slate-400">
+                          <p className={isExcluded ? 'line-through text-slate-600' : ''}>{stream.formula}</p>
+                          {stream.products && (
+                            <p className={`text-xs mt-1 ${isExcluded ? 'text-slate-700' : 'text-slate-600'}`}>{stream.products.join('、')}</p>
+                          )}
+                          {stream.note && <p className={`text-xs mt-1 ${isExcluded ? 'text-slate-700' : 'text-[#39FF14]'}`}>{stream.note}</p>}
+                          {(stream as any).capacity && <p className="text-xs text-emerald-500/70 mt-1">單機容量: {(stream as any).capacity}份</p>}
+                        </td>
+                        <td className={`py-4 px-4 text-right font-medium transition-all duration-300 ${isExcluded ? 'text-slate-600 line-through' : 'text-white'}`}>
+                          ${stream.monthlyRevenue.toLocaleString()}
+                        </td>
+                        <td className="py-4 px-4 text-right">
+                          <span className={`transition-all duration-300 ${isExcluded ? 'text-slate-600' : stream.marginRate >= 0.8 ? 'text-[#39FF14]' : 'text-slate-300'}`}>
+                            {(stream.marginRate * 100).toFixed(0)}%
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 text-right">
+                          <span className={`font-bold transition-all duration-300 ${isExcluded ? 'text-slate-600 line-through' : 'text-[#39FF14]'}`}>
+                            ${stream.monthlyProfit.toLocaleString()}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

@@ -609,75 +609,124 @@ const MODIFICATION_SPECS = [
 ];
 
 function MachineVisualCard() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <div className="aspect-[9/16] bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
-      {/* 背景發光效果 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#39FF14]/5 via-transparent to-[#EE4D2D]/5 pointer-events-none" />
-      
-      {/* 頂端 Logo 呈現 */}
-      <div className="relative z-10 text-center">
-        <h2 className="text-4xl font-black tracking-tight">
-          <span style={{ color: '#39FF14' }}>R</span>
-          <span style={{ color: '#EE4D2D' }}>E</span>
-          <span className="text-[#FFF4E0] drop-shadow-[0_0_25px_rgba(255,244,224,0.6)]">:BOX</span>
-          <span className="text-xs align-top ml-1" style={{ color: '#39FF14' }}>2.0</span>
-        </h2>
-        <p className="text-xs text-slate-500 mt-2">88×38×180cm • 600-unit Ultra-thin</p>
-      </div>
+    <>
+      <div className="aspect-[9/16] bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+        {/* 背景發光效果 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#39FF14]/5 via-transparent to-[#EE4D2D]/5 pointer-events-none" />
+        
+        {/* 頂端 Logo 呈現 */}
+        <div className="relative z-10 text-center">
+          <h2 className="text-4xl font-black tracking-tight">
+            <span style={{ color: '#39FF14' }}>R</span>
+            <span style={{ color: '#EE4D2D' }}>E</span>
+            <span className="text-[#FFF4E0] drop-shadow-[0_0_25px_rgba(255,244,224,0.6)]">:BOX</span>
+            <span className="text-xs align-top ml-1" style={{ color: '#39FF14' }}>2.0</span>
+          </h2>
+          <p className="text-xs text-slate-500 mt-2">88×38×180cm • 600-unit Ultra-thin</p>
+        </div>
 
-      {/* 實機 3D 外觀圖片 */}
-      <div className="relative z-10 w-full h-[450px] overflow-hidden rounded-xl bg-slate-950/50 border border-slate-800 flex items-center justify-center my-4">
-        <img 
-          src="/spec-xray.png" 
-          alt="RE:BOX 實機 3D 外觀規格" 
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(57,255,20,0.15)]"
-        />
-      </div>
-
-      {/* 頂置隱藏出料槽標記 */}
-      <div className="relative z-10 mx-2">
-        <div className="border-2 border-dashed border-emerald-500/30 rounded-lg p-3 bg-slate-800/50">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-lg">�</span>
-            <span className="text-xs font-bold text-emerald-400">頂置隱藏出料槽</span>
+        {/* 實機 3D 外觀圖片 - 可點擊放大 */}
+        <div 
+          className="relative z-10 w-full h-[450px] overflow-hidden rounded-xl bg-slate-950/50 border border-slate-800 flex items-center justify-center my-4 cursor-pointer group"
+          onClick={() => setIsExpanded(true)}
+        >
+          <img 
+            src="/spec-xray.png" 
+            alt="RE:BOX 實機 3D 外觀規格" 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_0_20px_rgba(57,255,20,0.15)]"
+          />
+          {/* 放大提示圖標 */}
+          <div className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur border border-slate-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            </svg>
           </div>
-          <p className="text-xs text-slate-500">工作台天花板 (H130cm) • 重力落料</p>
+        </div>
+
+        {/* 頂置隱藏出料槽標記 */}
+        <div className="relative z-10 mx-2">
+          <div className="border-2 border-dashed border-emerald-500/30 rounded-lg p-3 bg-slate-800/50">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-lg">📦</span>
+              <span className="text-xs font-bold text-emerald-400">頂置隱藏出料槽</span>
+            </div>
+            <p className="text-xs text-slate-500">工作台天花板 (H130cm) • 重力落料</p>
+          </div>
+        </div>
+
+        {/* 下半部回收槽 - 100% 密閉鋼板 */}
+        <div className="relative z-10 mx-2">
+          <div className="border-2 border-dashed border-[#EE4D2D]/30 rounded-lg p-4 bg-slate-800/50">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg">♻️</span>
+              <span className="text-sm font-bold text-[#EE4D2D]">單向回收槽</span>
+              <span className="px-2 py-0.5 rounded text-[10px] bg-[#EE4D2D]/20 text-[#EE4D2D]">100% 密閉</span>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">機身尺寸</span>
+                <span className="text-white font-medium">88×38×180cm (0.1坪)</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">包材庫存</span>
+                <span className="text-[#39FF14] font-medium">600份 純扁平設計</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">單件售價</span>
+                <span className="text-[#FFF4E0]">$15 (Cost $4.5, Margin 70%)</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">回收口</span>
+                <span className="text-white">78×2cm 重力防呆</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-slate-700 mt-2">
+                <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-[#EE4D2D] to-[#39FF14]" />
+              </div>
+              <p className="text-xs text-slate-500 text-center mt-1">滿載度動態監測</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* 下半部回收槽 - 100% 密閉鋼板 */}
-      <div className="relative z-10 mx-2">
-        <div className="border-2 border-dashed border-[#EE4D2D]/30 rounded-lg p-4 bg-slate-800/50">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">♻️</span>
-            <span className="text-sm font-bold text-[#EE4D2D]">單向回收槽</span>
-            <span className="px-2 py-0.5 rounded text-[10px] bg-[#EE4D2D]/20 text-[#EE4D2D]">100% 密閉</span>
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-400">機身尺寸</span>
-              <span className="text-white font-medium">88×38×180cm (0.1坪)</span>
+      {/* 放大查看 Lightbox */}
+      {isExpanded && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setIsExpanded(false)}
+        >
+          {/* 關閉按鈕 */}
+          <button
+            onClick={() => setIsExpanded(false)}
+            className="absolute top-4 right-4 w-12 h-12 rounded-full bg-slate-800/80 backdrop-blur border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-600 transition-all z-10"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          
+          {/* 圖片容器 */}
+          <div 
+            className="relative max-w-5xl max-h-[90vh] w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src="/spec-xray.png" 
+              alt="RE:BOX 實機 3D 外觀規格 - 放大檢視" 
+              className="w-full h-full object-contain rounded-lg"
+            />
+            {/* 底部說明 */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+              <p className="text-white text-center text-sm font-medium">
+                RE:BOX 2.0 機體 3D 外觀規格 • 點擊任意處關閉
+              </p>
             </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-400">包材庫存</span>
-              <span className="text-[#39FF14] font-medium">600份 純扁平設計</span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-400">單件售價</span>
-              <span className="text-[#FFF4E0]">$15 (Cost $4.5, Margin 70%)</span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-400">回收口</span>
-              <span className="text-white">78×2cm 重力防呆</span>
-            </div>
-            <div className="h-1.5 rounded-full bg-slate-700 mt-2">
-              <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-[#EE4D2D] to-[#39FF14]" />
-            </div>
-            <p className="text-xs text-slate-500 text-center mt-1">滿載度動態監測</p>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

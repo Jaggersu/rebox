@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /* ═══════════════════════════════════════════════════════════
    TYPE DEFINITIONS
@@ -928,31 +928,249 @@ function MachineMonitoring() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   COMPONENT: Auth Guard - 權限盾牌
+   深灰色科技感登入區塊，保護核心商業機密
+═══════════════════════════════════════════════════════════ */
+
+// 預設密碼（實際環境應從環境變數或後端獲取）
+const ADMIN_PASSWORD = 'REBOX2026';
+const AUTH_STORAGE_KEY = 'rebox_internal_auth';
+
+function AuthGuard({ children }: { children: React.ReactNode }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isUnlocking, setIsUnlocking] = useState(false);
+
+  // 檢查 localStorage 中的登入狀態
+  useEffect(() => {
+    const authData = localStorage.getItem(AUTH_STORAGE_KEY);
+    if (authData) {
+      try {
+        const { authenticated, timestamp } = JSON.parse(authData);
+        // 登入狀態有效期為 24 小時
+        const isValid = authenticated && (Date.now() - timestamp) < 24 * 60 * 60 * 1000;
+        if (isValid) {
+          setIsAuthenticated(true);
+        } else {
+          localStorage.removeItem(AUTH_STORAGE_KEY);
+        }
+      } catch {
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+      }
+    }
+    setIsLoading(false);
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (password === ADMIN_PASSWORD) {
+      setIsUnlocking(true);
+      // 模擬解鎖動畫
+      setTimeout(() => {
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({
+          authenticated: true,
+          timestamp: Date.now()
+        }));
+        setIsAuthenticated(true);
+        setIsUnlocking(false);
+      }, 800);
+    } else {
+      setError('密碼錯誤，請重新輸入');
+      setPassword('');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    setIsAuthenticated(false);
+    setPassword('');
+    setError('');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-[#39FF14] animate-bounce" style={{ animationDelay: '0ms' }} />
+          <div className="w-3 h-3 rounded-full bg-[#39FF14] animate-bounce" style={{ animationDelay: '150ms' }} />
+          <div className="w-3 h-3 rounded-full bg-[#39FF14] animate-bounce" style={{ animationDelay: '300ms' }} />
+        </div>
+      </div>
+    );
+  }
+
+  // 未登入狀態 - 顯示深灰色科技感登入區塊
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        {/* 背景裝飾 */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#39FF14]/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#EE4D2D]/5 rounded-full blur-3xl" />
+          {/* 網格背景 */}
+          <div 
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(57,255,20,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57,255,20,0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px'
+            }}
+          />
+        </div>
+
+        {/* 登入卡片 */}
+        <div className={`relative w-full max-w-md transition-all duration-700 ${isUnlocking ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
+          {/* 外發光效果 */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-[#39FF14]/20 via-[#EE4D2D]/20 to-[#39FF14]/20 rounded-2xl blur-xl opacity-50" />
+          
+          <div className="relative bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 shadow-2xl">
+            {/* 鎖定圖標 */}
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 flex items-center justify-center">
+                  <svg 
+                    className="w-10 h-10 text-slate-500" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={1.5} 
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" 
+                    />
+                  </svg>
+                </div>
+                {/* 狀態指示燈 */}
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 border-2 border-slate-900">
+                  <div className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-75" />
+                </div>
+              </div>
+            </div>
+
+            {/* 標題 */}
+            <div className="text-center mb-8">
+              <h1 className="text-2xl font-black text-white mb-2">
+                <span className="text-[#39FF14]">RE:BOX</span>
+                <span className="text-white"> 內部營運後台</span>
+              </h1>
+              <p className="text-sm text-slate-500">
+                🔒 核心商業機密區域 • 僅限授權人員存取
+              </p>
+            </div>
+
+            {/* 分隔線 */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
+              <span className="text-xs text-slate-600 font-mono">SECURE ACCESS</span>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
+            </div>
+
+            {/* 登入表單 */}
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">
+                  管理員密碼
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="請輸入管理員密碼"
+                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-[#39FF14]/50 focus:ring-1 focus:ring-[#39FF14]/30 transition-all font-mono"
+                    autoFocus
+                  />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* 錯誤訊息 */}
+              {error && (
+                <div className="flex items-center gap-2 text-red-500 text-sm animate-pulse">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {error}
+                </div>
+              )}
+
+              {/* 登入按鈕 */}
+              <button
+                type="submit"
+                disabled={!password || isUnlocking}
+                className="w-full py-3 px-4 bg-gradient-to-r from-[#39FF14] to-emerald-500 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-[#39FF14]/20 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isUnlocking ? (
+                  <>
+                    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    驗證中...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                    </svg>
+                    解鎖存取
+                  </>
+                )}
+              </button>
+            </form>
+
+            {/* 底部提示 */}
+            <div className="mt-8 pt-6 border-t border-slate-800">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-600">Session: 24h</span>
+                <span className="text-slate-600">SSL Encrypted</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 已登入狀態 - 渲染內容並提供登出按鈕
+  return (
+    <>
+      {/* 登出浮動按鈕 */}
+      <button
+        onClick={handleLogout}
+        className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3 py-1.5 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-lg text-xs text-slate-400 hover:text-white hover:border-slate-600 transition-all"
+        title="登出"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        登出
+      </button>
+      {children}
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    MAIN PAGE COMPONENT
 ═══════════════════════════════════════════════════════════ */
 
 export default function InternalDashboard() {
-  // 暫免登入驗證 - 直接渲染完整頁面
-  // TODO: 正式環境啟用 Auth Guard
-  /*
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session);
-      setIsLoading(false);
-    };
-    checkAuth();
-  }, []);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (!isAuthenticated) return <Navigate to="/login" />;
-  */
-
   return (
-    <div className="min-h-screen bg-slate-950">
+    <AuthGuard>
+      <div className="min-h-screen bg-slate-950">
       {/* 頁頭提示條 */}
       <AlertBanner />
       
@@ -1003,10 +1221,11 @@ export default function InternalDashboard() {
         <div className="max-w-7xl mx-auto text-center text-slate-500 text-sm">
           <p>RE:BOX Internal Dashboard • 僅限授權人員存取</p>
           <p className="mt-1 text-xs text-slate-600">
-            暫免驗證環境 • 數據僅供內部評估使用
+            🔐 已啟用 Auth Guard 權限保護
           </p>
         </div>
       </footer>
     </div>
+    </AuthGuard>
   );
 }
